@@ -92,7 +92,7 @@ class Message(BaseModel):
     op_code: None | str
     init: None | StateInit
     decoded_op_name: None | str
-    decoded_body: dict
+    decoded_body: None | dict | str
 
 
 class Transaction(BaseModel):
