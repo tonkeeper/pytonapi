@@ -116,7 +116,7 @@ def main():
 
         # print transaction text comment
         if transaction.in_msg.decoded_op_name == "text_comment":
-            print(transaction.in_msg.decoded_body["text"])
+            print(transaction.in_msg.decoded_body["Text"])
             # output: Hello, World!
 
 
