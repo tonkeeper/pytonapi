@@ -1,7 +1,4 @@
-import base64
-
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-
 from pytonapi.schema.traces import Trace
 
 
@@ -14,7 +11,7 @@ class TraceMethod(AsyncTonapiClient):
         :param trace_id: trace ID or transaction hash in hex (without 0x) or base64url format
         :return: :class:`Trace`
         """
-        method = f"v2/traces/{base64.b64decode(trace_id).hex()}"
-        response = await self._request(method=method)
+        method = f"v2/traces/{trace_id}"
+        response = await self._get(method=method)
 
         return Trace(**response)

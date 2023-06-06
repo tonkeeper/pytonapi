@@ -1,6 +1,8 @@
+from typing import List
+
 from pytonapi.tonapi.client import TonapiClient
 
-from pytonapi.schema.accounts import Account
+from pytonapi.schema.accounts import Account, Accounts
 from pytonapi.schema.domains import DomainNames
 from pytonapi.schema.jettons import JettonsBalances
 from pytonapi.schema.nft import NftItems
@@ -17,9 +19,22 @@ class AccountMethod(TonapiClient):
         :return: :class:`Account`
         """
         method = f"v2/accounts/{account_id}"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return Account(**response)
+
+    def get_bulk_info(self, account_ids: List[str]) -> Accounts:
+        """
+        Get human-friendly information about multiple accounts without low-level details.
+
+        :param account_ids: List of account IDs
+        return: :class:`Accounts`
+        """
+        method = f"v2/accounts/_bulk"
+        params = {"account_ids": account_ids}
+        response = self._post(method=method, body=params)
+
+        return Accounts(**response)
 
     def get_domains(self, account_id: str) -> DomainNames:
         """
@@ -29,7 +44,7 @@ class AccountMethod(TonapiClient):
         :return: :class:`DomainNames`
         """
         method = f"v2/accounts/{account_id}/dns/backresolve"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return DomainNames(**response)
 
@@ -41,7 +56,7 @@ class AccountMethod(TonapiClient):
         :return: :class:`JettonsBalances`
         """
         method = f"v2/accounts/{account_id}/jettons"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return JettonsBalances(**response)
 
@@ -62,7 +77,7 @@ class AccountMethod(TonapiClient):
             "limit": limit, "offset": offset,
             'indirect_ownership': 'true' if indirect_ownership else 'false'
         }
-        response = self._request(method=method, params=params)
+        response = self._get(method=method, params=params)
 
         return NftItems(**response)
 
@@ -99,6 +114,6 @@ class AccountMethod(TonapiClient):
         """
         method = f"v2/accounts/{account_id}/traces"
         params = {"limit": limit}
-        response = self._request(method=method, params=params)
+        response = self._get(method=method, params=params)
 
         return TraceIds(**response)

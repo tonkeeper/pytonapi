@@ -1,15 +1,16 @@
 from enum import Enum
+from typing import List, Optional
 
 from pydantic import BaseModel
 
-from . import Address
-from .accounts import AccountAddress
+from pytonapi.schema._address import Address
+from pytonapi.schema.accounts import AccountAddress
 
 
-class JettonVerificationType(Enum):
-    whitelist: str = "whitelist"
-    blacklist: str = "blacklist"
-    none: str = "none"
+class JettonVerificationType(str, Enum):
+    whitelist = "whitelist"
+    blacklist = "blacklist"
+    none = "none"
 
 
 class JettonMetadata(BaseModel):
@@ -17,11 +18,11 @@ class JettonMetadata(BaseModel):
     name: str
     symbol: str
     decimals: str
-    image: None | str
-    description: None | str
-    social: None | list[str]
-    websites: None | list[str]
-    catalogs: None | list[str]
+    image: Optional[str]
+    description: Optional[str]
+    social: Optional[List[str]]
+    websites: Optional[List[str]]
+    catalogs: Optional[List[str]]
 
 
 class JettonInfo(BaseModel):
@@ -47,4 +48,4 @@ class JettonBalance(BaseModel):
 
 
 class JettonsBalances(BaseModel):
-    balances: list[JettonBalance]
+    balances: List[JettonBalance]

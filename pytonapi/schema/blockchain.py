@@ -1,9 +1,12 @@
+from typing import List, Optional
+
 from pydantic import BaseModel
 
 from pytonapi.schema.accounts import AccountAddress
-
-from pytonapi.schema.traces import (Message, AccountStatus, TransactionType,
-                                    ComputePhase, StoragePhase, CreditPhase, ActionPhase, BouncePhaseType)
+from pytonapi.schema.traces import (AccountStatus, TransactionType,
+                                    BouncePhaseType, ActionPhase,
+                                    CreditPhase, StoragePhase,
+                                    ComputePhase, Message)
 
 
 class Block(BaseModel):
@@ -27,10 +30,10 @@ class Block(BaseModel):
     gen_catchain_seqno: int
     min_ref_mc_seqno: int
     prev_key_block_seqno: int
-    gen_software_version: None | int
-    gen_software_capabilities: None | int
-    master_ref: None | str
-    prev_refs: list[str]
+    gen_software_version: Optional[int]
+    gen_software_capabilities: Optional[int]
+    master_ref: Optional[str]
+    prev_refs: List[str]
     in_msg_descr_length: int
     out_msg_descr_length: int
     rand_seed: str
@@ -49,21 +52,19 @@ class Transaction(BaseModel):
     transaction_type: TransactionType
     state_update_old: str
     state_update_new: str
-    in_msg: None | Message
-    out_msgs: list[Message]
+    in_msg: Optional[Message]
+    out_msgs: List[Message]
     block: str
-    prev_trans_hash: None | str
-    prev_trans_lt: None | int
-    compute_phase: None | ComputePhase
-    storage_phase: None | StoragePhase
-    credit_phase: None | CreditPhase
-    action_phase: None | ActionPhase
-    bounce_phase: None | BouncePhaseType
+    prev_trans_hash: Optional[str]
+    prev_trans_lt: Optional[int]
+    compute_phase: Optional[ComputePhase]
+    storage_phase: Optional[StoragePhase]
+    credit_phase: Optional[CreditPhase]
+    action_phase: Optional[ActionPhase]
+    bounce_phase: Optional[BouncePhaseType]
     aborted: bool
     destroyed: bool
 
 
 class Transactions(BaseModel):
-    transactions: list[Transaction]
-
-
+    transactions: List[Transaction]

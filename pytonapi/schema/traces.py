@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 from enum import Enum
-
+from typing import Optional, List, Union, Dict
 from pydantic import BaseModel
 
 from .accounts import AccountAddress
 
 
 class AccountStatus(str, Enum):
-    nonexist = "nonexist"  # noqa
-    uninit = "uninit"  # noqa
+    nonexist = "nonexist"
+    uninit = "uninit"
     active = "active"
     frozen = "frozen"
 
@@ -25,9 +25,9 @@ class TransactionType(str, Enum):
 
 
 class ComputeSkipReason(str, Enum):
-    cskip_no_state = "cskip_no_state"  # noqa
-    cskip_bad_state = "cskip_bad_state"  # noqa
-    cskip_no_gas = "cskip_no_gas"  # noqa
+    cskip_no_state = "cskip_no_state"
+    cskip_bad_state = "cskip_bad_state"
+    cskip_no_gas = "cskip_no_gas"
 
 
 class AccStatusChange(str, Enum):
@@ -37,8 +37,8 @@ class AccStatusChange(str, Enum):
 
 
 class BouncePhaseType(str, Enum):
-    TrPhaseBounceNegfunds = "TrPhaseBounceNegfunds"  # noqa
-    TrPhaseBounceNofunds = "TrPhaseBounceNofunds"  # noqa
+    TrPhaseBounceNegfunds = "TrPhaseBounceNegfunds"
+    TrPhaseBounceNofunds = "TrPhaseBounceNofunds"
     TrPhaseBounceOk = "TrPhaseBounceOk"
 
 
@@ -57,24 +57,24 @@ class CreditPhase(BaseModel):
 
 class StoragePhase(BaseModel):
     fees_collected: int
-    fees_due: None | int
+    fees_due: Optional[int]
     status_change: AccStatusChange
 
 
 class ComputePhase(BaseModel):
     skipped: bool
-    skip_reason: None | ComputeSkipReason
-    success: None | bool
-    gas_fees: None | int
-    gas_used: None | int
-    vm_steps: None | int
-    exit_code: None | int
+    skip_reason: Optional[ComputeSkipReason]
+    success: Optional[bool]
+    gas_fees: Optional[int]
+    gas_used: Optional[int]
+    vm_steps: Optional[int]
+    exit_code: Optional[int]
 
 
 class StateInit(BaseModel):
-    code: None | str
-    data: None | str
-    library: dict[str, str]
+    code: Optional[str]
+    data: Optional[str]
+    library: Dict[str, str]
 
 
 class Message(BaseModel):
@@ -85,14 +85,14 @@ class Message(BaseModel):
     value: int
     fwd_fee: int
     ihr_fee: int
-    destination: None | AccountAddress
-    source: None | AccountAddress
+    destination: Optional[AccountAddress]
+    source: Optional[AccountAddress]
     import_fee: int
     created_at: int
-    op_code: None | str
-    init: None | StateInit
-    decoded_op_name: None | str
-    decoded_body: None | dict | str
+    op_code: Optional[str]
+    init: Optional[StateInit]
+    decoded_op_name: Optional[str]
+    decoded_body: Optional[Union[dict, str]]
 
 
 class Transaction(BaseModel):
@@ -107,23 +107,23 @@ class Transaction(BaseModel):
     transaction_type: TransactionType
     state_update_old: str
     state_update_new: str
-    in_msg: None | Message
-    out_msgs: list[Message]
+    in_msg: Optional[Message]
+    out_msgs: List[Message]
     block: str
-    prev_trans_hash: None | str
-    prev_trans_lt: None | int
-    compute_phase: None | ComputePhase
-    storage_phase: None | StoragePhase
-    credit_phase: None | CreditPhase
-    action_phase: None | ActionPhase
-    bounce_phase: None | BouncePhaseType
+    prev_trans_hash: Optional[str]
+    prev_trans_lt: Optional[int]
+    compute_phase: Optional[ComputePhase]
+    storage_phase: Optional[StoragePhase]
+    credit_phase: Optional[CreditPhase]
+    action_phase: Optional[ActionPhase]
+    bounce_phase: Optional[BouncePhaseType]
     aborted: bool
     destroyed: bool
 
 
 class Trace(BaseModel):
     transaction: Transaction
-    children: None | list[Trace]
+    children: Optional[List[Trace]]
 
 
 class TraceId(BaseModel):
@@ -132,4 +132,4 @@ class TraceId(BaseModel):
 
 
 class TraceIds(BaseModel):
-    traces: list[TraceId]
+    traces: List[TraceId]

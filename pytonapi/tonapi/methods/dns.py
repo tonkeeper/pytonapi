@@ -14,7 +14,7 @@ class DnsMethod(TonapiClient):
         :return: :class:`DNSRecord`
         """
         method = f"v2/dns/{domain_name}/resolve"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return DNSRecord(**response)
 
@@ -26,6 +26,6 @@ class DnsMethod(TonapiClient):
         :return: :class:`DomainBids`
         """
         method = f"v2/dns/{domain_name}/bids"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return DomainBids(**response)

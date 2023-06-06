@@ -1,10 +1,18 @@
 import base64
 import struct
+from typing import Union
 
 import libscrc
 
+__all__ = [
+    'raw_to_userfriendly',
+    'userfriendly_to_raw',
+    'nano_to_amount',
+    'amount_to_nano'
+]
 
-def raw_to_userfriendly(address: str, tag=0x11) -> str:
+
+def raw_to_userfriendly(address: str, tag: int = 0x11) -> str:
     """
     Converts a raw address string to a user-friendly format.
 
@@ -41,7 +49,7 @@ def userfriendly_to_raw(address: str) -> str:
     return f'{workchain_id}:{key}'
 
 
-def nano_to_amount(value: int | float, precision: int = 2) -> float:
+def nano_to_amount(value: Union[int, float], precision: int = 2) -> float:
     """
     Converts a value from nanoton to TON and rounds it to the specified precision.
 
@@ -51,10 +59,10 @@ def nano_to_amount(value: int | float, precision: int = 2) -> float:
     """
     converted_value = round(value / 10 ** 9, 9)
 
-    return float(f'{converted_value:.{precision}f}')
+    return round(converted_value, precision)
 
 
-def amount_to_nano(value: int | float) -> int:
+def amount_to_nano(value: Union[int, float]) -> int:
     """
     Converts TON value to nanoton.
 

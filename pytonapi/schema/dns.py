@@ -1,6 +1,8 @@
+from typing import List, Optional
+
 from pydantic import BaseModel
 
-from pytonapi.schema import Address
+from pytonapi.schema._address import Address
 
 
 class WalletDNS(BaseModel):
@@ -8,11 +10,11 @@ class WalletDNS(BaseModel):
     is_wallet: bool
     has_method_pubkey: bool
     has_method_seqno: bool
-    names: list[str]
+    names: List[str]
 
 
 class DNSRecord(BaseModel):
-    wallet: None | WalletDNS
-    next_resolver: None | str
-    sites: list[str]
-    storage: None | str
+    wallet: Optional[WalletDNS]
+    next_resolver: Optional[str]
+    sites: List[str]
+    storage: Optional[str]

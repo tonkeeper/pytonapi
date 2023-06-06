@@ -1,10 +1,12 @@
+from typing import List
+
 from pydantic import BaseModel
 
 from pytonapi.schema.accounts import AccountAddress
 
 
 class DomainNames(BaseModel):
-    domains: list[str]
+    domains: List[str]
 
 
 class DomainBid(BaseModel):
@@ -16,4 +18,4 @@ class DomainBid(BaseModel):
 
 
 class DomainBids(BaseModel):
-    data: list[DomainBid]
+    data: List[DomainBid]

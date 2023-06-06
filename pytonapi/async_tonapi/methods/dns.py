@@ -1,5 +1,4 @@
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-
 from pytonapi.schema.dns import DNSRecord
 from pytonapi.schema.domains import DomainBids
 
@@ -14,7 +13,7 @@ class DnsMethod(AsyncTonapiClient):
         :return: :class:`DNSRecord`
         """
         method = f"v2/dns/{domain_name}/resolve"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return DNSRecord(**response)
 
@@ -26,6 +25,6 @@ class DnsMethod(AsyncTonapiClient):
         :return: :class:`DomainBids`
         """
         method = f"v2/dns/{domain_name}/bids"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return DomainBids(**response)

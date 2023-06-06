@@ -1,5 +1,6 @@
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from typing import List
 
+from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.nft import NftCollections, NftCollection, NftItems, NftItem
 
 
@@ -15,7 +16,7 @@ class NftMethod(AsyncTonapiClient):
         """
         method = "v2/nfts/collections"
         params = {'limit': limit, 'offset': offset}
-        response = await self._request(method=method, params=params)
+        response = await self._get(method=method, params=params)
 
         return NftCollections(**response)
 
@@ -27,7 +28,7 @@ class NftMethod(AsyncTonapiClient):
         :return: :class:`NftCollection`
         """
         method = f"v2/nfts/collections/{account_id}"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return NftCollection(**response)
 
@@ -43,7 +44,7 @@ class NftMethod(AsyncTonapiClient):
         """
         method = f"v2/nfts/collections/{account_id}/items"
         params = {'limit': limit, 'offset': offset}
-        response = await self._request(method=method, params=params)
+        response = await self._get(method=method, params=params)
 
         return NftItems(**response)
 
@@ -52,9 +53,9 @@ class NftMethod(AsyncTonapiClient):
         Get all NFT items from collection by collection address.
 
         :param account_id: Account ID
-        :return: :class:NftItems
+        :return: :class:`NftItems`
         """
-        nft_items = []
+        nft_items: List[NftItem] = []
         offset, limit = 0, 1000
 
         while True:
@@ -77,6 +78,6 @@ class NftMethod(AsyncTonapiClient):
         :return: :class:`NftItem`
         """
         method = f"v2/nfts/{account_id}"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return NftItem(**response)

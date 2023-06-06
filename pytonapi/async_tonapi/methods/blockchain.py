@@ -1,5 +1,6 @@
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from typing import Optional
 
+from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.blockchain import Block, Transactions, Transaction
 
 
@@ -13,7 +14,7 @@ class BlockchainMethod(AsyncTonapiClient):
         :return: :class:`Block`
         """
         method = f"v2/blockchain/blocks/{block_id}"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return Block(**response)
 
@@ -25,7 +26,7 @@ class BlockchainMethod(AsyncTonapiClient):
         :return: :class:`Block`
         """
         method = f"v2/blockchain/blocks/{block_id}/transactions"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return Transactions(**response)
 
@@ -38,11 +39,11 @@ class BlockchainMethod(AsyncTonapiClient):
         :return: :class:`Transaction`
         """
         method = f"v2/blockchain/transactions/{transaction_id}"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return Transaction(**response)
 
-    async def get_account_transactions(self, account_id: str, after_lt: int = None,
+    async def get_account_transactions(self, account_id: str, after_lt: Optional[int] = None,
                                        before_lt: int = 0, limit: int = 100) -> Transactions:
         """
         Get account transactions.
@@ -55,7 +56,8 @@ class BlockchainMethod(AsyncTonapiClient):
         """
         method = f"v2/blockchain/accounts/{account_id}/transactions"
         params = {'before_lt': before_lt, 'limit': limit}
-        if after_lt: params['after_lt'] = after_lt  # noqa E701
-        response = await self._request(method=method, params=params)
+        if after_lt is not None:
+            params['after_lt'] = after_lt
+        response = await self._get(method=method, params=params)
 
         return Transactions(**response)

@@ -1,4 +1,5 @@
 import base64
+import binascii
 
 from pytonapi.tonapi.client import TonapiClient
 
@@ -14,7 +15,10 @@ class TraceMethod(TonapiClient):
         :param trace_id: trace ID or transaction hash in hex (without 0x) or base64url format
         :return: :class:`Trace`
         """
-        method = f"v2/traces/{base64.b64decode(trace_id).hex()}"
-        response = self._request(method=method)
+        if len(trace_id) == 44:
+            decoded = base64.urlsafe_b64decode(trace_id + '=' * (-len(trace_id) % 4))
+            trace_id = binascii.hexlify(decoded).decode('utf-8')
+        method = f"v2/traces/{trace_id}"
+        response = self._get(method=method)
 
         return Trace(**response)

@@ -1,5 +1,4 @@
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-
 from pytonapi.schema.jettons import JettonInfo
 
 
@@ -13,6 +12,6 @@ class JettonMethod(AsyncTonapiClient):
         :return: :class:`JettonInfo`
         """
         method = f"v2/jettons/{account_id}"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return JettonInfo(**response)

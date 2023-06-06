@@ -15,7 +15,7 @@ class NftMethod(TonapiClient):
         """
         method = "v2/nfts/collections"
         params = {'limit': limit, 'offset': offset}
-        response = self._request(method=method, params=params)
+        response = self._get(method=method, params=params)
 
         return NftCollections(**response)
 
@@ -27,7 +27,7 @@ class NftMethod(TonapiClient):
         :return: :class:`NftCollection`
         """
         method = f"v2/nfts/collections/{account_id}"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return NftCollection(**response)
 
@@ -43,7 +43,7 @@ class NftMethod(TonapiClient):
         """
         method = f"v2/nfts/collections/{account_id}/items"
         params = {'limit': limit, 'offset': offset}
-        response = self._request(method=method, params=params)
+        response = self._get(method=method, params=params)
 
         return NftItems(**response)
 
@@ -77,6 +77,6 @@ class NftMethod(TonapiClient):
         :return: :class:`NftItem`
         """
         method = f"v2/nfts/{account_id}"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return NftItem(**response)

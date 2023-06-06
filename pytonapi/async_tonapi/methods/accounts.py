@@ -1,9 +1,10 @@
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from typing import List
 
-from pytonapi.schema.accounts import Account
+from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.schema.accounts import Account, Accounts
 from pytonapi.schema.domains import DomainNames
 from pytonapi.schema.jettons import JettonsBalances
-from pytonapi.schema.nft import NftItems
+from pytonapi.schema.nft import NftItems, NftItem
 from pytonapi.schema.traces import TraceIds
 
 
@@ -17,9 +18,22 @@ class AccountMethod(AsyncTonapiClient):
         :return: :class:`Account`
         """
         method = f"v2/accounts/{account_id}"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return Account(**response)
+
+    async def get_bulk_info(self, account_ids: List[str]) -> Accounts:
+        """
+        Get human-friendly information about multiple accounts without low-level details.
+
+        :param account_ids: List of account IDs
+        return: :class:`Accounts`
+        """
+        method = f"v2/accounts/_bulk"
+        params = {"account_ids": account_ids}
+        response = await self._post(method=method, body=params)
+
+        return Accounts(**response)
 
     async def get_domains(self, account_id: str) -> DomainNames:
         """
@@ -29,7 +43,7 @@ class AccountMethod(AsyncTonapiClient):
         :return: :class:`DomainNames`
         """
         method = f"v2/accounts/{account_id}/dns/backresolve"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return DomainNames(**response)
 
@@ -41,7 +55,7 @@ class AccountMethod(AsyncTonapiClient):
         :return: :class:`JettonsBalances`
         """
         method = f"v2/accounts/{account_id}/jettons"
-        response = await self._request(method=method)
+        response = await self._get(method=method)
 
         return JettonsBalances(**response)
 
@@ -62,7 +76,7 @@ class AccountMethod(AsyncTonapiClient):
             "limit": limit, "offset": offset,
             'indirect_ownership': 'true' if indirect_ownership else 'false'
         }
-        response = await self._request(method=method, params=params)
+        response = await self._get(method=method, params=params)
 
         return NftItems(**response)
 
@@ -73,7 +87,7 @@ class AccountMethod(AsyncTonapiClient):
         :param account_id: account ID
         :return: :class:`NftItems`
         """
-        nft_items = []
+        nft_items: List[NftItem] = []
         offset, limit = 0, 1000
 
         while True:
@@ -99,6 +113,6 @@ class AccountMethod(AsyncTonapiClient):
         """
         method = f"v2/accounts/{account_id}/traces"
         params = {"limit": limit}
-        response = await self._request(method=method, params=params)
+        response = await self._get(method=method, params=params)
 
         return TraceIds(**response)

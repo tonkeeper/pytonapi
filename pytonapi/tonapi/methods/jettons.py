@@ -13,6 +13,6 @@ class JettonMethod(TonapiClient):
         :return: :class:`JettonInfo`
         """
         method = f"v2/jettons/{account_id}"
-        response = self._request(method=method)
+        response = self._get(method=method)
 
         return JettonInfo(**response)
