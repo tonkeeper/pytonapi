@@ -60,12 +60,13 @@ class AccountMethod(AsyncTonapiClient):
         return JettonsBalances(**response)
 
     async def get_nfts(self, account_id: str, limit: int = 1000, offset: int = 0,
-                       indirect_ownership: bool = False) -> NftItems:
+                       collection: str = None, indirect_ownership: bool = False) -> NftItems:
         """
         Get NFT items by owner address.
 
         :param account_id: account ID
         :param limit: Default value : 1000
+        :param collection: filter NFT by collection address
         :param offset: Default value : 0
         :param indirect_ownership: Selling nft items in ton implemented usually via transfer items
          to special selling account. This option enables including items which owned not directly.
@@ -74,17 +75,19 @@ class AccountMethod(AsyncTonapiClient):
         method = f"v2/accounts/{account_id}/nfts"
         params = {
             "limit": limit, "offset": offset,
-            'indirect_ownership': 'true' if indirect_ownership else 'false'
+            "indirect_ownership": "true" if indirect_ownership else "false"
         }
+        if collection: params["collection"] = collection  # noqa:E701
         response = await self._get(method=method, params=params)
 
         return NftItems(**response)
 
-    async def get_all_nfts(self, account_id: str) -> NftItems:
+    async def get_all_nfts(self, account_id: str, collection: str = None) -> NftItems:
         """
         Get all NFT items by owner address.
 
         :param account_id: account ID
+        :param collection: filter NFT by collection address
         :return: :class:`NftItems`
         """
         nft_items: List[NftItem] = []
@@ -93,7 +96,7 @@ class AccountMethod(AsyncTonapiClient):
         while True:
             result = await self.get_nfts(
                 account_id=account_id, limit=limit, offset=offset,
-                indirect_ownership=True,
+                collection=collection, indirect_ownership=True,
             )
             nft_items += result.nft_items
             offset += limit
