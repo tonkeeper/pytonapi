@@ -82,12 +82,14 @@ class AccountMethod(AsyncTonapiClient):
 
         return NftItems(**response)
 
-    async def get_all_nfts(self, account_id: str, collection: str = None) -> NftItems:
+    async def get_all_nfts(self, account_id: str, collection: str = None, indirect_ownership: bool = True) -> NftItems:
         """
         Get all NFT items by owner address.
 
         :param account_id: account ID
         :param collection: filter NFT by collection address
+        :param indirect_ownership: Selling nft items in ton implemented usually via transfer items
+         to special selling account. This option enables including items which owned not directly.
         :return: :class:`NftItems`
         """
         nft_items: List[NftItem] = []
@@ -96,7 +98,7 @@ class AccountMethod(AsyncTonapiClient):
         while True:
             result = await self.get_nfts(
                 account_id=account_id, limit=limit, offset=offset,
-                collection=collection, indirect_ownership=True,
+                collection=collection, indirect_ownership=indirect_ownership,
             )
             nft_items += result.nft_items
             offset += limit
