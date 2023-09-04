@@ -31,7 +31,7 @@ class Collection(BaseModel):
 class NftCollection(BaseModel):
     address: Address
     next_item_index: int
-    owner: AccountAddress
+    owner: AccountAddress | None
     raw_collection_content: str
     metadata: Optional[dict]
 
