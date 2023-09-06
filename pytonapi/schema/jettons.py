@@ -30,6 +30,7 @@ class JettonInfo(BaseModel):
     total_supply: str
     metadata: JettonMetadata
     verification: JettonVerificationType
+    holders_count: int
 
 
 class JettonPreview(BaseModel):
