@@ -50,3 +50,16 @@ class JettonBalance(BaseModel):
 
 class JettonsBalances(BaseModel):
     balances: List[JettonBalance]
+
+
+class JettonHolder(BaseModel):
+    address: Address
+    balance: str
+
+
+class JettonHolders(BaseModel):
+    addresses: list[JettonHolder]
+
+
+class Jettons(BaseModel):
+    jettons: list[JettonInfo]
