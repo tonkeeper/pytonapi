@@ -16,7 +16,7 @@ setuptools.setup(
     install_requires=[
         "aiohttp>=3.8.3",
         "libscrc>=1.8.1",
-        "pydantic==1.10.4",
+        "pydantic==2.*",
         "requests>=2.29.0",
     ],
     classifiers=[
