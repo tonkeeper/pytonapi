@@ -1,3 +1,5 @@
+import asyncio
+import logging
 from typing import Any, Dict
 
 import aiohttp
@@ -5,33 +7,50 @@ from aiohttp import ClientResponse
 
 from pytonapi.exceptions import (TONAPIBadRequestError,
                                  TONAPIError, TONAPIInternalServerError,
-                                 TONAPINotFoundError, TONAPIUnauthorizedError)
+                                 TONAPINotFoundError, TONAPIUnauthorizedError,
+                                 TONAPITooManyRequestsError)
 
 
 class AsyncTonapiClient:
 
-    def __init__(self, api_key: str, testnet: bool = False):
+    def __init__(self, api_key: str, testnet: bool = False, max_retries: int = 3):
         self._api_key = api_key
         self._testnet = testnet
+        self._max_retries = max_retries
 
         self.__headers = {'Authorization': f'Bearer {api_key}'}
         self.__base_url = "https://testnet.tonapi.io/" if testnet else "https://tonapi.io/"
+
+    async def __retry(self, func, *args, **kwargs):
+        for i in range(self._max_retries):
+            try:
+                return await func(*args, **kwargs)
+            except TONAPITooManyRequestsError:
+                logging.warning(
+                    f"Rate limit exceeded. Retrying "
+                    f"{i + 1}/{self._max_retries} is in progress."
+                )
+                await asyncio.sleep(1)
+
+        raise TONAPITooManyRequestsError
 
     @staticmethod
     async def __process_response(response: ClientResponse) -> Any:
         response_json = await response.json()
         error = response_json.get('error', response_json)
 
-        status = response.status
-        if status == 200:
+        status_code = response.status
+        if status_code == 200:
             return response_json
-        elif status == 400:
+        elif status_code == 400:
             raise TONAPIBadRequestError(error)
-        elif status == 401:
+        elif status_code == 401:
             raise TONAPIUnauthorizedError
-        elif status == 404:
+        elif status_code == 404:
             raise TONAPINotFoundError
-        elif status == 500:
+        elif status_code == 429:
+            raise TONAPITooManyRequestsError(error)
+        elif status_code == 500:
             raise TONAPIInternalServerError(error)
         else:
             raise TONAPIError(error)
@@ -46,6 +65,7 @@ class AsyncTonapiClient:
         :raises TONAPIBadRequestError: Raised when the client sends a bad request (HTTP 400).
         :raises TONAPIUnauthorizedError: Raised when the client is not authorized to access a resource (HTTP 401).
         :raises TONAPINotFoundError: Raised when the requested resource is not found (HTTP 404).
+        :raises TONAPITooManyRequestsError: Raised when the rate limit is exceeded (HTTP 429).
         :raises TONAPIInternalServerError: Raised when the server encounters an internal error (HTTP 500).
         :raises TONAPIError: Raised when the response contains an error.
         """
@@ -54,7 +74,7 @@ class AsyncTonapiClient:
         async with aiohttp.ClientSession(headers=self.__headers) as session:
             url = f"{self.__base_url}{method}"
             async with session.get(url=url, params=params, ssl=False) as response:
-                return await self.__process_response(response)
+                return await self.__retry(self.__process_response, response)
 
     async def _post(self, method: str, body: Dict[str, Any] = None) -> Dict[str, Any]:
         """
@@ -66,6 +86,7 @@ class AsyncTonapiClient:
         :raises TONAPIBadRequestError: Raised when the client sends a bad request (HTTP 400).
         :raises TONAPIUnauthorizedError: Raised when the client is not authorized to access a resource (HTTP 401).
         :raises TONAPINotFoundError: Raised when the requested resource is not found (HTTP 404).
+        :raises TONAPITooManyRequestsError: Raised when the rate limit is exceeded (HTTP 429).
         :raises TONAPIInternalServerError: Raised when the server encounters an internal error (HTTP 500).
         :raises TONAPIError: Raised when the response contains an error.
         """
@@ -74,4 +95,4 @@ class AsyncTonapiClient:
         async with aiohttp.ClientSession(headers=self.__headers) as session:
             url = f"{self.__base_url}{method}"
             async with session.post(url=url, json=body, ssl=False) as response:
-                return await self.__process_response(response)
+                return await self.__retry(self.__process_response, response)
