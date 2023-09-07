@@ -10,12 +10,13 @@ from pytonapi.tonapi.methods.traces import TraceMethod
 
 class Tonapi(TonapiClient):
 
-    def __init__(self, api_key: str, testnet: bool = False):
+    def __init__(self, api_key: str, testnet: bool = False, max_retries: int = 3):
         """
-        :param api_key: You can get an access token here https://tonconsole.com/
+        :param api_key: You can get an API key here https://tonconsole.com/
         :param testnet: Use true, if you want to switch to testnet
+        :param max_retries: Maximum number of retries per request if rate limit is reached
         """
-        super().__init__(api_key, testnet)
+        super().__init__(api_key, testnet, max_retries)
 
     @property
     def blockchain(self) -> BlockchainMethod:
