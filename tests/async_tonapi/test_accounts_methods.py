@@ -1,5 +1,4 @@
 from pytonapi import schema
-from pytonapi.exceptions import TONAPIInternalServerError
 from tests.async_tonapi import TestAsyncTonapi
 
 ACCOUNT_ID = "EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N"  # noqa
@@ -32,9 +31,5 @@ class TestAccountMethod(TestAsyncTonapi):
         self.assertIsInstance(response, schema.nft.NftItems)
 
     async def test_get_traces(self):
-        # response = await self.tonapi.accounts.get_traces(WALLET_ADDRESS)
-        # self.assertIsInstance(response, schema.traces.TraceIds)
-
-        with self.assertRaises(TONAPIInternalServerError) as e:
-            await self.tonapi.accounts.get_traces(ACCOUNT_ID)
-        self.assertEqual(str(e.exception), "{'Error': 'not implemented'}")
+        response = await self.tonapi.accounts.get_traces(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.traces.TraceIds)
