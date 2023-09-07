@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pytonapi.schema.accounts import AccountAddress
 from pytonapi.schema.traces import (AccountStatus, TransactionType,

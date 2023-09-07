@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
