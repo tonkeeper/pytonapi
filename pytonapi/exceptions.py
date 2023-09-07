@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class TONAPIError(Exception):
     """Base class for all exceptions."""
 
@@ -19,7 +22,7 @@ class TONAPIUnauthorizedError(TONAPIClientError):
 
     def __init__(self):
         super().__init__(
-            "Access token is missing or invalid. "
+            "API key is missing or invalid. "
             "You can get an access token here https://tonconsole.com/"
         )
 
@@ -30,6 +33,16 @@ class TONAPINotFoundError(TONAPIClientError):
     def __init__(self):
         super().__init__(
             "Error 404: Method does not exist."
+        )
+
+
+class TONAPITooManyRequestsError(TONAPIClientError):
+    """Raised when the rate limit is exceeded (HTTP 429)."""
+
+    def __init__(self, text: Optional[str] = None):
+        super().__init__(
+            text or "Too many requests per second. Upgrade your plan "
+                    "on https://tonconsole.com/tonapi/pricing."
         )
 
 
