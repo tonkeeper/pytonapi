@@ -32,9 +32,5 @@ class TestAccountMethod(TestTonapi):
         self.assertIsInstance(response, schema.nft.NftItems)
 
     def test_get_traces(self):
-        # response = self.tonapi.accounts.get_traces(WALLET_ADDRESS)
-        # self.assertIsInstance(response, schema.traces.TraceIds)
-
-        with self.assertRaises(TONAPIInternalServerError) as e:
-            self.tonapi.accounts.get_traces(ACCOUNT_ID)
-        self.assertEqual(str(e.exception), "{'Error': 'not implemented'}")
+        response = self.tonapi.accounts.get_traces(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.traces.TraceIds)
