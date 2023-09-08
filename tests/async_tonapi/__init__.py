@@ -8,4 +8,4 @@ API_KEY = "test_key"
 class TestAsyncTonapi(IsolatedAsyncioTestCase):
 
     def setUp(self) -> None:
-        self.tonapi = AsyncTonapi(api_key=API_KEY)  # noqa
+        self.tonapi = AsyncTonapi(api_key=API_KEY)
