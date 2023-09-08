@@ -1,3 +1,6 @@
+from typing import Optional
+
+from pytonapi.schema.events import AccountEvents
 from pytonapi.tonapi.client import TonapiClient
 
 from pytonapi.schema.nft import NftCollections, NftCollection, NftItems, NftItem
@@ -92,3 +95,30 @@ class NftMethod(TonapiClient):
         response = self._post(method=method, body=params)
 
         return NftItems(**response)
+
+    def get_nft_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
+                        accept_language: str = "en", subject_only: bool = False,
+                        start_data: Optional[int] = None, end_data: Optional[int] = None
+                        ) -> AccountEvents:
+        """
+        Get the transfer nfts history for account
+
+        :param account_id: account ID
+        :param limit: Default value : 100
+        :param before_lt: omit this parameter to get last events
+        :param accept_language: Default value : en
+        :param subject_only: Default value : False
+        :param start_data: Default value : None
+        :param end_data: Default value : None
+        :return: :class:`AccountEvents`
+        """
+        method = f"v2/nfts/{account_id}/history"
+        params = {"limit": limit}
+        if before_lt: params["before_lt"] = before_lt  # noqa:E701
+        if subject_only: params["subject_only"] = "true"  # noqa:E701
+        if start_data: params["start_data"] = start_data  # noqa:E701
+        if end_data: params["end_data"] = end_data  # noqa:E701
+        headers = {"Accept-Language": accept_language}
+        response = self._get(method=method, params=params, headers=headers)
+
+        return AccountEvents(**response)
