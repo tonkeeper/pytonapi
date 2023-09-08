@@ -35,3 +35,7 @@ class TestNftMethod(TestAsyncTonapi):
     async def test_get_bulk_items(self):
         response = await self.tonapi.nft.get_bulk_items(ACCOUNT_IDS)
         self.assertIsInstance(response, schema.nft.NftItems)
+
+    async def test_get_nft_history(self):
+        response = await self.tonapi.nft.get_nft_history(ACCOUNT_ID_NFT)
+        self.assertIsInstance(response, schema.events.AccountEvents)

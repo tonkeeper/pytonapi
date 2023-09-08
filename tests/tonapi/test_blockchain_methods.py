@@ -1,9 +1,11 @@
 from pytonapi import schema
+from pytonapi.exceptions import TONAPIInternalServerError, TONAPINotFoundError
 from tests.tonapi import TestTonapi
 
 BLOCK_ID = "(-1,8000000000000000,4234234)"
 ACCOUNT_ID = "EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N"  # noqa
 TRANSACTION_ID = "97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+ACCOUNT_ID_NFT = "EQBSZKEvqoiuPUCFz-CHtpVxAwg1F8PyjZhWAJL2yeujn0_H"  # noqa
 
 
 class TestBlockchainMethod(TestTonapi):
@@ -20,6 +22,43 @@ class TestBlockchainMethod(TestTonapi):
         response = self.tonapi.blockchain.get_transaction_data(TRANSACTION_ID)
         self.assertIsInstance(response, schema.blockchain.Transaction)
 
+    def test_get_transaction_by_message(self):
+        # response = self.tonapi.blockchain.get_transaction_by_message(TRANSACTION_ID)
+        # self.assertIsInstance(response, schema.blockchain.Transaction)
+
+        with self.assertRaises(TONAPINotFoundError) as e:
+            self.tonapi.blockchain.get_transaction_by_message(TRANSACTION_ID)
+        self.assertEqual(str(e.exception), "Error 404: Method does not exist.")
+
+    def test_get_validators(self):
+        # response = self.tonapi.blockchain.get_validators()
+        # self.assertIsInstance(response, schema.blockchain.Validators)
+
+        with self.assertRaises(TONAPIInternalServerError) as e:
+            self.tonapi.blockchain.get_validators()
+        self.assertEqual(str(e.exception), "{'Error': 'not implemented'}")
+
+    def test_get_last_masterchain_block(self):
+        response = self.tonapi.blockchain.get_last_masterchain_block()
+        self.assertIsInstance(response, schema.blockchain.BlockchainBlock)
+
+    def test_get_account_info(self):
+        response = self.tonapi.blockchain.get_account_info(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.blockchain.BlockchainRawAccount)
+
     def test_get_account_transactions(self):
         response = self.tonapi.blockchain.get_account_transactions(ACCOUNT_ID)
         self.assertIsInstance(response, schema.blockchain.Transactions)
+
+    def test_inspect_account(self):
+        # response = self.tonapi.blockchain.inspect_account(ACCOUNT_ID)
+        # self.assertIsInstance(response, schema.blockchain.BlockchainAccountInspect)
+
+        with self.assertRaises(TONAPIInternalServerError) as e:
+            self.tonapi.blockchain.inspect_account(ACCOUNT_ID)
+        self.assertEqual(str(e.exception), "not enough refs")
+
+    def test_execute_get_method(self):
+        response = self.tonapi.blockchain.execute_get_method(
+            ACCOUNT_ID_NFT, "get_nft_data")
+        self.assertIsInstance(response, schema.blockchain.MethodExecutionResult)

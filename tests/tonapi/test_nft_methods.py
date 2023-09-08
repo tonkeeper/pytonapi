@@ -8,6 +8,7 @@ ACCOUNT_IDS = [
     "EQCdCF8klpqabxDq9WgezruR86-EFsHEKw2mPFg0o79f8XSR",  # noqa
     "EQAmjob5sIWZRe9RcGhe8yMUu96WEN_BSOBEgB7vygYKOsLY",  # noqa
 ]
+ACCOUNT_ID = "EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N"  # noqa
 
 
 class TestNftMethod(TestTonapi):
@@ -32,6 +33,10 @@ class TestNftMethod(TestTonapi):
         response = self.tonapi.nft.get_item_by_address(ACCOUNT_ID_NFT)
         self.assertIsInstance(response, schema.nft.NftItem)
 
-    async def test_get_bulk_items(self):
+    def test_get_bulk_items(self):
         response = self.tonapi.nft.get_bulk_items(ACCOUNT_IDS)
         self.assertIsInstance(response, schema.nft.NftItems)
+
+    def test_get_nft_history(self):
+        response = self.tonapi.nft.get_nft_history(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.events.AccountEvents)
