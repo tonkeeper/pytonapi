@@ -1,4 +1,4 @@
-aiohttp~=3.8.3
+aiohttp>=3.8.5
 libscrc~=1.8.1
 pydantic==2.*
-requests~=2.29.0
+requests>=2.31.0
