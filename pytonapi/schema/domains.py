@@ -1,12 +1,19 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic.v1 import BaseModel
 
 from pytonapi.schema.accounts import AccountAddress
+from pytonapi.schema.nft import NftItem
 
 
 class DomainNames(BaseModel):
     domains: List[str]
+
+
+class DomainInfo(BaseModel):
+    name: str
+    expiring_at: Optional[int]
+    item: Optional[NftItem]
 
 
 class DomainBid(BaseModel):
