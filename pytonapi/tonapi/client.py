@@ -3,7 +3,7 @@ import time
 from typing import Optional, Dict, Any
 
 import requests
-from requests import Response
+from requests import Response, JSONDecodeError
 
 from pytonapi.exceptions import (TONAPIBadRequestError,
                                  TONAPIError, TONAPIInternalServerError,
@@ -21,26 +21,19 @@ class TonapiClient:
         self.__headers = {'Authorization': f'Bearer {api_key}'}
         self.__base_url = "https://testnet.tonapi.io/" if testnet else "https://tonapi.io/"
 
-    def __retry(self, func, *args, **kwargs):
-        for i in range(self._max_retries):
-            try:
-                return func(*args, **kwargs)
-            except TONAPITooManyRequestsError:
-                logging.warning(
-                    f"Rate limit exceeded. Retrying "
-                    f"{i + 1}/{self._max_retries} is in progress."
-                )
-                time.sleep(1)
-        raise TONAPITooManyRequestsError
-
     @staticmethod
     def __process_response(response: Response) -> Any:
-        response_json = response.json()
-        error = response_json.get('error', response_json)
-
         status_code = response.status_code
+
+        try:
+            response = response.json()
+            error = response.get('error', response)
+        except JSONDecodeError:
+            error = response.text
+            response = True if status_code == 200 else False
+
         if status_code == 200:
-            return response_json
+            return response
         elif status_code == 400:
             raise TONAPIBadRequestError(error)
         elif status_code == 401:
@@ -54,13 +47,30 @@ class TonapiClient:
         else:
             raise TONAPIError(error)
 
-    def _get(self, method: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def __retry(self, request: callable, *args, **kwargs):
+        for i in range(self._max_retries):
+            try:
+                response = request(*args, **kwargs)
+                return self.__process_response(response)
+            except TONAPITooManyRequestsError:
+                logging.warning(
+                    f"Rate limit exceeded. Retrying "
+                    f"{i + 1}/{self._max_retries} is in progress."
+                )
+                time.sleep(1)
+        raise TONAPITooManyRequestsError
+
+    def _get(self, method: str, params: Optional[Dict[str, Any]] = None,
+             headers: Optional[Dict[str, Any]] = None,
+             ) -> Dict[str, Any]:
         """
         Send a GET request to the TONAPI.
 
         :param method: The API method to call.
         :param params: The query parameters to include in the request.
+        :param headers: The headers to include in the request.
         :return: The response data.
+
         :raises TONAPIBadRequestError: Raised when the client sends a bad request (HTTP 400).
         :raises TONAPIUnauthorizedError: Raised when the client is not authorized to access a resource (HTTP 401).
         :raises TONAPINotFoundError: Raised when the requested resource is not found (HTTP 404).
@@ -68,20 +78,25 @@ class TonapiClient:
         :raises TONAPIInternalServerError: Raised when the server encounters an internal error (HTTP 500).
         :raises TONAPIError: Raised when the response contains an error.
         """
-        params = params.copy() if params is not None else {}
+        params = params.copy() if params else {}
+        headers.update(self.__headers) if headers else ...
+        headers = headers or self.__headers
 
         with requests.Session() as session:
             url = f"{self.__base_url}{method}"
-            response = session.get(url=url, params=params, headers=self.__headers)
-            return self.__retry(self.__process_response, response)
+            return self.__retry(session.get, url=url, params=params, headers=headers)
 
-    def _post(self, method: str, body: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    def _post(self, method: str, body: Optional[Dict[str, Any]] = None,
+              headers: Optional[Dict[str, Any]] = None
+              ) -> Dict[str, Any]:
         """
         Send a POST request to the TONAPI.
 
         :param method: The API method to call.
         :param body: The request parameters to include in the request body.
+        :param headers: The headers to include in the request.
         :return: The response data.
+
         :raises TONAPIBadRequestError: Raised when the client sends a bad request (HTTP 400).
         :raises TONAPIUnauthorizedError: Raised when the client is not authorized to access a resource (HTTP 401).
         :raises TONAPINotFoundError: Raised when the requested resource is not found (HTTP 404).
@@ -89,9 +104,10 @@ class TonapiClient:
         :raises TONAPIInternalServerError: Raised when the server encounters an internal error (HTTP 500).
         :raises TONAPIError: Raised when the response contains an error.
         """
-        body = body.copy() if body is not None else {}
+        body = body.copy() if body else {}
+        headers.update(self.__headers) if headers else ...
+        headers = headers or self.__headers
 
         with requests.Session() as session:
             url = f"{self.__base_url}{method}"
-            response = session.post(url=url, headers=self.__headers, json=body)
-            return self.__retry(self.__process_response, response)
+            return self.__retry(session.post, url=url, headers=headers, json=body)
