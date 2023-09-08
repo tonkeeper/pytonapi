@@ -58,8 +58,8 @@ class JettonHolder(BaseModel):
 
 
 class JettonHolders(BaseModel):
-    addresses: list[JettonHolder]
+    addresses: List[JettonHolder]
 
 
 class Jettons(BaseModel):
-    jettons: list[JettonInfo]
+    jettons: List[JettonInfo]
