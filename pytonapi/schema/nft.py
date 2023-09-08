@@ -26,6 +26,7 @@ class ImagePreview(BaseModel):
 class Collection(BaseModel):
     address: Address
     name: str
+    description: Optional[str]
 
 
 class NftCollection(BaseModel):
@@ -34,6 +35,7 @@ class NftCollection(BaseModel):
     owner: Optional[AccountAddress]
     raw_collection_content: str
     metadata: Optional[dict]
+    previews: Optional[List[ImagePreview]]
 
 
 class NftItem(BaseModel):
