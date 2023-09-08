@@ -18,3 +18,16 @@ class DNSRecord(BaseModel):
     next_resolver: Optional[str]
     sites: List[str]
     storage: Optional[str]
+
+
+class Auction(BaseModel):
+    domain: str
+    owner: str
+    price: int
+    bids: int
+    date: int
+
+
+class Auctions(BaseModel):
+    data: List[Auction]
+    total: int
