@@ -28,3 +28,50 @@ class AccountAddress(BaseModel):
     name: Optional[str]
     is_scam: bool
     icon: Optional[str]
+
+
+class FoundAccount(BaseModel):
+    address: Address
+    name: Optional[str]
+    preview: Optional[str]
+
+
+class FoundAccounts(BaseModel):
+    addresses: List[FoundAccount]
+
+
+class Subscription(BaseModel):
+    address: Address
+    wallet_address: Address
+    beneficiary_address: Address
+    amount: Balance
+    period: int
+    start_time: int
+    timeout: int
+    last_payment_time: int
+    last_request_time: int
+    subscription_id: int
+    failed_attempts: int
+
+
+class Subscriptions(BaseModel):
+    subscriptions: List[Subscription]
+
+
+class DnsExpiringItemsInner(BaseModel):
+    from pytonapi.schema.nft import NftItem
+    expiring_at: int
+    name: str
+    dns_item: Optional[NftItem]
+
+
+class DnsExpiring(BaseModel):
+    items: List[DnsExpiringItemsInner]
+
+
+class PublicKey(BaseModel):
+    public_key: str
+
+
+class BalanceChange(BaseModel):
+    balance_change: Balance
