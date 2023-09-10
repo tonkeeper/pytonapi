@@ -76,7 +76,7 @@ class AccountMethod(AsyncTonapiClient):
 
     async def get_jettons_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
                                   accept_language: str = "en", subject_only: bool = False,
-                                  start_data: Optional[int] = None, end_data: Optional[int] = None
+                                  start_date: Optional[int] = None, end_date: Optional[int] = None
                                   ) -> AccountEvents:
         """
         Get the transfer jettons history for account.
@@ -86,16 +86,16 @@ class AccountMethod(AsyncTonapiClient):
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value : en
         :param subject_only: Default value : False
-        :param start_data: Default value : None
-        :param end_data: Default value : None
+        :param start_date: Default value : None
+        :param end_date: Default value : None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/jettons/history"
         params = {"limit": limit}
         if before_lt: params["before_lt"] = before_lt  # noqa:E701
         if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_data: params["start_data"] = start_data  # noqa:E701
-        if end_data: params["end_data"] = end_data  # noqa:E701
+        if start_date: params["start_date"] = start_date  # noqa:E701
+        if end_date: params["end_date"] = end_date  # noqa:E701
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 
@@ -104,7 +104,7 @@ class AccountMethod(AsyncTonapiClient):
     async def get_jettons_history_by_jetton(self, account_id: str, jetton_id: str,
                                             limit: int = 100, before_lt: Optional[int] = None,
                                             accept_language: str = "en", subject_only: bool = False,
-                                            start_data: Optional[int] = None, end_data: Optional[int] = None
+                                            start_date: Optional[int] = None, end_date: Optional[int] = None
                                             ) -> AccountEvents:
         """
         Get the transfer jetton history for account and jetton.
@@ -116,16 +116,16 @@ class AccountMethod(AsyncTonapiClient):
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value : en
         :param subject_only: Default value : False
-        :param start_data: Default value : None
-        :param end_data: Default value : None
+        :param start_date: Default value : None
+        :param end_date: Default value : None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/jettons/{jetton_id}/history"
         params = {"limit": limit}
         if before_lt: params["before_lt"] = before_lt  # noqa:E701
         if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_data: params["start_data"] = start_data  # noqa:E701
-        if end_data: params["end_data"] = end_data  # noqa:E701
+        if start_date: params["start_date"] = start_date  # noqa:E701
+        if end_date: params["end_date"] = end_date  # noqa:E701
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 
@@ -214,7 +214,7 @@ class AccountMethod(AsyncTonapiClient):
 
     async def get_events(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
                          accept_language: str = "en", subject_only: bool = False,
-                         start_data: Optional[int] = None, end_data: Optional[int] = None
+                         start_date: Optional[int] = None, end_date: Optional[int] = None
                          ) -> AccountEvents:
         """
         Get events for an account. Each event is built on top of a trace which is a series of transactions
@@ -228,16 +228,16 @@ class AccountMethod(AsyncTonapiClient):
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value : en
         :param subject_only: Default value : False
-        :param start_data: Default value : None
-        :param end_data: Default value : None
+        :param start_date: Default value : None
+        :param end_date: Default value : None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/events"
         params = {"limit": limit}
         if before_lt: params["before_lt"] = before_lt  # noqa:E701
         if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_data: params["start_data"] = start_data  # noqa:E701
-        if end_data: params["end_data"] = end_data  # noqa:E701
+        if start_date: params["start_date"] = start_date  # noqa:E701
+        if end_date: params["end_date"] = end_date  # noqa:E701
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 
@@ -245,7 +245,7 @@ class AccountMethod(AsyncTonapiClient):
 
     async def get_nft_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
                               accept_language: str = "en", subject_only: bool = False,
-                              start_data: Optional[int] = None, end_data: Optional[int] = None
+                              start_date: Optional[int] = None, end_date: Optional[int] = None
                               ) -> AccountEvents:
         """
         Get the transfer nft history.
@@ -255,16 +255,16 @@ class AccountMethod(AsyncTonapiClient):
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value : en
         :param subject_only: Default value : False
-        :param start_data: Default value : None
-        :param end_data: Default value : None
+        :param start_date: Default value : None
+        :param end_date: Default value : None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/nfts/history"
         params = {"limit": limit}
         if before_lt: params["before_lt"] = before_lt  # noqa:E701
         if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_data: params["start_data"] = start_data  # noqa:E701
-        if end_data: params["end_data"] = end_data  # noqa:E701
+        if start_date: params["start_date"] = start_date  # noqa:E701
+        if end_date: params["end_date"] = end_date  # noqa:E701
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 
