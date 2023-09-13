@@ -3,7 +3,7 @@
 ![Python Versions](https://img.shields.io/pypi/pyversions/pytonapi.svg)
 ![License](https://img.shields.io/github/license/nessshon/pytonapi)
 
-Python wrapper for [tonapi.io](https://tonapi.io/swagger-ui/v2) v2
+Python wrapper for [tonapi.io](https://tonapi.io/api-v2)
 \
 __You need an api key to use it, get it here [tonconsole.com](https://tonconsole.com/)__
 
