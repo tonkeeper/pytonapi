@@ -12,14 +12,15 @@ __all__ = [
 ]
 
 
-def raw_to_userfriendly(address: str, tag: int = 0x11) -> str:
+def raw_to_userfriendly(address: str, bounceable: bool = False) -> str:
     """
     Converts a raw address string to a user-friendly format.
 
-    :param address: address (str): The raw address string in the format "workchain_id:key".
-    :param tag: The tag value to include in the output. Defaults to 0x11.
+    :param address: The raw address string in the format "workchain_id:key".
+    :param bounceable: The flag indicating if the address is bounceable. Defaults to False.
     :return: The user-friendly address string, encoded in base64 and URL-safe.
     """
+    tag = 0x51 if bounceable else 0x11
     workchain_id, key = address.split(':')
     workchain_id = int(workchain_id)
     key = bytearray.fromhex(key)

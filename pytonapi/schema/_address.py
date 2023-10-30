@@ -22,11 +22,11 @@ class Address(BaseModel):
         """
         return self.__root__
 
-    def to_userfriendly(self, tag: int = 0x11) -> str:
+    def to_userfriendly(self, bounceable: bool = False) -> str:
         """
         Converts a raw address string to a user-friendly format.
 
-        :param tag: The tag value to include in the output. Defaults to 0x11.
+        :param bounceable: The flag indicating if the address is bounceable. Defaults to False.
         :return: The user-friendly address string, encoded in base64 and URL-safe.
         """
-        return raw_to_userfriendly(self.__root__, tag=tag)
+        return raw_to_userfriendly(self.__root__, bounceable=bounceable)
