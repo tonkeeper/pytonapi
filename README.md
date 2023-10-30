@@ -45,6 +45,10 @@ def main():
     print(account.address.to_userfriendly())
     # output: EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess
 
+    # print account address (userfriendly bounceable)
+    print(account.address.to_userfriendly(bounceable=True))
+    # output: UQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNbbp
+
     # print account balance (nanoton)
     print(account.balance.to_nano())
     # output: 1500000000
