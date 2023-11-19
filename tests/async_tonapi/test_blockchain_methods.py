@@ -1,5 +1,5 @@
 from pytonapi import schema
-from pytonapi.exceptions import TONAPIInternalServerError, TONAPINotFoundError
+from pytonapi.exceptions import TONAPINotImplementedError
 from tests.async_tonapi import TestAsyncTonapi
 
 BLOCK_ID = "(-1,8000000000000000,4234234)"
@@ -28,12 +28,9 @@ class TestBlockchainMethod(TestAsyncTonapi):
         self.assertIsInstance(response, schema.blockchain.Transaction)
 
     async def test_get_validators(self):
-        # response = await self.tonapi.blockchain.get_validators()
-        # self.assertIsInstance(response, schema.blockchain.Validators)
-
-        with self.assertRaises(TONAPIInternalServerError) as e:
+        with self.assertRaises(TONAPINotImplementedError) as e:
             await self.tonapi.blockchain.get_validators()
-        self.assertEqual(str(e.exception), "{'Error': 'not implemented'}")
+        self.assertEqual(str(e.exception), "not implemented")
 
     async def test_get_last_masterchain_block(self):
         response = await self.tonapi.blockchain.get_last_masterchain_block()
