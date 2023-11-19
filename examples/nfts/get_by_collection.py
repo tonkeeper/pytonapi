@@ -31,7 +31,7 @@ def main():
 
         # Print the URL of the first preview image for the NFT
         print(nft.previews[0].url)
-        # Output: https://cache.tonapi.io/imgproxy/c0wiqWVwr79OCcmR7qD-4WIKWOnk8t4vX_cqmohhE8s/rs:fill:100:100:1/g:no/aHR0cHM6Ly9uZnQudG9ubWVuZG9uLmNvbS9jb2xsZWN0aW9ucy9jYXJkcy8zMi5wbmc.webp
+        # Output: https://cache.tonapi.io/imgproxy/c0wiqWVwrL...YXJkcy8zMi5wbmc.webp
 
 
 if __name__ == '__main__':
