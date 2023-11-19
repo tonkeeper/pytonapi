@@ -1,10 +1,9 @@
 import json
 import logging
 import time
-from typing import Any, Dict, Optional, Union, Generator
+from typing import Any, Dict, Optional, Generator
 
 import httpx
-import requests
 
 from pytonapi.exceptions import (
     TONAPIBadRequestError,
@@ -52,54 +51,36 @@ class TonapiClient:
         self.headers = headers or {"Authorization": f"Bearer {api_key}"}
 
     @staticmethod
-    def __read_content(
-            response: Union[requests.Response, httpx.Response],
-    ) -> Dict[str, Any]:
+    def __read_content(response: httpx.Response) -> Any:
         """
-        Read content from an HTTP response.
+        Read the response content.
 
         :param response: The HTTP response object.
-        :return: The response content as a dictionary.
-        :raises TONAPIError: If there is an issue reading the content.
+        :return: The response content.
         """
-
-        def try_load_json(c: str) -> Union[Dict, str]:
-            """
-            Try to load content as JSON. If decoding fails, return the content as a string.
-
-            :param c: The content to be loaded as JSON.
-            :return: Decoded JSON content or a dictionary with an 'error' key in case of decoding failure.
-            """
-            try:
-                return json.loads(c)
-            except json.JSONDecodeError:
-                return {"error": c}
-
         try:
-            try:
-                content = response.json()
-            except json.JSONDecodeError:
-                content = try_load_json(response.text)
-
+            content = response.json()
         except httpx.ResponseNotRead:
-            response: httpx.Response
             content_bytes = response.read()
-            content = try_load_json(content_bytes.decode())
-
+            content_decoded = content_bytes.decode()
+            try:
+                content = json.loads(content_decoded)
+            except json.JSONDecodeError:
+                content = {"error": content_decoded}
+        except json.JSONDecodeError:
+            content = {"error", response.text}
         except Exception as e:
             raise TONAPIError(f"Failed to read response content: {e}")
 
         return content
 
-    def __process_response(
-            self,
-            response: Union[requests.Response, httpx.Response],
-    ) -> Dict[str, Any]:
+    def __process_response(self, response: httpx.Response) -> Dict[str, Any]:
         """
         Process the HTTP response and handle errors.
 
         :param response: The HTTP response object.
         :return: The response content as a dictionary.
+        :raises TONAPIError: If there is an error status code in the response.
         """
         content = self.__read_content(response)
 
@@ -169,10 +150,15 @@ class TonapiClient:
         """
         url = self.base_url + path
         self.headers.update(headers or {})
-
-        data = {"params": params or {}, "json": body or {}}
-        with requests.request(method=method, url=url, headers=self.headers, **data) as response:
-            return self.__process_response(response)
+        timeout = httpx.Timeout(timeout=self.timeout)
+        try:
+            with httpx.Client(headers=self.headers, timeout=timeout) as session:
+                session: httpx.Client
+                data = {"params": params or {}, "json": body or {}}
+                response = session.request(method=method, url=url, **data)
+                return self.__process_response(response)
+        except httpx.LocalProtocolError:
+            raise TONAPIUnauthorizedError
 
     def _request_retries(
             self,
@@ -207,7 +193,6 @@ class TonapiClient:
                     f"Retrying {i + 1}/{self.max_retries} is in progress."
                 )
                 time.sleep(1)
-
         raise TONAPITooManyRequestsError
 
     def _get(
