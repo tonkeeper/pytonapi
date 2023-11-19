@@ -6,7 +6,7 @@ from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.traces import Trace
 
 
-class TraceMethod(TonapiClient):
+class TracesMethod(TonapiClient):
 
     def get_trace(self, trace_id: str) -> Trace:
         """

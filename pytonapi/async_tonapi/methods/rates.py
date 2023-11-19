@@ -1,10 +1,10 @@
 from typing import List, Optional
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-from pytonapi.schema.rates import Rates, ChartRates
+from pytonapi.schema.rates import ChartRates, Rates
 
 
-class RateMethod(AsyncTonapiClient):
+class RatesMethod(AsyncTonapiClient):
 
     async def get_prices(self, tokens: List[str], currencies: List[str]) -> Rates:
         """
@@ -25,21 +25,27 @@ class RateMethod(AsyncTonapiClient):
 
         return Rates(**response)
 
-    async def get_chart(self, token: str, currency: Optional[str] = "usd",
-                        start_date: Optional[str] = None, end_date: Optional[str] = None
-                        ) -> ChartRates:
+    async def get_chart(
+            self,
+            token: str,
+            currency: Optional[str] = "USD",
+            start_date: Optional[str] = None,
+            end_date: Optional[str] = None,
+    ) -> ChartRates:
         """
-        Get the token price to the currency.
+        Get the chart rates for the token to the currency.
 
         :param token: accept jetton master address
         :param currency: accept fiat currency, example: "USD", "RUB" and so on
-        :param start_date: start date
-        :param end_date: end date
+        :param start_date: start date (optional)
+        :param end_date: end date (optional)
         :return: :class:`ChartRates`
         """
         params = {'token': token, "currency": currency}
-        if start_date: params["start_date"] = start_date  # noqa:E701
-        if end_date: params["end_date"] = end_date  # noqa:E701
+        if start_date:
+            params["start_date"] = start_date
+        if end_date:
+            params["end_date"] = end_date
         method = f"v2/rates/chart"
         response = await self._get(method=method, params=params)
 

@@ -4,6 +4,9 @@ from pytonapi.utils import nano_to_amount
 
 
 class Balance(BaseModel):
+    """
+    Represents the balance of an account.
+    """
     __root__: int
 
     def __int__(self) -> int:

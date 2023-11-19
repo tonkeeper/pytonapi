@@ -1,9 +1,16 @@
 from typing import Optional
 
 from pytonapi.tonapi.client import TonapiClient
-
-from pytonapi.schema.blockchain import Block, Transactions, Transaction, Validators, BlockchainBlock, \
-    BlockchainRawAccount, BlockchainAccountInspect, MethodExecutionResult
+from pytonapi.schema.blockchain import (
+    Block,
+    Transactions,
+    Transaction,
+    Validators,
+    BlockchainBlock,
+    BlockchainRawAccount,
+    BlockchainAccountInspect,
+    MethodExecutionResult,
+)
 
 
 class BlockchainMethod(TonapiClient):
@@ -91,8 +98,13 @@ class BlockchainMethod(TonapiClient):
 
         return BlockchainRawAccount(**response)
 
-    def get_account_transactions(self, account_id: str, after_lt: int = None,
-                                 before_lt: int = 0, limit: int = 100) -> Transactions:
+    def get_account_transactions(
+            self,
+            account_id: str,
+            after_lt: Optional[int] = None,
+            before_lt: int = 0,
+            limit: int = 100,
+    ) -> Transactions:
         """
         Get account transactions.
 
@@ -121,9 +133,11 @@ class BlockchainMethod(TonapiClient):
 
         return BlockchainAccountInspect(**response)
 
-    def execute_get_method(self, account_id: str, method_name: str,
-                           args: Optional[str] = None
-                           ) -> MethodExecutionResult:
+    def execute_get_method(
+            self, account_id: str,
+            method_name: str,
+            args: Optional[str] = None,
+    ) -> MethodExecutionResult:
         """
         Execute get method for account.
 

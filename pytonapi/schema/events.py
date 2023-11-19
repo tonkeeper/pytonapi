@@ -215,3 +215,18 @@ class Event(BaseModel):
     is_scam: bool
     lt: int
     in_progress: bool
+
+
+class MempoolEventData(BaseModel):
+    boc: str
+
+
+class TraceEventData(BaseModel):
+    accounts: List[Address]
+    hash: str
+
+
+class TransactionEventData(BaseModel):
+    account_id: Address
+    lt: int
+    tx_hash: str

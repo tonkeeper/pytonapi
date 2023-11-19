@@ -4,7 +4,7 @@ from pytonapi.schema.rates import Rates, ChartRates
 from pytonapi.tonapi import TonapiClient
 
 
-class RateMethod(TonapiClient):
+class RatesMethod(TonapiClient):
 
     def get_prices(self, tokens: List[str], currencies: List[str]) -> Rates:
         """

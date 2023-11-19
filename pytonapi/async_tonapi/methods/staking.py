@@ -1,8 +1,12 @@
 from typing import Optional
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-from pytonapi.schema.staking import (StakingPoolInfo, AccountStaking,
-                                     StakingPoolHistory, StakingPools)
+from pytonapi.schema.staking import (
+    AccountStaking,
+    StakingPoolInfo,
+    StakingPoolHistory,
+    StakingPools,
+)
 
 
 class StakingMethod(AsyncTonapiClient):
@@ -19,7 +23,11 @@ class StakingMethod(AsyncTonapiClient):
 
         return AccountStaking(**response)
 
-    async def get_pool_info(self, account_id: str, accept_language: str = "en") -> StakingPoolInfo:
+    async def get_pool_info(
+            self,
+            account_id: str,
+            accept_language: str = "en",
+    ) -> StakingPoolInfo:
         """
         Stacking pool info.
 
@@ -45,8 +53,12 @@ class StakingMethod(AsyncTonapiClient):
 
         return StakingPoolHistory(**response)
 
-    async def get_all_network_pools(self, available_for: str, include_unverified: Optional[bool] = False,
-                                    accept_language: str = "en") -> StakingPools:
+    async def get_all_network_pools(
+            self,
+            available_for: str,
+            include_unverified: Optional[bool] = False,
+            accept_language: str = "en",
+    ) -> StakingPools:
         """
         All pools available in network.
 
@@ -57,8 +69,10 @@ class StakingMethod(AsyncTonapiClient):
         :return: :class:`StakingPools`
         """
         method = f"v2/staking/pools"
-        params = {"available_for": available_for,
-                  "include_unverified": "true" if include_unverified else "false"}
+        params = {
+            "available_for": available_for,
+            "include_unverified": "true" if include_unverified else "false"
+        }
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 

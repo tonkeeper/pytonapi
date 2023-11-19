@@ -33,14 +33,18 @@ class NftMethod(AsyncTonapiClient):
 
         return NftCollection(**response)
 
-    async def get_items_by_collection_address(self, account_id: str, limit: int = 1000,
-                                              offset: int = 0) -> NftItems:
+    async def get_items_by_collection_address(
+            self,
+            account_id: str,
+            limit: int = 1000,
+            offset: int = 0,
+    ) -> NftItems:
         """
         Get NFT items from collection by collection address.
 
         :param account_id: Account ID
-        :param limit: Default value : 1000
-        :param offset: Default value : 0
+        :param limit: Default value: 1000
+        :param offset: Default value: 0
         :return: :class:`NftItems`
         """
         method = f"v2/nfts/collections/{account_id}/items"
@@ -75,7 +79,7 @@ class NftMethod(AsyncTonapiClient):
         """
         Get NFT item by its address.
 
-        :param account_id: account ID
+        :param account_id: Account ID
         :return: :class:`NftItem`
         """
         method = f"v2/nfts/{account_id}"
@@ -83,11 +87,12 @@ class NftMethod(AsyncTonapiClient):
 
         return NftItem(**response)
 
-    async def get_bulk_items(self, account_ids: list[str]) -> NftItems:
+    async def get_bulk_items(self, account_ids: List[str]) -> NftItems:
         """
-        Get NFT items by their addresses
+        Get NFT items by their addresses.
 
-        :param account_ids: a list of account IDs
+        :param account_ids: A list of account IDs
+        :return: :class:`NftItems`
         """
         method = f"v2/nfts/_bulk"
         params = {"account_ids": account_ids}
@@ -95,28 +100,38 @@ class NftMethod(AsyncTonapiClient):
 
         return NftItems(**response)
 
-    async def get_nft_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
-                              accept_language: str = "en", subject_only: bool = False,
-                              start_date: Optional[int] = None, end_date: Optional[int] = None
-                              ) -> AccountEvents:
+    async def get_nft_history(
+            self,
+            account_id: str,
+            limit: int = 100,
+            before_lt: Optional[int] = None,
+            accept_language: str = "en",
+            subject_only: bool = False,
+            start_date: Optional[int] = None,
+            end_date: Optional[int] = None,
+    ) -> AccountEvents:
         """
-        Get the transfer nfts history for account.
+        Get the transfer NFTs history for account.
 
-        :param account_id: account ID
-        :param limit: Default value : 100
-        :param before_lt: omit this parameter to get last events
-        :param accept_language: Default value : en
-        :param subject_only: Default value : False
-        :param start_date: Default value : None
-        :param end_date: Default value : None
+        :param account_id: Account ID
+        :param limit: Default value: 100
+        :param before_lt: Default value: None (omit this parameter to get last events)
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :param start_date: Default value: None
+        :param end_date: Default value: None
         :return: :class:`AccountEvents`
         """
         method = f"v2/nfts/{account_id}/history"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa:E701
-        if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_date: params["start_date"] = start_date  # noqa:E701
-        if end_date: params["end_date"] = end_date  # noqa:E701
+        if before_lt:
+            params["before_lt"] = before_lt
+        if subject_only:
+            params["subject_only"] = "true"
+        if start_date:
+            params["start_date"] = start_date
+        if end_date:
+            params["end_date"] = end_date
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 

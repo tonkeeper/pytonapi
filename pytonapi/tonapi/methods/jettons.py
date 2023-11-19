@@ -3,7 +3,7 @@ from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons
 
 
-class JettonMethod(TonapiClient):
+class JettonsMethod(TonapiClient):
 
     def get_info(self, account_id: str) -> JettonInfo:
         """

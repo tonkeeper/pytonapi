@@ -2,16 +2,22 @@ from typing import List, Optional
 
 from pytonapi.schema.events import AccountEvents, AccountEvent
 from pytonapi.tonapi.client import TonapiClient
-
-from pytonapi.schema.accounts import Account, Accounts, FoundAccounts, Subscriptions, DnsExpiring, PublicKey, \
-    BalanceChange
+from pytonapi.schema.accounts import (
+    Account,
+    Accounts,
+    FoundAccounts,
+    Subscriptions,
+    DnsExpiring,
+    PublicKey,
+    BalanceChange,
+)
 from pytonapi.schema.domains import DomainNames
 from pytonapi.schema.jettons import JettonsBalances
 from pytonapi.schema.nft import NftItems
 from pytonapi.schema.traces import TraceIds
 
 
-class AccountMethod(TonapiClient):
+class AccountsMethod(TonapiClient):
 
     def get_info(self, account_id: str) -> Account:
         """
@@ -75,10 +81,16 @@ class AccountMethod(TonapiClient):
 
         return JettonsBalances(**response)
 
-    def get_jettons_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
-                            accept_language: str = "en", subject_only: bool = False,
-                            start_date: Optional[int] = None, end_date: Optional[int] = None
-                            ) -> AccountEvents:
+    def get_jettons_history(
+            self,
+            account_id: str,
+            limit: int = 100,
+            before_lt: Optional[int] = None,
+            accept_language: str = "en",
+            subject_only: bool = False,
+            start_date: Optional[int] = None,
+            end_date: Optional[int] = None,
+    ) -> AccountEvents:
         """
         Get the transfer jettons history for account.
 
@@ -102,11 +114,17 @@ class AccountMethod(TonapiClient):
 
         return AccountEvents(**response)
 
-    def get_jettons_history_by_jetton(self, account_id: str, jetton_id: str,
-                                      limit: int = 100, before_lt: Optional[int] = None,
-                                      accept_language: str = "en", subject_only: bool = False,
-                                      start_date: Optional[int] = None, end_date: Optional[int] = None
-                                      ) -> AccountEvents:
+    def get_jettons_history_by_jetton(
+            self,
+            account_id: str,
+            jetton_id: str,
+            limit: int = 100,
+            before_lt: Optional[int] = None,
+            accept_language: str = "en",
+            subject_only: bool = False,
+            start_date: Optional[int] = None,
+            end_date: Optional[int] = None,
+    ) -> AccountEvents:
         """
         Get the transfer jetton history for account and jetton.
 
@@ -132,8 +150,14 @@ class AccountMethod(TonapiClient):
 
         return AccountEvents(**response)
 
-    def get_nfts(self, account_id: str, limit: int = 1000, offset: int = 0,
-                 collection: str = None, indirect_ownership: bool = False) -> NftItems:
+    def get_nfts(
+            self,
+            account_id: str,
+            limit: int = 1000,
+            offset: int = 0,
+            collection: str = None,
+            indirect_ownership: bool = False,
+    ) -> NftItems:
         """
         Get NFT items by owner address.
 
@@ -155,7 +179,12 @@ class AccountMethod(TonapiClient):
 
         return NftItems(**response)
 
-    def get_all_nfts(self, account_id: str, collection: str = None, indirect_ownership: bool = True) -> NftItems:
+    def get_all_nfts(
+            self,
+            account_id: str,
+            collection: str = None,
+            indirect_ownership: bool = True,
+    ) -> NftItems:
         """
         Get all NFT items by owner address.
 
@@ -195,8 +224,12 @@ class AccountMethod(TonapiClient):
 
         return TraceIds(**response)
 
-    def get_event(self, account_id: str, event_id: str, accept_language: str = "en",
-                  subject_only: Optional[bool] = False) -> AccountEvent:
+    def get_event(
+            self, account_id: str,
+            event_id: str,
+            accept_language: str = "en",
+            subject_only: Optional[bool] = False,
+    ) -> AccountEvent:
         """
         Get event for an account by event_id
 
@@ -213,10 +246,15 @@ class AccountMethod(TonapiClient):
 
         return AccountEvent(**response)
 
-    def get_events(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
-                   accept_language: str = "en", subject_only: Optional[bool] = False,
-                   start_date: Optional[int] = None, end_date: Optional[int] = None
-                   ) -> AccountEvents:
+    def get_events(
+            self, account_id: str,
+            limit: int = 100,
+            before_lt: Optional[int] = None,
+            accept_language: str = "en",
+            subject_only: bool = False,
+            start_date: Optional[int] = None,
+            end_date: Optional[int] = None,
+    ) -> AccountEvents:
         """
         Get events for an account. Each event is built on top of a trace which is a series of transactions
         caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace
@@ -244,10 +282,16 @@ class AccountMethod(TonapiClient):
 
         return AccountEvents(**response)
 
-    def get_nft_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
-                        accept_language: str = "en", subject_only: bool = False,
-                        start_date: Optional[int] = None, end_date: Optional[int] = None
-                        ) -> AccountEvents:
+    def get_nft_history(
+            self,
+            account_id: str,
+            limit: int = 100,
+            before_lt: Optional[int] = None,
+            accept_language: str = "en",
+            subject_only: bool = False,
+            start_date: Optional[int] = None,
+            end_date: Optional[int] = None,
+    ) -> AccountEvents:
         """
         Get the transfer nft history.
 
@@ -309,7 +353,12 @@ class AccountMethod(TonapiClient):
 
         return PublicKey(**response)
 
-    def get_balance_change(self, account_id: str, start_date: int, end_date: int) -> BalanceChange:
+    def get_balance_change(
+            self,
+            account_id: str,
+            start_date: int,
+            end_date: int,
+    ) -> BalanceChange:
         """
         Get account's balance change.
 

@@ -1,13 +1,21 @@
+from __future__ import annotations
+
 from typing import List, Optional, Dict, Any
 
 from pydantic.v1 import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
-from pytonapi.schema.traces import (AccountStatus, TransactionType,
-                                    BouncePhaseType, ActionPhase,
-                                    CreditPhase, StoragePhase,
-                                    ComputePhase, Message)
+from pytonapi.schema.traces import (
+    AccountStatus,
+    ActionPhase,
+    BouncePhaseType,
+    ComputePhase,
+    CreditPhase,
+    Message,
+    StoragePhase,
+    TransactionType,
+)
 
 
 class Block(BaseModel):
@@ -146,7 +154,7 @@ class TvmStackRecord(BaseModel):
     cell: Optional[str]
     slice: Optional[str]
     num: Optional[str]
-    tuple: Optional[List['TvmStackRecord']]
+    tuple: Optional[List[TvmStackRecord]]
 
 
 class MethodExecutionResult(BaseModel):

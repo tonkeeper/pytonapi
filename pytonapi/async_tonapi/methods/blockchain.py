@@ -1,8 +1,16 @@
 from typing import Optional
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-from pytonapi.schema.blockchain import Block, Transactions, Transaction, Validators, BlockchainBlock, \
-    BlockchainRawAccount, BlockchainAccountInspect, MethodExecutionResult
+from pytonapi.schema.blockchain import (
+    Block,
+    Transactions,
+    Transaction,
+    Validators,
+    BlockchainBlock,
+    BlockchainRawAccount,
+    BlockchainAccountInspect,
+    MethodExecutionResult,
+)
 
 
 class BlockchainMethod(AsyncTonapiClient):
@@ -24,7 +32,7 @@ class BlockchainMethod(AsyncTonapiClient):
         Get transactions from block.
 
         :param block_id: block ID (string), example: "(-1,8000000000000000,4234234)"
-        :return: :class:`Block`
+        :return: :class:`Transactions`
         """
         method = f"v2/blockchain/blocks/{block_id}/transactions"
         response = await self._get(method=method)
@@ -90,8 +98,13 @@ class BlockchainMethod(AsyncTonapiClient):
 
         return BlockchainRawAccount(**response)
 
-    async def get_account_transactions(self, account_id: str, after_lt: Optional[int] = None,
-                                       before_lt: int = 0, limit: int = 100) -> Transactions:
+    async def get_account_transactions(
+            self,
+            account_id: str,
+            after_lt: Optional[int] = None,
+            before_lt: int = 0,
+            limit: int = 100,
+    ) -> Transactions:
         """
         Get account transactions.
 
@@ -121,15 +134,19 @@ class BlockchainMethod(AsyncTonapiClient):
 
         return BlockchainAccountInspect(**response)
 
-    async def execute_get_method(self, account_id: str, method_name: str,
-                                 args: Optional[str] = None
-                                 ) -> MethodExecutionResult:
+    async def execute_get_method(
+            self,
+            account_id: str,
+            method_name: str,
+            args: Optional[str] = None,
+    ) -> MethodExecutionResult:
         """
         Execute get method for account.
 
         :param account_id: account ID
         :param method_name: contract get method name
         :param args: contract get method args
+        :return: :class:`MethodExecutionResult`
         """
         method = f"v2/blockchain/accounts/{account_id}/methods/{method_name}"
         params = {'args': args} if args else {}

@@ -5,7 +5,7 @@ from pytonapi.tonapi import TonapiClient
 from pytonapi.schema.events import Event
 
 
-class EventMethod(TonapiClient):
+class EventsMethod(TonapiClient):
 
     def get_event(self, event_id: str, accept_language: str = "en") -> Event:
         """

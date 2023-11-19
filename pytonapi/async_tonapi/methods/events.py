@@ -5,7 +5,7 @@ from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.events import Event
 
 
-class EventMethod(AsyncTonapiClient):
+class EventsMethod(AsyncTonapiClient):
 
     async def get_event(self, event_id: str, accept_language: str = "en") -> Event:
         """
@@ -21,9 +21,11 @@ class EventMethod(AsyncTonapiClient):
         :param accept_language: Default value : en
         :return: :class:`Event`
         """
+
         if len(event_id) == 44:
             decoded = base64.urlsafe_b64decode(event_id + '=' * (-len(event_id) % 4))
             event_id = binascii.hexlify(decoded).decode('utf-8')
+
         method = f"v2/events/{event_id}"
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, headers=headers)

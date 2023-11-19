@@ -5,7 +5,7 @@ from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.traces import Trace
 
 
-class TraceMethod(AsyncTonapiClient):
+class TracesMethod(AsyncTonapiClient):
 
     async def get_trace(self, trace_id: str) -> Trace:
         """
@@ -18,6 +18,6 @@ class TraceMethod(AsyncTonapiClient):
             decoded = base64.urlsafe_b64decode(trace_id + '=' * (-len(trace_id) % 4))
             trace_id = binascii.hexlify(decoded).decode('utf-8')
         method = f"v2/traces/{trace_id}"
-        response = await self._get(method=method)
+        response_data = await self._get(method=method)
 
-        return Trace(**response)
+        return Trace(**response_data)
