@@ -6,7 +6,6 @@ ACCOUNTS_IDS = ["ALL"]
 
 
 async def handler(event) -> None:
-    print(event)
     pprint(event)
 
 
