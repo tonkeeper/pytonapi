@@ -14,11 +14,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires='>=3.7, <3.11',
     install_requires=[
-        "aiohttp>=3.8.5",
         "httpx>=0.25.1",
         "libscrc>=1.8.1",
         "pydantic==2.*",
-        "requests>=2.31.0",
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",

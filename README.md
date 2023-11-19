@@ -27,11 +27,9 @@ Python wrapper for [tonapi.io](https://tonapi.io/api-v2)\
 
 ## Dependencies
 
-* [aiohttp](https://pypi.org/project/aiohttp/) - Asynchronous HTTP client/server framework for asyncio
-* [requests](https://pypi.org/project/requests/) - Python HTTP library
+* [httpx](https://pypi.org/project/httpx/) - A fully featured HTTP client for Python 3, which provides sync and async
 * [pydantic](https://pypi.org/project/pydantic/) - Data validation and settings management using Python type hints
 * [libscrc](https://pypi.org/project/libscrc/) - Library for calculating CRC-16, CRC-CCITT, CRC-32 checksums
-* [httpx](https://pypi.org/project/httpx/) - A fully featured HTTP client for Python 3, which provides sync and async
   APIs
 
 ## Installation
