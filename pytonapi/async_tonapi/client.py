@@ -1,9 +1,8 @@
 import asyncio
 import json
 import logging
-from typing import Any, Dict, Optional, Union, AsyncGenerator
+from typing import Any, Dict, Optional, AsyncGenerator
 
-import aiohttp
 import httpx
 
 from pytonapi.exceptions import (
@@ -28,7 +27,6 @@ class AsyncTonapiClient:
             is_testnet: Optional[bool] = False,
             max_retries: Optional[int] = None,
             base_url: Optional[str] = None,
-            use_ssl: Optional[bool] = None,
             headers: Optional[Dict[str, Any]] = None,
             timeout: Optional[float] = None,
     ) -> None:
@@ -38,13 +36,11 @@ class AsyncTonapiClient:
         :param api_key: The API key.
         :param base_url: The base URL for the API.
         :param is_testnet: Use True if using the testnet.
-        :param use_ssl: Use SSL if True.
         :param timeout: Request timeout in seconds.
         :param headers: Additional headers to include in requests.
         :param max_retries: Maximum number of retries per request if rate limit is reached.
         """
         self.api_key = api_key
-        self.use_ssl = use_ssl
         self.timeout = timeout
         self.max_retries = max_retries
 
@@ -55,50 +51,30 @@ class AsyncTonapiClient:
         self.headers = headers or {"Authorization": f"Bearer {api_key}"}
 
     @staticmethod
-    async def __read_content(
-            response: Union[aiohttp.ClientResponse, httpx.Response],
-    ) -> Dict[str, Any]:
+    async def __read_content(response: httpx.Response) -> Any:
         """
-        Read content from an HTTP response.
+        Read the response content.
 
         :param response: The HTTP response object.
-        :return: The response content as a dictionary.
-        :raises TONAPIError: If there is an issue reading the content.
+        :return: The response content.
         """
-
-        def try_load_json(c: str) -> Union[Dict, str]:
-            """
-            Try to load content as JSON. If decoding fails, return the content as a string.
-
-            :param c: The content to be loaded as JSON.
-            :return: Decoded JSON content or a dictionary with an 'error' key in case of decoding failure.
-            """
-            try:
-                return json.loads(c)
-            except json.JSONDecodeError:
-                return {"error": c}
-
         try:
-            content = await response.json()
-
-        except aiohttp.ContentTypeError:
-            response: aiohttp.ClientResponse
-            content = try_load_json(await response.text())
-
+            content = response.json()
         except httpx.ResponseNotRead:
-            response: httpx.Response
             content_bytes = await response.aread()
-            content = try_load_json(content_bytes.decode())
-
+            content_decoded = content_bytes.decode()
+            try:
+                content = json.loads(content_decoded)
+            except json.JSONDecodeError:
+                content = {"error": content_decoded}
+        except json.JSONDecodeError:
+            content = {"error", response.text}
         except Exception as e:
             raise TONAPIError(f"Failed to read response content: {e}")
 
         return content
 
-    async def __process_response(
-            self,
-            response: Union[aiohttp.ClientResponse, httpx.Response],
-    ) -> Dict[str, Any]:
+    async def __process_response(self, response: httpx.Response) -> Dict[str, Any]:
         """
         Process the HTTP response and handle errors.
 
@@ -108,12 +84,7 @@ class AsyncTonapiClient:
         """
         content = await self.__read_content(response)
 
-        if isinstance(response, aiohttp.ClientResponse):
-            status_code = response.status
-        else:
-            status_code = response.status_code
-
-        if status_code != 200:
+        if response.status_code != 200:
             error_map = {
                 400: TONAPIBadRequestError,
                 401: TONAPIUnauthorizedError,
@@ -122,7 +93,7 @@ class AsyncTonapiClient:
                 500: TONAPIInternalServerError,
                 501: TONAPINotImplementedError,
             }
-            error_class = error_map.get(status_code, TONAPIError)
+            error_class = error_map.get(response.status_code, TONAPIError)
             error = content.get("error", content)
             raise error_class(error)
 
@@ -181,12 +152,15 @@ class AsyncTonapiClient:
         """
         url = self.base_url + path
         self.headers.update(headers or {})
-        timeout = aiohttp.ClientTimeout(total=self.timeout)
-
-        async with aiohttp.ClientSession(headers=self.headers, timeout=timeout) as session:
-            data = {"params": params or {}, "json": body or {}, "ssl": self.use_ssl}
-            async with session.request(method=method, url=url, **data) as response:
+        timeout = httpx.Timeout(timeout=self.timeout)
+        try:
+            async with httpx.AsyncClient(headers=self.headers, timeout=timeout) as session:
+                session: httpx.AsyncClient
+                data = {"params": params or {}, "json": body or {}}
+                response = await session.request(method=method, url=url, **data)
                 return await self.__process_response(response)
+        except httpx.LocalProtocolError:
+            raise TONAPIUnauthorizedError
 
     async def _request_retries(
             self,
