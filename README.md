@@ -31,6 +31,7 @@ Python wrapper for [tonapi.io](https://tonapi.io/api-v2)\
 * [pydantic](https://pypi.org/project/pydantic/) - Data validation and settings management using Python type hints
 * [libscrc](https://pypi.org/project/libscrc/) - Library for calculating CRC-16, CRC-CCITT, CRC-32 checksums
   APIs
+* [websockets](https://pypi.org/project/websockets/) - A library for building WebSocket servers and clients in Python
 
 ## Installation
 
