@@ -15,6 +15,7 @@ setuptools.setup(
     python_requires='>=3.7, <3.11',
     install_requires=[
         "httpx>=0.25.1",
+        "websockets>=12.0",
         "libscrc>=1.8.1",
         "pydantic==2.*",
     ],
