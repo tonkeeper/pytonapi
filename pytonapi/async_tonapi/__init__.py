@@ -52,3 +52,7 @@ class AsyncTonapi(AsyncTonapiClient):
     @property
     def traces(self) -> methods.TracesMethod:
         return methods.TracesMethod(**self.__dict__)
+
+    @property
+    def websocket(self) -> methods.WebSocketMethod:
+        return methods.WebSocketMethod(**self.__dict__)

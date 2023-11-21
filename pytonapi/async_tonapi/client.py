@@ -4,6 +4,7 @@ import logging
 from typing import Any, Dict, Optional, AsyncGenerator
 
 import httpx
+import websockets
 
 from pytonapi.exceptions import (
     TONAPIBadRequestError,
@@ -27,6 +28,7 @@ class AsyncTonapiClient:
             is_testnet: Optional[bool] = False,
             max_retries: Optional[int] = None,
             base_url: Optional[str] = None,
+            websocket_url: Optional[str] = None,
             headers: Optional[Dict[str, Any]] = None,
             timeout: Optional[float] = None,
     ) -> None:
@@ -35,6 +37,7 @@ class AsyncTonapiClient:
 
         :param api_key: The API key.
         :param base_url: The base URL for the API.
+        :param websocket_url: The URL for the WebSocket server.
         :param is_testnet: Use True if using the testnet.
         :param timeout: Request timeout in seconds.
         :param headers: Additional headers to include in requests.
@@ -48,6 +51,7 @@ class AsyncTonapiClient:
             base_url or "https://testnet.tonapi.io/"
             if is_testnet else "https://tonapi.io/"
         )
+        self.websocket_url = websocket_url or "wss://tonapi.io/v2/websocket"
         self.headers = headers or {"Authorization": f"Bearer {api_key}"}
 
     @staticmethod
@@ -131,6 +135,36 @@ class AsyncTonapiClient:
                             yield value
             except httpx.LocalProtocolError:
                 raise TONAPIUnauthorizedError
+
+    async def _subscribe_websocket(
+            self,
+            method: str,
+            params: Any,
+    ) -> AsyncGenerator[Dict[str, Any], None]:
+        """
+        Subscribe to a WebSocket event stream.
+
+        :param method: The API method to subscribe to.
+        :param params: Parameters for the API method.
+        :return: An asynchronous generator yielding WebSocket event data.
+        """
+        payload = {
+            "id": 1,
+            "jsonrpc": "2.0",
+            "method": method,
+            "params": params,
+        }
+        async with websockets.connect(self.websocket_url) as websocket:
+            try:
+                await websocket.send(json.dumps(payload))
+                while True:
+                    message = await websocket.recv()
+                    message_json = json.loads(message)
+                    if "params" in message_json:
+                        value = message_json["params"]
+                        yield value
+            except websockets.exceptions.ConnectionClosed:
+                raise
 
     async def _request(
             self,
