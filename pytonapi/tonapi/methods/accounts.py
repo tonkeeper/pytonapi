@@ -5,6 +5,7 @@ from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.accounts import (
     Account,
     Accounts,
+    AddressForm,
     FoundAccounts,
     Subscriptions,
     DnsExpiring,
@@ -18,6 +19,18 @@ from pytonapi.schema.traces import TraceIds
 
 
 class AccountsMethod(TonapiClient):
+
+    def parse_address(self, account_id: str) -> AddressForm:
+        """
+        parse address and display in all formats.
+
+        :param account_id: account ID
+        :return: :class:`AddressForm`
+        """
+        method = f"v2/address/{account_id}/parse"
+        response = self._get(method=method)
+
+        return AddressForm(**response)
 
     def get_info(self, account_id: str) -> Account:
         """

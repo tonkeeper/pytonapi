@@ -19,8 +19,8 @@
 
 - [x] /v2/blockchain/blocks/{block_id}
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/shards
-- [x] /v2/blockchain/blocks/{block_id}/config/raw
 - [x] /v2/blockchain/blocks/{block_id}/transactions
+- [x] /v2/blockchain/blocks/{block_id}/config/raw
 - [x] /v2/blockchain/transactions/{transaction_id}
 - [x] /v2/blockchain/messages/{msg_id}/transaction
 - [x] /v2/blockchain/validators
@@ -34,16 +34,9 @@
 - [x] /v2/blockchain/accounts/{account_id}/inspect
 
 
-- Emulation
-
-- [ ] /v2/events/emulate
-- [ ] /v2/traces/emulate
-- [ ] /v2/wallet/emulate
-- [ ] /v2/accounts/{account_id}/events/emulate
-
-
 - Accounts
 
+- [x] /v2/address/{account_id}/parse
 - [x] /v2/accounts/_bulk
 - [x] /v2/accounts/{account_id}
 - [x] /v2/accounts/{account_id}/dns/backresolve
@@ -63,6 +56,14 @@
 - [x] /v2/accounts/{account_id}/diff
 
 
+- Emulation
+
+- [ ] /v2/events/emulate
+- [ ] /v2/traces/emulate
+- [ ] /v2/wallet/emulate
+- [ ] /v2/accounts/{account_id}/events/emulate
+
+
 - NFT
 
 - [x] /v2/accounts/{account_id}/nfts/history
@@ -76,8 +77,8 @@
 
 - DNS
 
-- [x] /v2/nfts/{account_id}/history
 - [x] /v2/dns/{domain_name}
+- [x] /v2/nfts/{account_id}/history
 - [x] /v2/dns/{domain_name}/resolve
 - [x] /v2/dns/{domain_name}/bids
 - [x] /v2/dns/auctions

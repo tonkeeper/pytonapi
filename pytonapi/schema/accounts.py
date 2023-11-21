@@ -6,6 +6,19 @@ from pytonapi.schema._address import Address
 from pytonapi.schema._balance import Balance
 
 
+class AddressFormB64(BaseModel):
+    b64: str
+    b64url: str
+
+
+class AddressForm(BaseModel):
+    raw_form: str
+    bounceable: AddressFormB64
+    non_bounceable: AddressFormB64
+    given_type: str
+    test_only: bool
+
+
 class Account(BaseModel):
     address: Address
     balance: Balance

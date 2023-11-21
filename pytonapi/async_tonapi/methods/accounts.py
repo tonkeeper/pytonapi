@@ -4,6 +4,7 @@ from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.accounts import (
     Account,
     Accounts,
+    AddressForm,
     FoundAccounts,
     Subscriptions,
     DnsExpiring,
@@ -18,6 +19,18 @@ from pytonapi.schema.traces import TraceIds
 
 
 class AccountsMethod(AsyncTonapiClient):
+
+    async def parse_address(self, account_id: str) -> AddressForm:
+        """
+        parse address and display in all formats.
+
+        :param account_id: account ID
+        :return: :class:`AddressForm`
+        """
+        method = f"v2/address/{account_id}/parse"
+        response = await self._get(method=method)
+
+        return AddressForm(**response)
 
     async def get_info(self, account_id: str) -> Account:
         """
