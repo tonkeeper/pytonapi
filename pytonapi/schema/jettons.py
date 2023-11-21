@@ -63,3 +63,9 @@ class JettonHolders(BaseModel):
 
 class Jettons(BaseModel):
     jettons: List[JettonInfo]
+
+
+class JettonQuantity(BaseModel):
+    quantity: str
+    wallet_address: AccountAddress
+    jetton: JettonPreview

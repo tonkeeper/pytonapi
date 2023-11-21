@@ -26,6 +26,10 @@ class AsyncTonapi(AsyncTonapiClient):
         return methods.DnsMethod(**self.__dict__)
 
     @property
+    def emulate(self) -> methods.EmulateMethod:
+        return methods.EmulateMethod(**self.__dict__)
+
+    @property
     def events(self) -> methods.EventsMethod:
         return methods.EventsMethod(**self.__dict__)
 

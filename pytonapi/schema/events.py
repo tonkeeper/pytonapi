@@ -4,8 +4,9 @@ from pydantic.v1 import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
-from pytonapi.schema.jettons import JettonPreview
+from pytonapi.schema.jettons import JettonPreview, JettonQuantity
 from pytonapi.schema.nft import NftItem, Price
+from pytonapi.schema.traces import Trace
 
 
 class Refund(BaseModel):
@@ -230,3 +231,17 @@ class TransactionEventData(BaseModel):
     account_id: Address
     lt: int
     tx_hash: str
+
+
+class Risk(BaseModel):
+    description: Optional[str] = None
+    transfer_all_remaining_balance: bool
+    ton: int
+    jettons: List[JettonQuantity]
+    nfts: List[NftItem]
+
+
+class MessageConsequences(BaseModel):
+    trace: Trace
+    risk: Risk
+    event: AccountEvent

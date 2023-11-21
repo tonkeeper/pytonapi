@@ -1,6 +1,7 @@
 from .accounts import AccountsMethod
 from .blockchain import BlockchainMethod
 from .dns import DnsMethod
+from .emulate import EmulateMethod
 from .events import EventsMethod
 from .jettons import JettonsMethod
 from .nft import NftMethod
@@ -15,6 +16,7 @@ __all__ = [
     "AccountsMethod",
     "BlockchainMethod",
     "DnsMethod",
+    "EmulateMethod",
     "EventsMethod",
     "JettonsMethod",
     "NftMethod",
