@@ -61,6 +61,10 @@ class TestBlockchainMethod(TestAsyncTonapi):
     #     response = await self.tonapi.blockchain.send_message("body")
     #     self.assertIsInstance(response, bool)
 
+    async def test_get_config(self):
+        response = await self.tonapi.blockchain.get_config()
+        self.assertIsInstance(response, schema.blockchain.BlockchainConfig)
+
     async def test_execute_get_method(self):
         response = await self.tonapi.blockchain.execute_get_method(
             ACCOUNT_ID_NFT, "get_nft_data")
