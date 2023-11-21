@@ -37,9 +37,6 @@ class SSEMethod(AsyncTonapiClient):
 
         :handler: A callable function to handle the SSEEvent
         :accounts: A list of account addresses to subscribe to
-
-        Returns:
-            None
         """
         method = "v2/sse/accounts/traces"
         params = {'accounts': accounts}
