@@ -1,3 +1,4 @@
+from pytonapi.schema.events import Event
 from pytonapi.tonapi.client import TonapiClient
 
 from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons
@@ -42,3 +43,15 @@ class JettonsMethod(TonapiClient):
         response = self._get(method=method, params=params)
 
         return Jettons(**response)
+
+    def get_jetton_transfer_event(self, event_id: str) -> Event:
+        """
+        Get only jetton transfers in the event.
+
+        :param event_id: event ID or transaction hash in hex (without 0x) or base64url format
+        :return: :class:`Event`
+        """
+        method = f"v2/events/{event_id}/jettons"
+        response = self._get(method=method)
+
+        return Event(**response)

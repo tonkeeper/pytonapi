@@ -99,7 +99,7 @@
 - [x] /v2/jettons
 - [x] /v2/jettons/{account_id}
 - [x] /v2/jettons/{account_id}/holders
-- [ ] /v2/events/{event_id}/jettons
+- [x] /v2/events/{event_id}/jettons
 
 
 - Staking
