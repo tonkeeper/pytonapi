@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.blockchain import (
@@ -147,18 +147,6 @@ class BlockchainMethod(AsyncTonapiClient):
 
         return Transactions(**response)
 
-    async def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
-        """
-        Blockchain account inspect.
-
-        :param account_id: account ID
-        :return: :class:`BlockchainAccountInspect`
-        """
-        method = f"v2/blockchain/accounts/{account_id}/inspect"
-        response = await self._get(method=method)
-
-        return BlockchainAccountInspect(**response)
-
     async def execute_get_method(
             self,
             account_id: str,
@@ -178,3 +166,26 @@ class BlockchainMethod(AsyncTonapiClient):
         response = await self._get(method=method, params=params)
 
         return MethodExecutionResult(**response)
+
+    async def send_message(self, body: Dict[str, Any]) -> bool:
+        """
+        Send message to blockchain.
+
+        :param body: both a single boc and a batch of boc serialized in base64 are accepted
+        """
+        method = "v2/blockchain/message"
+        response = await self._post(method=method, body=body)
+
+        return bool(response)
+
+    async def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
+        """
+        Blockchain account inspect.
+
+        :param account_id: account ID
+        :return: :class:`BlockchainAccountInspect`
+        """
+        method = f"v2/blockchain/accounts/{account_id}/inspect"
+        response = await self._get(method=method)
+
+        return BlockchainAccountInspect(**response)

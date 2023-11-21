@@ -28,8 +28,9 @@
 - [x] /v2/blockchain/accounts/{account_id}
 - [x] /v2/blockchain/accounts/{account_id}/transactions
 - [x] /v2/blockchain/accounts/{account_id}/methods/{method_name}
-- [ ] /v2/blockchain/message
+- [x] /v2/blockchain/message
 - [ ] /v2/blockchain/config
+- [ ] /v2/blockchain/config/raw
 - [x] /v2/blockchain/accounts/{account_id}/inspect
 
 

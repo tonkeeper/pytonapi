@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 
 from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.blockchain import (
@@ -145,6 +145,17 @@ class BlockchainMethod(TonapiClient):
         response = self._get(method=method, params=params)
 
         return Transactions(**response)
+
+    def send_message(self, body: Dict[str, Any]) -> bool:
+        """
+        Send message to blockchain.
+
+        :param body: both a single boc and a batch of boc serialized in base64 are accepted
+        """
+        method = "v2/blockchain/message"
+        response = self._post(method=method, body=body)
+
+        return bool(response)
 
     def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
         """
