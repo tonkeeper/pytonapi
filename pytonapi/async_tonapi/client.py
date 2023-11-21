@@ -254,6 +254,7 @@ class AsyncTonapiClient:
     async def _post(
             self,
             method: str,
+            params: Optional[Dict[str, Any]] = None,
             body: Optional[Dict[str, Any]] = None,
             headers: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
@@ -268,4 +269,4 @@ class AsyncTonapiClient:
         request = self._request
         if self.max_retries:
             request = self._request_retries
-        return await request("POST", method, headers, body=body)
+        return await request("POST", method, headers, params=params, body=body)

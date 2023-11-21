@@ -217,6 +217,7 @@ class TonapiClient:
     def _post(
             self,
             method: str,
+            params: Optional[Dict[str, Any]] = None,
             body: Optional[Dict[str, Any]] = None,
             headers: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
@@ -231,4 +232,4 @@ class TonapiClient:
         request = self._request
         if self.max_retries:
             request = self._request_retries
-        return request("POST", method, headers, body=body)
+        return request("POST", method, headers, params=params, body=body)
