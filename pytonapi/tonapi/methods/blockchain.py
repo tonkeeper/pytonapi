@@ -186,6 +186,17 @@ class BlockchainMethod(TonapiClient):
 
         return BlockchainConfig(**response)
 
+    def get_raw_config(self) -> RawBlockchainConfig:
+        """
+        Get raw blockchain config.
+
+        :return: :class:`RawBlockchainConfig`
+        """
+        method = "v2/blockchain/config/raw"
+        response = self._get(method=method)
+
+        return RawBlockchainConfig(**response)
+
     def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
         """
         Blockchain account inspect.

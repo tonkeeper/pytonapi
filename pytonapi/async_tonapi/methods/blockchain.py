@@ -173,6 +173,7 @@ class BlockchainMethod(AsyncTonapiClient):
         Send message to blockchain.
 
         :param body: both a single boc and a batch of boc serialized in base64 are accepted
+        :return: bool
         """
         method = "v2/blockchain/message"
         response = await self._post(method=method, body=body)
@@ -182,11 +183,24 @@ class BlockchainMethod(AsyncTonapiClient):
     async def get_config(self) -> BlockchainConfig:
         """
         Get blockchain config.
+
+        :return: :class:`BlockchainConfig`
         """
         method = "v2/blockchain/config"
         response = await self._get(method=method)
 
         return BlockchainConfig(**response)
+
+    async def get_raw_config(self) -> RawBlockchainConfig:
+        """
+        Get raw blockchain config.
+
+        :return: :class:`RawBlockchainConfig`
+        """
+        method = "v2/blockchain/config/raw"
+        response = await self._get(method=method)
+
+        return RawBlockchainConfig(**response)
 
     async def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
         """
