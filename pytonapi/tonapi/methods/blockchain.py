@@ -2,11 +2,11 @@ from typing import Optional
 
 from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.blockchain import (
-    Block,
     Transactions,
     Transaction,
     Validators,
     BlockchainBlock,
+    BlockchainBlockShards,
     BlockchainRawAccount,
     BlockchainAccountInspect,
     MethodExecutionResult,
@@ -15,7 +15,7 @@ from pytonapi.schema.blockchain import (
 
 class BlockchainMethod(TonapiClient):
 
-    def get_block_data(self, block_id: str) -> Block:
+    def get_block_data(self, block_id: str) -> BlockchainBlock:
         """
         Get block data.
 
@@ -25,7 +25,19 @@ class BlockchainMethod(TonapiClient):
         method = f"v2/blockchain/blocks/{block_id}"
         response = self._get(method=method)
 
-        return Block(**response)
+        return BlockchainBlock(**response)
+
+    def get_block_shards(self, masterchain_seqno: int) -> BlockchainBlockShards:
+        """
+        Get blockchain block shards.
+
+        :param masterchain_seqno: masterchain block seqno
+        :return: :class:`BlockchainBlockShards`
+        """
+        method = f"v2/blockchain/masterchain/{masterchain_seqno}/shards"
+        response = self._get(method=method)
+
+        return BlockchainBlockShards(**response)
 
     def get_transaction_from_block(self, block_id: str) -> Transactions:
         """

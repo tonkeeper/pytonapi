@@ -18,37 +18,6 @@ from pytonapi.schema.traces import (
 )
 
 
-class Block(BaseModel):
-    workchain_id: int
-    shard: str
-    seqno: int
-    root_hash: str
-    file_hash: str
-    global_id: int
-    version: int
-    after_merge: bool
-    before_split: bool
-    after_split: bool
-    want_split: bool
-    want_merge: bool
-    key_block: bool
-    gen_utime: int
-    start_lt: int
-    end_lt: int
-    vert_seqno: int
-    gen_catchain_seqno: int
-    min_ref_mc_seqno: int
-    prev_key_block_seqno: int
-    gen_software_version: Optional[int]
-    gen_software_capabilities: Optional[int]
-    master_ref: Optional[str]
-    prev_refs: List[str]
-    in_msg_descr_length: int
-    out_msg_descr_length: int
-    rand_seed: str
-    created_by: str
-
-
 class Transaction(BaseModel):
     hash: str
     lt: int
@@ -116,6 +85,10 @@ class BlockchainBlock(BaseModel):
     out_msg_descr_length: int
     rand_seed: str
     created_by: str
+
+
+class BlockchainBlockShards(BaseModel):
+    shards: List[Dict]
 
 
 class AccountStorageInfo(BaseModel):
