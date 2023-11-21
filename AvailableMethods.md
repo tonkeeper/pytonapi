@@ -30,7 +30,7 @@
 - [x] /v2/blockchain/accounts/{account_id}/methods/{method_name}
 - [x] /v2/blockchain/message
 - [x] /v2/blockchain/config
-- [ ] /v2/blockchain/config/raw
+- [x] /v2/blockchain/config/raw
 - [x] /v2/blockchain/accounts/{account_id}/inspect
 
 
