@@ -9,6 +9,10 @@ JETTON_ID = "EQD0vdSA_NedR9uvbgN9EikRX-suesDxGeFg69XQMavfLqIw"  # noqa
 
 class TestAccountMethod(TestTonapi):
 
+    def test_parse_address(self):
+        response = self.tonapi.accounts.parse_address(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.accounts.AddressForm)
+
     def test_get_info(self):
         response = self.tonapi.accounts.get_info(ACCOUNT_ID)
         self.assertIsInstance(response, schema.accounts.Account)
