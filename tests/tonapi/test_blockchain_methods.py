@@ -20,6 +20,10 @@ class TestBlockchainMethod(TestTonapi):
         response = self.tonapi.blockchain.get_block_shards(MASTERCHATIN_SEQNO)
         self.assertIsInstance(response, schema.blockchain.BlockchainBlockShards)
 
+    # def test_get_raw_config(self):
+    #     response = self.tonapi.blockchain.get_raw_config(BLOCK_ID)
+    #     self.assertIsInstance(response, schema.blockchain.RawBlockchainConfig)
+
     def test_get_transaction_from_block(self):
         response = self.tonapi.blockchain.get_transaction_from_block(BLOCK_ID)
         self.assertIsInstance(response, schema.blockchain.Transactions)
@@ -52,6 +56,10 @@ class TestBlockchainMethod(TestTonapi):
     def test_inspect_account(self):
         response = self.tonapi.blockchain.inspect_account(ACCOUNT_ID)
         self.assertIsInstance(response, schema.blockchain.BlockchainAccountInspect)
+
+    # def test_send_message(self):
+    #     response = self.tonapi.blockchain.send_message("body")
+    #     self.assertIsInstance(response, bool)
 
     def test_execute_get_method(self):
         response = self.tonapi.blockchain.execute_get_method(
