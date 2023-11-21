@@ -58,10 +58,10 @@
 
 - Emulation
 
-- [ ] /v2/events/emulate
-- [ ] /v2/traces/emulate
-- [ ] /v2/wallet/emulate
-- [ ] /v2/accounts/{account_id}/events/emulate
+- [x] /v2/events/emulate
+- [x] /v2/traces/emulate
+- [x] /v2/wallet/emulate
+- [x] /v2/accounts/{account_id}/events/emulate
 
 
 - NFT
