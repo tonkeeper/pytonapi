@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional, Dict, Any
 
-from pydantic.v1 import BaseModel
+from pydantic.v1 import BaseModel, Field
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
@@ -56,6 +56,15 @@ class Validators(BaseModel):
     validators: List[Validator]
 
 
+class ValidatorSet(BaseModel):
+    utime_since: int
+    utime_until: int
+    total: int
+    main: int
+    total_weight: Optional[int] = None
+    list: List
+
+
 class BlockchainBlock(BaseModel):
     workchain_id: int
     shard: str
@@ -93,6 +102,61 @@ class BlockchainBlockShards(BaseModel):
 
 class RawBlockchainConfig(BaseModel):
     config: Dict[str, Any]
+
+
+class BlockchainConfig(BaseModel):
+    c0: str = Field(alias="0")
+    c1: str = Field(alias="1")
+    c2: str = Field(alias="2")
+    c3: Optional[str] = Field(alias="3", default=None)
+    c4: str = Field(alias="4")
+    c5: Optional[Dict[str, Any]] = Field(alias="5", default=None)
+    c6: Optional[Dict[str, Any]] = Field(alias="6", default=None)
+    c7: Optional[Dict[str, Any]] = Field(alias="7", default=None)
+    c8: Optional[Dict[str, Any]] = Field(alias="8", default=None)
+    c9: Optional[Dict[str, Any]] = Field(alias="9", default=None)
+    c10: Optional[Dict[str, Any]] = Field(alias="10", default=None)
+    c11: Optional[Dict[str, Any]] = Field(alias="11", default=None)
+    c12: Optional[Dict[str, Any]] = Field(alias="12", default=None)
+    c13: Optional[Dict[str, Any]] = Field(alias="13", default=None)
+    c14: Optional[Dict[str, Any]] = Field(alias="14", default=None)
+    c15: Optional[Dict[str, Any]] = Field(alias="15", default=None)
+    c16: Optional[Dict[str, Any]] = Field(alias="16", default=None)
+    c17: Optional[Dict[str, Any]] = Field(alias="17", default=None)
+    c18: Optional[Dict[str, Any]] = Field(alias="18", default=None)
+    c19: Optional[Dict[str, Any]] = Field(alias="19", default=None)
+    c20: Optional[Dict[str, Any]] = Field(alias="20", default=None)
+    c21: Optional[Dict[str, Any]] = Field(alias="21", default=None)
+    c22: Optional[Dict[str, Any]] = Field(alias="22", default=None)
+    c23: Optional[Dict[str, Any]] = Field(alias="23", default=None)
+    c24: Optional[Dict[str, Any]] = Field(alias="24", default=None)
+    c25: Optional[Dict[str, Any]] = Field(alias="25", default=None)
+    c26: Optional[Dict[str, Any]] = Field(alias="26", default=None)
+    c27: Optional[Dict[str, Any]] = Field(alias="27", default=None)
+    c28: Optional[Dict[str, Any]] = Field(alias="28", default=None)
+    c29: Optional[Dict[str, Any]] = Field(alias="29", default=None)
+    c30: Optional[Dict[str, Any]] = Field(alias="30", default=None)
+    c31: Optional[Dict[str, Any]] = Field(alias="31", default=None)
+    c32: Optional[ValidatorSet] = Field(alias="32", default=None)
+    c33: Optional[ValidatorSet] = Field(alias="33", default=None)
+    c34: Optional[ValidatorSet] = Field(alias="34", default=None)
+    c35: Optional[ValidatorSet] = Field(alias="35", default=None)
+    c36: Optional[ValidatorSet] = Field(alias="36", default=None)
+    c37: Optional[ValidatorSet] = Field(alias="37", default=None)
+    c38: Optional[Dict[str, Any]] = Field(alias="38", default=None)
+    c39: Optional[Dict[str, Any]] = Field(alias="39", default=None)
+    c40: Optional[Dict[str, Any]] = Field(alias="40", default=None)
+    c41: Optional[Dict[str, Any]] = Field(alias="41", default=None)
+    c42: Optional[Dict[str, Any]] = Field(alias="42", default=None)
+    c43: Optional[Dict[str, Any]] = Field(alias="43", default=None)
+    c44: Optional[Dict[str, Any]] = Field(alias="44", default=None)
+    c71: Optional[Dict[str, Any]] = Field(alias="71", default=None)
+    c72: Optional[Dict[str, Any]] = Field(alias="72", default=None)
+    c73: Optional[Dict[str, Any]] = Field(alias="73", default=None)
+    c79: Optional[Dict[str, Any]] = Field(alias="79", default=None)
+    c81: Optional[Dict[str, Any]] = Field(alias="81", default=None)
+    c82: Optional[Dict[str, Any]] = Field(alias="82", default=None)
+    raw: str
 
 
 class AccountStorageInfo(BaseModel):

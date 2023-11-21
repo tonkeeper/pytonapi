@@ -11,6 +11,7 @@ from pytonapi.schema.blockchain import (
     BlockchainAccountInspect,
     MethodExecutionResult,
     RawBlockchainConfig,
+    BlockchainConfig,
 )
 
 
@@ -146,31 +147,9 @@ class BlockchainMethod(TonapiClient):
 
         return Transactions(**response)
 
-    def send_message(self, body: Dict[str, Any]) -> bool:
-        """
-        Send message to blockchain.
-
-        :param body: both a single boc and a batch of boc serialized in base64 are accepted
-        """
-        method = "v2/blockchain/message"
-        response = self._post(method=method, body=body)
-
-        return bool(response)
-
-    def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
-        """
-        Blockchain account inspect.
-
-        :param account_id: account ID
-        :return: :class:`BlockchainAccountInspect`
-        """
-        method = f"v2/blockchain/accounts/{account_id}/inspect"
-        response = self._get(method=method)
-
-        return BlockchainAccountInspect(**response)
-
     def execute_get_method(
-            self, account_id: str,
+            self,
+            account_id: str,
             method_name: str,
             args: Optional[str] = None,
     ) -> MethodExecutionResult:
@@ -186,3 +165,35 @@ class BlockchainMethod(TonapiClient):
         response = self._get(method=method, params=params)
 
         return MethodExecutionResult(**response)
+
+    def send_message(self, body: Dict[str, Any]) -> bool:
+        """
+        Send message to blockchain.
+
+        :param body: both a single boc and a batch of boc serialized in base64 are accepted
+        """
+        method = "v2/blockchain/message"
+        response = self._post(method=method, body=body)
+
+        return bool(response)
+
+    def get_config(self) -> BlockchainConfig:
+        """
+        Get blockchain config.
+        """
+        method = "v2/blockchain/config"
+        response = self._get(method=method)
+
+        return BlockchainConfig(**response)
+
+    def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
+        """
+        Blockchain account inspect.
+
+        :param account_id: account ID
+        :return: :class:`BlockchainAccountInspect`
+        """
+        method = f"v2/blockchain/accounts/{account_id}/inspect"
+        response = self._get(method=method)
+
+        return BlockchainAccountInspect(**response)

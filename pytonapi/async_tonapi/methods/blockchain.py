@@ -11,6 +11,7 @@ from pytonapi.schema.blockchain import (
     BlockchainAccountInspect,
     MethodExecutionResult,
     RawBlockchainConfig,
+    BlockchainConfig,
 )
 
 
@@ -177,6 +178,15 @@ class BlockchainMethod(AsyncTonapiClient):
         response = await self._post(method=method, body=body)
 
         return bool(response)
+
+    async def get_config(self) -> BlockchainConfig:
+        """
+        Get blockchain config.
+        """
+        method = "v2/blockchain/config"
+        response = await self._get(method=method)
+
+        return BlockchainConfig(**response)
 
     async def inspect_account(self, account_id: str) -> BlockchainAccountInspect:
         """
