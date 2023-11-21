@@ -91,6 +91,10 @@ class BlockchainBlockShards(BaseModel):
     shards: List[Dict]
 
 
+class RawBlockchainConfig(BaseModel):
+    config: Dict[str, Any]
+
+
 class AccountStorageInfo(BaseModel):
     used_cells: int
     used_bits: int

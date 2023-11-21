@@ -19,6 +19,7 @@
 
 - [x] /v2/blockchain/blocks/{block_id}
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/shards
+- [x] /v2/blockchain/blocks/{block_id}/config/raw
 - [x] /v2/blockchain/blocks/{block_id}/transactions
 - [x] /v2/blockchain/transactions/{transaction_id}
 - [x] /v2/blockchain/messages/{msg_id}/transaction

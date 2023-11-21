@@ -10,6 +10,7 @@ from pytonapi.schema.blockchain import (
     BlockchainRawAccount,
     BlockchainAccountInspect,
     MethodExecutionResult,
+    RawBlockchainConfig,
 )
 
 
@@ -50,6 +51,18 @@ class BlockchainMethod(AsyncTonapiClient):
         response = await self._get(method=method)
 
         return Transactions(**response)
+
+    async def get_raw_config(self, block_id: str) -> RawBlockchainConfig:
+        """
+        Get raw blockchain config from a specific block, if present.
+
+        :param block_id: block ID (strings)
+        :return: :class:`RawBlockchainConfig`
+        """
+        method = f"v2/blockchain/blocks/{block_id}/config/raw"
+        response = await self._get(method=method)
+
+        return RawBlockchainConfig(**response)
 
     async def get_transaction_data(self, transaction_id: str) -> Transaction:
         """
