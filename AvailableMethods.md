@@ -9,9 +9,9 @@
 
 - Websocket
 
-- [ ] v2/websocket/subscribe_account
-- [ ] v2/websocket/subscribe_trace
-- [ ] v2/websocket/subscribe_mempool
+- [x] v2/websocket/subscribe_account
+- [x] v2/websocket/subscribe_trace
+- [x] v2/websocket/subscribe_mempool
 
 ### Raw API
 
