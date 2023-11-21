@@ -50,5 +50,9 @@ class Tonapi(TonapiClient):
         return methods.StorageMethod(**self.__dict__)
 
     @property
+    def tonconnect(self) -> methods.TonconnectMethod:
+        return methods.TonconnectMethod(**self.__dict__)
+
+    @property
     def traces(self) -> methods.TracesMethod:
         return methods.TracesMethod(**self.__dict__)

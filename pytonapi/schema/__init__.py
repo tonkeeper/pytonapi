@@ -8,6 +8,7 @@ from pytonapi.schema import nft
 from pytonapi.schema import rates
 from pytonapi.schema import staking
 from pytonapi.schema import storage
+from pytonapi.schema import tonconnect
 from pytonapi.schema import traces
 
 __all__ = [
@@ -21,5 +22,6 @@ __all__ = [
     "rates",
     "staking",
     "storage",
+    "tonconnect",
     "traces",
 ]

@@ -123,8 +123,8 @@
 
 - Connect
 
-- [ ] /v2/tonconnect/payload
-- [ ] /v2/tonconnect/payload
+- [x] /v2/tonconnect/payload
+- [x] /v2/tonconnect/stateinit
 
 
 - Wallet

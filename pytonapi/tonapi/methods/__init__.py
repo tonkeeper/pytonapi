@@ -8,6 +8,7 @@ from .rates import RatesMethod
 from .sse import SSEMethod
 from .staking import StakingMethod
 from .storage import StorageMethod
+from .tonconnect import TonconnectMethod
 from .traces import TracesMethod
 
 __all__ = [
@@ -21,5 +22,6 @@ __all__ = [
     "SSEMethod",
     "StakingMethod",
     "StorageMethod",
+    "TonconnectMethod",
     "TracesMethod",
 ]
