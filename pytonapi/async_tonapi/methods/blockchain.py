@@ -53,7 +53,7 @@ class BlockchainMethod(AsyncTonapiClient):
 
         return Transactions(**response)
 
-    async def get_raw_config(self, block_id: str) -> RawBlockchainConfig:
+    async def get_raw_block_config(self, block_id: str) -> RawBlockchainConfig:
         """
         Get raw blockchain config from a specific block, if present.
 

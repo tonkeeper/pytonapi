@@ -20,7 +20,7 @@ class TestBlockchainMethod(TestAsyncTonapi):
         response = await self.tonapi.blockchain.get_block_shards(MASTERCHATIN_SEQNO)
         self.assertIsInstance(response, schema.blockchain.BlockchainBlockShards)
 
-    # async def test_get_raw_config(self):
+    # async def test_get_raw_block_config(self):
     #     response = await self.tonapi.blockchain.get_raw_config(BLOCK_ID)
     #     self.assertIsInstance(response, schema.blockchain.RawBlockchainConfig)
 

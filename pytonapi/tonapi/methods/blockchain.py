@@ -41,7 +41,7 @@ class BlockchainMethod(TonapiClient):
 
         return BlockchainBlockShards(**response)
 
-    def get_raw_config(self, block_id: str) -> RawBlockchainConfig:
+    def get_raw_block_config(self, block_id: str) -> RawBlockchainConfig:
         """
         Get raw blockchain config from a specific block, if present.
 
