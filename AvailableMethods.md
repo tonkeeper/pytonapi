@@ -129,10 +129,10 @@
 
 - Wallet
 
-- [ ] /v2/wallet/backup
-- [ ] /v2/wallet/auth/proof
-- [ ] /v2/pubkeys/{public_key}/wallets
-- [ ] /v2/wallet/{account_id}/seqno
+- [x] /v2/wallet/backup
+- [x] /v2/wallet/auth/proof
+- [x] /v2/pubkeys/{public_key}/wallets
+- [x] /v2/wallet/{account_id}/seqno
 
 
 - Lite Server
