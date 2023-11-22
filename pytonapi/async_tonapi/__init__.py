@@ -22,6 +22,10 @@ class AsyncTonapi(AsyncTonapiClient):
         return methods.JettonsMethod(**self.__dict__)
 
     @property
+    def liteserver(self) -> methods.LiteserverMethod:
+        return methods.LiteserverMethod(**self.__dict__)
+
+    @property
     def dns(self) -> methods.DnsMethod:
         return methods.DnsMethod(**self.__dict__)
 
@@ -60,6 +64,10 @@ class AsyncTonapi(AsyncTonapiClient):
     @property
     def traces(self) -> methods.TracesMethod:
         return methods.TracesMethod(**self.__dict__)
+
+    @property
+    def wallet(self) -> methods.WalletMethod:
+        return methods.WalletMethod(**self.__dict__)
 
     @property
     def websocket(self) -> methods.WebSocketMethod:

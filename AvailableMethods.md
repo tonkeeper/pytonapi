@@ -137,18 +137,18 @@
 
 - Lite Server
 
-- [ ] /v2/liteserver/get_masterchain_info
-- [ ] /v2/liteserver/get_masterchain_info_ext
-- [ ] /v2/liteserver/get_time
-- [ ] /v2/liteserver/get_block/{block_id}
-- [ ] /v2/liteserver/get_state/{block_id}
-- [ ] /v2/liteserver/get_block_header/{block_id}
-- [ ] /v2/liteserver/send_message
-- [ ] /v2/liteserver/get_account_state/{account_id}
-- [ ] /v2/liteserver/get_shard_info/{block_id}
-- [ ] /v2/liteserver/get_all_shards_info/{block_id}
-- [ ] /v2/liteserver/get_transactions/{account_id}
-- [ ] /v2/liteserver/list_block_transactions/{block_id}
-- [ ] /v2/liteserver/get_block_proof
-- [ ] /v2/liteserver/get_config_all/{block_id}
-- [ ] /v2/liteserver/get_shard_block_proof/{block_id}
+- [x] /v2/liteserver/get_masterchain_info
+- [x] /v2/liteserver/get_masterchain_info_ext
+- [x] /v2/liteserver/get_time
+- [x] /v2/liteserver/get_block/{block_id}
+- [x] /v2/liteserver/get_state/{block_id}
+- [x] /v2/liteserver/get_block_header/{block_id}
+- [x] /v2/liteserver/send_message
+- [x] /v2/liteserver/get_account_state/{account_id}
+- [x] /v2/liteserver/get_shard_info/{block_id}
+- [x] /v2/liteserver/get_all_shards_info/{block_id}
+- [x] /v2/liteserver/get_transactions/{account_id}
+- [x] /v2/liteserver/list_block_transactions/{block_id}
+- [x] /v2/liteserver/get_block_proof
+- [x] /v2/liteserver/get_config_all/{block_id}
+- [x] /v2/liteserver/get_shard_block_proof/{block_id}
