@@ -1,4 +1,3 @@
-import json
 from typing import List, Callable, Any, Awaitable, Tuple
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
