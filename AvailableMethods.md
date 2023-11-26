@@ -7,7 +7,7 @@
 - [x] v2/sse/mempool?accounts={accounts}
 
 
-- Websocket
+- Websocket (async only)
 
 - [x] v2/websocket/subscribe_account
 - [x] v2/websocket/subscribe_trace
