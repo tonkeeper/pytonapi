@@ -20,7 +20,7 @@ def raw_to_userfriendly(address: str, is_bounceable: bool = False) -> str:
     :param is_bounceable: The flag indicating if the address is bounceable. Defaults to False.
     :return: The user-friendly address string, encoded in base64 and URL-safe.
     """
-    tag = 0x51 if is_bounceable else 0x11
+    tag = 0x11 if is_bounceable else 0x51
     workchain_id, key = address.split(':')
     workchain_id = int(workchain_id)
     key = bytearray.fromhex(key)
