@@ -47,10 +47,7 @@ class AsyncTonapiClient:
         self.timeout = timeout
         self.max_retries = max_retries
 
-        self.base_url = (
-            base_url or "https://testnet.tonapi.io/"
-            if is_testnet else "https://tonapi.io/"
-        )
+        self.base_url = base_url or "https://tonapi.io/" if not is_testnet else "https://testnet.tonapi.io/"
         self.websocket_url = websocket_url or "wss://tonapi.io/v2/websocket"
         self.headers = headers or {"Authorization": f"Bearer {api_key}"}
 
