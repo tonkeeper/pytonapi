@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Union
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
 from pytonapi.schema.liteserver import (
@@ -43,7 +43,7 @@ class LiteserverMethod(AsyncTonapiClient):
 
         return RawMasterChainInfoExt(**response)
 
-    async def get_time(self) -> int:
+    async def get_time(self) -> Union[int, None]:
         """
         Get raw time.
 
@@ -90,7 +90,7 @@ class LiteserverMethod(AsyncTonapiClient):
 
         return RawBlockHeader(**response)
 
-    async def send_message(self, body: Dict[str, Any]) -> int:
+    async def send_message(self, body: Dict[str, Any]) -> Union[int, None]:
         """
         Send raw message to blockchain.
 
