@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Union
 
 from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.accounts import Accounts
@@ -9,7 +9,7 @@ class WalletMethod(TonapiClient):
     def get_backup_info(
             self,
             x_tonconnect_auth: str,
-    ) -> str:
+    ) -> Union[str, None]:
         """
         Get backup info.
 
@@ -25,7 +25,7 @@ class WalletMethod(TonapiClient):
     def account_verification(
             self,
             body: Dict[str, Any],
-    ) -> str:
+    ) -> Union[str, None]:
         """
         Account verification and token issuance.
 
@@ -69,7 +69,7 @@ class WalletMethod(TonapiClient):
     def get_account_seqno(
             self,
             account_id: str,
-    ) -> int:
+    ) -> Union[int, None]:
         """
         Get account seqno.
 
