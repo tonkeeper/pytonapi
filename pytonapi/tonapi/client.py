@@ -41,6 +41,7 @@ class TonapiClient:
         :param max_retries: Maximum number of retries per request if rate limit is reached.
         """
         self.api_key = api_key
+        self.is_testnet = is_testnet
         self.timeout = timeout
         self.max_retries = max_retries
 
@@ -85,6 +86,7 @@ class TonapiClient:
             error_map = {
                 400: TONAPIBadRequestError,
                 401: TONAPIUnauthorizedError,
+                403: TONAPIInternalServerError,
                 404: TONAPINotFoundError,
                 429: TONAPITooManyRequestsError,
                 500: TONAPIInternalServerError,
