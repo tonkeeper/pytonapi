@@ -1,3 +1,5 @@
+from typing import Any, Dict, Optional
+
 from pytonapi.tonapi.client import TonapiClient
 from pytonapi.tonapi import methods
 
@@ -8,6 +10,34 @@ __all__ = [
 
 
 class Tonapi(TonapiClient):
+
+    def __init__(
+            self,
+            api_key: str,
+            is_testnet: Optional[bool] = False,
+            max_retries: Optional[int] = None,
+            base_url: Optional[str] = None,
+            headers: Optional[Dict[str, Any]] = None,
+            timeout: Optional[float] = None,
+    ) -> None:
+        """
+        Initialize the TonapiClient.
+
+        :param api_key: The API key.
+        :param base_url: The base URL for the API.
+        :param is_testnet: Use True if using the testnet.
+        :param timeout: Request timeout in seconds.
+        :param headers: Additional headers to include in requests.
+        :param max_retries: Maximum number of retries per request if rate limit is reached.
+        """
+        super().__init__(
+            api_key=api_key,
+            is_testnet=is_testnet,
+            max_retries=max_retries,
+            base_url=base_url,
+            headers=headers,
+            timeout=timeout
+        )
 
     @property
     def blockchain(self) -> methods.BlockchainMethod:
