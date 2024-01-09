@@ -1,9 +1,11 @@
-# PyTONAPI
+# 📦 PyTONAPI
 
 [![TON](https://img.shields.io/badge/TON-grey?logo=TON&logoColor=40AEF0)](https://ton.org)
 [![PyPI](https://img.shields.io/pypi/v/pytonapi.svg?color=FFE873&labelColor=3776AB)](https://pypi.python.org/pypi/pytonapi)
-![Python Versions](https://img.shields.io/pypi/pyversions/pytonapi.svg?color=FFE873&labelColor=3776AB)
+![Python Versions](https://img.shields.io/badge/Python-3.7%20--%203.12-black?color=FFE873&labelColor=3776AB)
 [![License](https://img.shields.io/github/license/tonkeeper/pytonapi)](https://github.com/tonkeeper/pytonapi/blob/main/LICENSE)
+
+![Image](https://telegra.ph//file/f88bcf9051073973edbd6.jpg)
 
 ![Downloads](https://pepy.tech/badge/pytonapi)
 ![Downloads](https://pepy.tech/badge/pytonapi/month)
