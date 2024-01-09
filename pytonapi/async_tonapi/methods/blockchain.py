@@ -152,7 +152,7 @@ class BlockchainMethod(AsyncTonapiClient):
             self,
             account_id: str,
             method_name: str,
-            args: Optional[str] = None,
+            *args: Optional[str],
     ) -> MethodExecutionResult:
         """
         Execute get method for account.
@@ -163,8 +163,10 @@ class BlockchainMethod(AsyncTonapiClient):
         :return: :class:`MethodExecutionResult`
         """
         method = f"v2/blockchain/accounts/{account_id}/methods/{method_name}"
-        params = {'args': args} if args else {}
-        response = await self._get(method=method, params=params)
+        query_params = "&".join(f"args={arg}" for arg in args)
+        if query_params:
+            method += f"?{query_params}"
+        response = await self._get(method=method)
 
         return MethodExecutionResult(**response)
 

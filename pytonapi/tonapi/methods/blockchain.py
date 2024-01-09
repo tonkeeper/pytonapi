@@ -151,7 +151,7 @@ class BlockchainMethod(TonapiClient):
             self,
             account_id: str,
             method_name: str,
-            args: Optional[str] = None,
+            *args: Optional[str],
     ) -> MethodExecutionResult:
         """
         Execute get method for account.
@@ -161,8 +161,10 @@ class BlockchainMethod(TonapiClient):
         :param args: contract get method args
         """
         method = f"v2/blockchain/accounts/{account_id}/methods/{method_name}"
-        params = {'args': args} if args else {}
-        response = self._get(method=method, params=params)
+        query_params = "&".join(f"args={arg}" for arg in args)
+        if query_params:
+            method += f"?{query_params}"
+        response = self._get(method=method)
 
         return MethodExecutionResult(**response)
 
