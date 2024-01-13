@@ -34,12 +34,6 @@ To use the API **you need an API key**, you can get it here [tonconsole.com](htt
   help you get started and
   understand different use cases.
 
-## Dependencies
-
-* [httpx](https://pypi.org/project/httpx/) - A fully featured HTTP client for Python 3, which provides sync and async
-* [pydantic](https://pypi.org/project/pydantic/) - Data validation and settings management using Python type hints
-* [websockets](https://pypi.org/project/websockets/) - A library for building WebSocket servers and clients in Python
-
 ## Usage
 
 ### Installation
@@ -123,6 +117,12 @@ if __name__ == '__main__':
 * Additional examples can be found [examples](https://github.com/tonkeeper/pytonapi/tree/main/examples) folder.
 
 </details>
+
+## Dependencies
+
+* [httpx](https://pypi.org/project/httpx/) - A fully featured HTTP client for Python 3, which provides sync and async
+* [pydantic](https://pypi.org/project/pydantic/) - Data validation and settings management using Python type hints
+* [websockets](https://pypi.org/project/websockets/) - A library for building WebSocket servers and clients in Python
 
 ## Contribution
 
