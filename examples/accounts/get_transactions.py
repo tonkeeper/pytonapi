@@ -10,26 +10,19 @@ ACCOUNT_ID = "EQAUxYSo-UwoqAGixaD3d7CNLp9PthgmEZfnr6BvsijzJHdA"  # noqa
 
 
 def main():
-    # Create a new Tonapi object with the provided API key
     tonapi = Tonapi(api_key=API_KEY)
+    result = tonapi.blockchain.get_account_transactions(account_id=ACCOUNT_ID, limit=1000)
 
-    # Retrieve account transactions
-    result = tonapi.blockchain.get_account_transactions(account_id=ACCOUNT_ID, limit=100)
-
-    # Iterate through transactions and print details
     for transaction in result.transactions:
-        # Print transaction value in nanoton
-        print(transaction.in_msg.value)
-        # Output: 1000000000
+        print(f"Value nanoton: {transaction.in_msg.value}")
+        # output: 1000000000
 
-        # Print transaction value in amount
-        print(nano_to_amount(transaction.in_msg.value))
-        # Output: 1.0
+        print(f"Value TON: {nano_to_amount(transaction.in_msg.value)}")
+        # output: 1.0
 
-        # Print transaction text comment if present
         if transaction.in_msg.decoded_op_name == "text_comment":
-            print(transaction.in_msg.decoded_body["text"])
-            # Output: Hello, World!
+            print(f"Comment: {transaction.in_msg.decoded_body['text']}")
+            # output: Hello, World!
 
 
 if __name__ == '__main__':
