@@ -19,8 +19,12 @@
 
 - [x] /v2/blockchain/blocks/{block_id}
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/shards
+- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/blocks
+- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/transactions
+- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/config
+- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/config/raw
 - [x] /v2/blockchain/blocks/{block_id}/transactions
-- [x] /v2/blockchain/blocks/{block_id}/config/raw
+- [x] ~~/v2/blockchain/blocks/{block_id}/config/raw~~
 - [x] /v2/blockchain/transactions/{transaction_id}
 - [x] /v2/blockchain/messages/{msg_id}/transaction
 - [x] /v2/blockchain/validators
@@ -34,6 +38,15 @@
 - [x] /v2/blockchain/accounts/{account_id}/inspect
 
 
+- Emulation
+
+- [ ] /v2/message/decode
+- [x] /v2/events/emulate
+- [x] /v2/traces/emulate
+- [x] /v2/wallet/emulate
+- [x] /v2/accounts/{account_id}/events/emulate
+
+
 - Accounts
 
 - [x] /v2/address/{account_id}/parse
@@ -44,7 +57,6 @@
 - [x] /v2/accounts/{account_id}/jettons/history
 - [x] /v2/accounts/{account_id}/jettons/{jetton_id}/history
 - [x] /v2/accounts/{account_id}/nfts
-- [x] /v2/accounts/{account_id}/nfts/history
 - [x] /v2/accounts/{account_id}/events
 - [x] /v2/accounts/{account_id}/events/{event_id}
 - [x] /v2/accounts/{account_id}/traces
@@ -54,14 +66,6 @@
 - [x] /v2/accounts/{account_id}/dns/expiring
 - [x] /v2/accounts/{account_id}/publickey
 - [x] /v2/accounts/{account_id}/diff
-
-
-- Emulation
-
-- [x] /v2/events/emulate
-- [x] /v2/traces/emulate
-- [x] /v2/wallet/emulate
-- [x] /v2/accounts/{account_id}/events/emulate
 
 
 - NFT
@@ -78,7 +82,6 @@
 - DNS
 
 - [x] /v2/dns/{domain_name}
-- [x] /v2/nfts/{account_id}/history
 - [x] /v2/dns/{domain_name}/resolve
 - [x] /v2/dns/{domain_name}/bids
 - [x] /v2/dns/auctions
@@ -92,6 +95,14 @@
 - Events
 
 - [x] /v2/events/{event_id}
+
+
+- Inscriptions
+
+- [ ] /v2/experimental/accounts/{account_id}/inscriptions
+- [ ] /v2/experimental/accounts/{account_id}/inscriptions/history
+- [ ] /v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
+- [ ] /v2/experimental/inscriptions/op-template
 
 
 - Jettons
@@ -129,6 +140,7 @@
 
 - Wallet
 
+- [ ] /v2/wallet/backup
 - [x] /v2/wallet/backup
 - [x] /v2/wallet/auth/proof
 - [x] /v2/pubkeys/{public_key}/wallets
