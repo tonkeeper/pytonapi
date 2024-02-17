@@ -94,6 +94,7 @@ class Message(BaseModel):
     init: Optional[StateInit]
     decoded_op_name: Optional[str]
     decoded_body: Optional[Union[dict, str]]
+    raw_body: Optional[str]
 
 
 class Transaction(BaseModel):
