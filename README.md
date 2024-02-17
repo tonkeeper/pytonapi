@@ -131,8 +131,8 @@ submit a pull request.
 
 ## Support
 
-Supported by [TON Society](https://github.com/ton-society/grants-and-bounties), Grants and Bounties program.
-
+Supported by  [TONAPI](https://tonapi.io) and [TON Society](https://github.com/ton-society/grants-and-bounties) (Grants
+and Bounties program).
 
 ## Donations
 
