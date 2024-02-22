@@ -14,7 +14,7 @@ from pytonapi.schema.accounts import (
 )
 from pytonapi.schema.domains import DomainNames
 from pytonapi.schema.jettons import JettonsBalances
-from pytonapi.schema.nft import NftItems
+from pytonapi.schema.nft import NftItems, NftItem
 from pytonapi.schema.traces import TraceIds
 
 
@@ -32,6 +32,19 @@ class AccountsMethod(TonapiClient):
 
         return AddressForm(**response)
 
+    def get_bulk_info(self, account_ids: List[str]) -> Accounts:
+        """
+        Get human-friendly information about multiple accounts without low-level details.
+
+        :param account_ids: List of account IDs
+        :return: :class:`Accounts`
+        """
+        method = f"v2/accounts/_bulk"
+        params = {"account_ids": account_ids}
+        response = self._post(method=method, body=params)
+
+        return Accounts(**response)
+
     def get_info(self, account_id: str) -> Account:
         """
         Get human-friendly information about an account without low-level details.
@@ -43,32 +56,6 @@ class AccountsMethod(TonapiClient):
         response = self._get(method=method)
 
         return Account(**response)
-
-    def get_bulk_info(self, account_ids: List[str]) -> Accounts:
-        """
-        Get human-friendly information about multiple accounts without low-level details.
-
-        :param account_ids: List of account IDs
-        return: :class:`Accounts`
-        """
-        method = f"v2/accounts/_bulk"
-        params = {"account_ids": account_ids}
-        response = self._post(method=method, body=params)
-
-        return Accounts(**response)
-
-    def search_by_domain(self, name: str) -> FoundAccounts:
-        """
-        Search by account domain name.
-
-        :param name: domain name
-        :return: :class:`Account`
-        """
-        method = f"v2/accounts/search"
-        params = {"name": name}
-        response = self._get(method=method, params=params)
-
-        return FoundAccounts(**response)
 
     def get_domains(self, account_id: str) -> DomainNames:
         """
@@ -108,20 +95,24 @@ class AccountsMethod(TonapiClient):
         Get the transfer jettons history for account.
 
         :param account_id: account ID
-        :param limit: Default value : 100
+        :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
-        :param accept_language: Default value : en
-        :param subject_only: Default value : False
-        :param start_date: Default value : None
-        :param end_date: Default value : None
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :param start_date: Default value: None
+        :param end_date: Default value: None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/jettons/history"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa:E701
-        if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_date: params["start_date"] = start_date  # noqa:E701
-        if end_date: params["end_date"] = end_date  # noqa:E701
+        if before_lt:
+            params["before_lt"] = before_lt
+        if subject_only:
+            params["subject_only"] = "true"
+        if start_date:
+            params["start_date"] = start_date
+        if end_date:
+            params["end_date"] = end_date
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, params=params, headers=headers)
 
@@ -144,20 +135,24 @@ class AccountsMethod(TonapiClient):
 
         :param account_id: account ID
         :param jetton_id: jetton ID
-        :param limit: Default value : 100
+        :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
-        :param accept_language: Default value : en
-        :param subject_only: Default value : False
-        :param start_date: Default value : None
-        :param end_date: Default value : None
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :param start_date: Default value: None
+        :param end_date: Default value: None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/jettons/{jetton_id}/history"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa:E701
-        if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_date: params["start_date"] = start_date  # noqa:E701
-        if end_date: params["end_date"] = end_date  # noqa:E701
+        if before_lt:
+            params["before_lt"] = before_lt
+        if subject_only:
+            params["subject_only"] = "true"
+        if start_date:
+            params["start_date"] = start_date
+        if end_date:
+            params["end_date"] = end_date
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, params=params, headers=headers)
 
@@ -168,26 +163,28 @@ class AccountsMethod(TonapiClient):
             account_id: str,
             limit: int = 1000,
             offset: int = 0,
-            collection: str = None,
+            collection: Optional[str] = None,
             indirect_ownership: bool = False,
     ) -> NftItems:
         """
         Get NFT items by owner address.
 
         :param account_id: account ID
-        :param limit: Default value : 1000
-        :param offset: Default value : 0
+        :param limit: Default value: 1000
         :param collection: filter NFT by collection address
+        :param offset: Default value: 0
         :param indirect_ownership: Selling nft items in ton implemented usually via transfer items
          to special selling account. This option enables including items which owned not directly.
         :return: :class:`NftItems`
         """
         method = f"v2/accounts/{account_id}/nfts"
         params = {
-            "limit": limit, "offset": offset,
-            'indirect_ownership': 'true' if indirect_ownership else 'false'
+            "limit": limit,
+            "offset": offset,
+            "indirect_ownership": "true" if indirect_ownership else "false"
         }
-        if collection: params["collection"] = collection  # noqa:E701
+        if collection:
+            params["collection"] = collection
         response = self._get(method=method, params=params)
 
         return NftItems(**response)
@@ -195,7 +192,7 @@ class AccountsMethod(TonapiClient):
     def get_all_nfts(
             self,
             account_id: str,
-            collection: str = None,
+            collection: Optional[str] = None,
             indirect_ownership: bool = True,
     ) -> NftItems:
         """
@@ -207,13 +204,16 @@ class AccountsMethod(TonapiClient):
          to special selling account. This option enables including items which owned not directly.
         :return: :class:`NftItems`
         """
-        nft_items = []
+        nft_items: List[NftItem] = []
         offset, limit = 0, 1000
 
         while True:
             result = self.get_nfts(
-                account_id=account_id, limit=limit, offset=offset,
-                collection=collection, indirect_ownership=indirect_ownership,
+                account_id=account_id,
+                limit=limit,
+                offset=offset,
+                collection=collection,
+                indirect_ownership=indirect_ownership,
             )
             nft_items += result.nft_items
             offset += limit
@@ -223,44 +223,9 @@ class AccountsMethod(TonapiClient):
 
         return NftItems(nft_items=nft_items)
 
-    def get_traces(self, account_id: str, limit: int = 100) -> TraceIds:
-        """
-        Get traces for account.
-
-        :param account_id: account ID
-        :param limit: Default value : 100
-        :return: :class:`TraceIds`
-        """
-        method = f"v2/accounts/{account_id}/traces"
-        params = {"limit": limit}
-        response = self._get(method=method, params=params)
-
-        return TraceIds(**response)
-
-    def get_event(
-            self, account_id: str,
-            event_id: str,
-            accept_language: str = "en",
-            subject_only: Optional[bool] = False,
-    ) -> AccountEvent:
-        """
-        Get event for an account by event_id
-
-        :param account_id: account ID
-        :param event_id: event ID
-        :param accept_language: Default value : en
-        :param subject_only: Default value : False
-        :return: :class:`AccountEvent`
-        """
-        method = f"v2/accounts/{account_id}/events/{event_id}"
-        params = {"subject_only": subject_only} if subject_only else {}
-        headers = {"Accept-Language": accept_language}
-        response = self._get(method=method, params=params, headers=headers)
-
-        return AccountEvent(**response)
-
     def get_events(
-            self, account_id: str,
+            self,
+            account_id: str,
             limit: int = 100,
             before_lt: Optional[int] = None,
             accept_language: str = "en",
@@ -276,24 +241,65 @@ class AccountsMethod(TonapiClient):
         any logic on top of actions because actions can be changed at any time.
 
         :param account_id: account ID
-        :param limit: Default value : 100
+        :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
-        :param accept_language: Default value : en
-        :param subject_only: Default value : False
-        :param start_date: Default value : None
-        :param end_date: Default value : None
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :param start_date: Default value: None
+        :param end_date: Default value: None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/events"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa:E701
-        if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_date: params["start_date"] = start_date  # noqa:E701
-        if end_date: params["end_date"] = end_date  # noqa:E701
+        if before_lt:
+            params["before_lt"] = before_lt
+        if subject_only:
+            params["subject_only"] = "true"
+        if start_date:
+            params["start_date"] = start_date
+        if end_date:
+            params["end_date"] = end_date
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, params=params, headers=headers)
 
         return AccountEvents(**response)
+
+    def get_event(
+            self,
+            account_id: str,
+            event_id: str,
+            accept_language: str = "en",
+            subject_only: Optional[bool] = False,
+    ) -> AccountEvent:
+        """
+        Get event for an account by event_id
+
+        :param account_id: account ID
+        :param event_id: event ID
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :return: :class:`AccountEvent`
+        """
+        method = f"v2/accounts/{account_id}/events/{event_id}"
+        params = {"subject_only": subject_only} if subject_only else {}
+        headers = {"Accept-Language": accept_language}
+        response = self._get(method=method, params=params, headers=headers)
+
+        return AccountEvent(**response)
+
+    def get_traces(self, account_id: str, limit: int = 100) -> TraceIds:
+        """
+        Get traces for account.
+
+        :param account_id: account ID
+        :param limit: Default value: 100
+        :return: :class:`TraceIds`
+        """
+        method = f"v2/accounts/{account_id}/traces"
+        params = {"limit": limit}
+        response = self._get(method=method, params=params)
+
+        return TraceIds(**response)
 
     def get_nft_history(
             self,
@@ -309,20 +315,24 @@ class AccountsMethod(TonapiClient):
         Get the transfer nft history.
 
         :param account_id: account ID
-        :param limit: Default value : 100
+        :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
-        :param accept_language: Default value : en
-        :param subject_only: Default value : False
-        :param start_date: Default value : None
-        :param end_date: Default value : None
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :param start_date: Default value: None
+        :param end_date: Default value: None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/nfts/history"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa:E701
-        if subject_only: params["subject_only"] = "true"  # noqa:E701
-        if start_date: params["start_date"] = start_date  # noqa:E701
-        if end_date: params["end_date"] = end_date  # noqa:E701
+        if before_lt:
+            params["before_lt"] = before_lt
+        if subject_only:
+            params["subject_only"] = "true"
+        if start_date:
+            params["start_date"] = start_date
+        if end_date:
+            params["end_date"] = end_date
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, params=params, headers=headers)
 
@@ -339,6 +349,31 @@ class AccountsMethod(TonapiClient):
         response = self._get(method=method)
 
         return Subscriptions(**response)
+
+    def reindex(self, account_id: str) -> bool:
+        """
+        Update internal cache for a particular account
+
+        :param account_id: account ID
+        :return: :class:`bool`
+        """
+        method = f"v2/accounts/{account_id}/reindex"
+        response = self._post(method=method)
+
+        return bool(response)
+
+    def search_by_domain(self, name: str) -> FoundAccounts:
+        """
+        Search by account domain name.
+
+        :param name: domain name
+        :return: :class:`FoundAccounts`
+        """
+        method = f"v2/accounts/search"
+        params = {"name": name}
+        response = self._get(method=method, params=params)
+
+        return FoundAccounts(**response)
 
     def get_expiring_dns(self, account_id: str, period: Optional[int] = None) -> DnsExpiring:
         """
@@ -385,15 +420,3 @@ class AccountsMethod(TonapiClient):
         response = self._get(method=method, params=params)
 
         return BalanceChange(**response)
-
-    def reindex(self, account_id: str) -> bool:
-        """
-        Update internal cache for a particular account
-
-        :param account_id: account ID
-        :return: :class:`bool`
-        """
-        method = f"v2/accounts/{account_id}/reindex"
-        response = self._post(method=method)
-
-        return bool(response)

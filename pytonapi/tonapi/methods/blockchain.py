@@ -6,30 +6,43 @@ from pytonapi.schema.blockchain import (
     Transaction,
     Validators,
     BlockchainBlock,
+    BlockchainBlocks,
     BlockchainBlockShards,
-    BlockchainRawAccount,
     BlockchainAccountInspect,
+    BlockchainConfig,
+    BlockchainRawAccount,
     MethodExecutionResult,
     RawBlockchainConfig,
-    BlockchainConfig,
+    ServiceStatus,
 )
 
 
 class BlockchainMethod(TonapiClient):
+
+    def status(self) -> ServiceStatus:
+        """
+        Reduce indexing latency.
+
+        :return: :class:`ServiceStatus`
+        """
+        method = "v2/status"
+        response = self._get(method=method)
+
+        return ServiceStatus(**response)
 
     def get_block_data(self, block_id: str) -> BlockchainBlock:
         """
         Get block data.
 
         :param block_id: block ID (string), example: "(-1,8000000000000000,4234234)"
-        :return: :class:`Block`
+        :return: :class:`BlockchainBlock`
         """
         method = f"v2/blockchain/blocks/{block_id}"
         response = self._get(method=method)
 
         return BlockchainBlock(**response)
 
-    def get_block_shards(self, masterchain_seqno: int) -> BlockchainBlockShards:
+    def get_block(self, masterchain_seqno: int) -> BlockchainBlockShards:
         """
         Get blockchain block shards.
 
@@ -41,14 +54,56 @@ class BlockchainMethod(TonapiClient):
 
         return BlockchainBlockShards(**response)
 
-    def get_raw_block_config(self, block_id: str) -> RawBlockchainConfig:
+    def get_blocks(self, masterchain_seqno: int) -> BlockchainBlocks:
+        """
+        Get all blocks in all shards and workchains between target
+        and previous masterchain block according to shards last blocks snapshot in masterchain.
+        We don't recommend to build your app around this method because
+        it has problem with scalability and will work very slow in the future.
+
+        :param masterchain_seqno: masterchain block seqno
+        :return: :class:`BlockchainBlocks`
+        """
+        method = f"v2/blockchain/masterchain/{masterchain_seqno}/blocks"
+        response = self._get(method=method)
+
+        return BlockchainBlocks(**response)
+
+    def get_transactions_shards(self, masterchain_seqno: int) -> Transactions:
+        """
+        Get all transactions in all shards and workchains between target
+        and previous masterchain block according to shards last blocks snapshot in masterchain.
+        We don't recommend to build your app around this method because
+        it has problem with scalability and will work very slow in the future.
+
+        :param masterchain_seqno: masterchain block seqno
+        :return: :class:`Transactions`
+        """
+        method = f"v2/blockchain/masterchain/{masterchain_seqno}/transactions"
+        response = self._get(method=method)
+
+        return Transactions(**response)
+
+    def get_blockchain_config(self, masterchain_seqno: int) -> BlockchainConfig:
+        """
+        Get blockchain config from a specific block, if present.
+
+        :param masterchain_seqno: masterchain block seqno
+        :return: :class:`BlockchainConfig`
+        """
+        method = f"v2/blockchain/masterchain/{masterchain_seqno}/config"
+        response = self._get(method=method)
+
+        return BlockchainConfig(**response)
+
+    def get_raw_blockchain_config(self, masterchain_seqno: int) -> RawBlockchainConfig:
         """
         Get raw blockchain config from a specific block, if present.
 
-        :param block_id: block ID (strings)
+        :param masterchain_seqno: masterchain block seqno
         :return: :class:`RawBlockchainConfig`
         """
-        method = f"v2/blockchain/blocks/{block_id}/config/raw"
+        method = f"v2/blockchain/masterchain/{masterchain_seqno}/config/raw"
         response = self._get(method=method)
 
         return RawBlockchainConfig(**response)
@@ -58,7 +113,7 @@ class BlockchainMethod(TonapiClient):
         Get transactions from block.
 
         :param block_id: block ID (string), example: "(-1,8000000000000000,4234234)"
-        :return: :class:`Block`
+        :return: :class:`Transactions`
         """
         method = f"v2/blockchain/blocks/{block_id}/transactions"
         response = self._get(method=method)

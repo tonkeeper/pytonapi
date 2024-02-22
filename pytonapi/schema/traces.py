@@ -125,7 +125,9 @@ class Transaction(BaseModel):
 
 class Trace(BaseModel):
     transaction: Transaction
+    interfaces: Optional[List[str]]
     children: Optional[List[Trace]]
+    emulated: Optional[bool]
 
 
 class TraceId(BaseModel):

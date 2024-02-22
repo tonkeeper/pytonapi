@@ -32,18 +32,6 @@ class AccountsMethod(AsyncTonapiClient):
 
         return AddressForm(**response)
 
-    async def get_info(self, account_id: str) -> Account:
-        """
-        Get human-friendly information about an account without low-level details.
-
-        :param account_id: Account ID
-        :return: :class:`Account`
-        """
-        method = f"v2/accounts/{account_id}"
-        response = await self._get(method=method)
-
-        return Account(**response)
-
     async def get_bulk_info(self, account_ids: List[str]) -> Accounts:
         """
         Get human-friendly information about multiple accounts without low-level details.
@@ -57,18 +45,17 @@ class AccountsMethod(AsyncTonapiClient):
 
         return Accounts(**response)
 
-    async def search_by_domain(self, name: str) -> FoundAccounts:
+    async def get_info(self, account_id: str) -> Account:
         """
-        Search by account domain name.
+        Get human-friendly information about an account without low-level details.
 
-        :param name: domain name
-        :return: :class:`FoundAccounts`
+        :param account_id: Account ID
+        :return: :class:`Account`
         """
-        method = f"v2/accounts/search"
-        params = {"name": name}
-        response = await self._get(method=method, params=params)
+        method = f"v2/accounts/{account_id}"
+        response = await self._get(method=method)
 
-        return FoundAccounts(**response)
+        return Account(**response)
 
     async def get_domains(self, account_id: str) -> DomainNames:
         """
@@ -236,42 +223,6 @@ class AccountsMethod(AsyncTonapiClient):
 
         return NftItems(nft_items=nft_items)
 
-    async def get_traces(self, account_id: str, limit: int = 100) -> TraceIds:
-        """
-        Get traces for account.
-
-        :param account_id: account ID
-        :param limit: Default value: 100
-        :return: :class:`TraceIds`
-        """
-        method = f"v2/accounts/{account_id}/traces"
-        params = {"limit": limit}
-        response = await self._get(method=method, params=params)
-
-        return TraceIds(**response)
-
-    async def get_event(
-            self,
-            account_id: str,
-            event_id: str,
-            accept_language: str = "en",
-            subject_only: Optional[bool] = False,
-    ) -> AccountEvent:
-        """
-        Get event for an account by event_id
-
-        :param account_id: account ID
-        :param event_id: event ID
-        :param accept_language: Default value: en
-        :param subject_only: Default value: False
-        :return: :class:`AccountEvent`
-        """
-        method = f"v2/accounts/{account_id}/events/{event_id}"
-        params = {"subject_only": subject_only} if subject_only else {}
-        headers = {"Accept-Language": accept_language}
-        response = await self._get(method=method, params=params, headers=headers)
-
-        return AccountEvent(**response)
 
     async def get_events(
             self,
@@ -313,6 +264,43 @@ class AccountsMethod(AsyncTonapiClient):
         response = await self._get(method=method, params=params, headers=headers)
 
         return AccountEvents(**response)
+
+    async def get_event(
+            self,
+            account_id: str,
+            event_id: str,
+            accept_language: str = "en",
+            subject_only: Optional[bool] = False,
+    ) -> AccountEvent:
+        """
+        Get event for an account by event_id
+
+        :param account_id: account ID
+        :param event_id: event ID
+        :param accept_language: Default value: en
+        :param subject_only: Default value: False
+        :return: :class:`AccountEvent`
+        """
+        method = f"v2/accounts/{account_id}/events/{event_id}"
+        params = {"subject_only": subject_only} if subject_only else {}
+        headers = {"Accept-Language": accept_language}
+        response = await self._get(method=method, params=params, headers=headers)
+
+        return AccountEvent(**response)
+
+    async def get_traces(self, account_id: str, limit: int = 100) -> TraceIds:
+        """
+        Get traces for account.
+
+        :param account_id: account ID
+        :param limit: Default value: 100
+        :return: :class:`TraceIds`
+        """
+        method = f"v2/accounts/{account_id}/traces"
+        params = {"limit": limit}
+        response = await self._get(method=method, params=params)
+
+        return TraceIds(**response)
 
     async def get_nft_history(
             self,
@@ -363,6 +351,31 @@ class AccountsMethod(AsyncTonapiClient):
 
         return Subscriptions(**response)
 
+    async def reindex(self, account_id: str) -> bool:
+        """
+        Update internal cache for a particular account
+
+        :param account_id: account ID
+        :return: :class:`bool`
+        """
+        method = f"v2/accounts/{account_id}/reindex"
+        response = await self._post(method=method)
+
+        return bool(response)
+
+    async def search_by_domain(self, name: str) -> FoundAccounts:
+        """
+        Search by account domain name.
+
+        :param name: domain name
+        :return: :class:`FoundAccounts`
+        """
+        method = f"v2/accounts/search"
+        params = {"name": name}
+        response = await self._get(method=method, params=params)
+
+        return FoundAccounts(**response)
+
     async def get_expiring_dns(self, account_id: str, period: Optional[int] = None) -> DnsExpiring:
         """
         Get expiring account .ton dns.
@@ -408,15 +421,3 @@ class AccountsMethod(AsyncTonapiClient):
         response = await self._get(method=method, params=params)
 
         return BalanceChange(**response)
-
-    async def reindex(self, account_id: str) -> bool:
-        """
-        Update internal cache for a particular account
-
-        :param account_id: account ID
-        :return: :class:`bool`
-        """
-        method = f"v2/accounts/{account_id}/reindex"
-        response = await self._post(method=method)
-
-        return bool(response)

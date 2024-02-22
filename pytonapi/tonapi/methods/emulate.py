@@ -1,11 +1,30 @@
 from typing import Dict, Any, Optional
 
+from pytonapi.schema.blockchain import DecodedMessage
 from pytonapi.tonapi.client import TonapiClient
 from pytonapi.schema.events import Event, AccountEvent, MessageConsequences
 from pytonapi.schema.traces import Trace
 
 
 class EmulateMethod(TonapiClient):
+
+    def decode_message(self, body: Dict[str, Any]) -> DecodedMessage:
+        """
+        Decode a given message. Only external incoming messages can be decoded currently.
+
+        :param body: bag-of-cells serialized to base64
+            example value:
+            {
+                "boc": "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg"
+            }
+        :return: :class: `DecodedMessage`
+        """
+        method = "v2/messages/decode"
+        response = self._post(
+            method=method,
+            body=body,
+        )
+        return DecodedMessage(**response)
 
     def emulate_events(
             self,

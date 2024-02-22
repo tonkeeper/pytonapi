@@ -30,6 +30,8 @@ class Account(BaseModel):
     icon: Optional[str]
     memo_required: Optional[bool]
     get_methods: List[str]
+    is_suspended: Optional[bool]
+    is_wallet: bool
 
 
 class Accounts(BaseModel):
@@ -41,6 +43,7 @@ class AccountAddress(BaseModel):
     name: Optional[str]
     is_scam: bool
     icon: Optional[str]
+    is_wallet: bool
 
 
 class FoundAccount(BaseModel):

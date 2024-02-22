@@ -50,9 +50,16 @@ class Transactions(BaseModel):
 
 class Validator(BaseModel):
     address: Address
+    adnl_address: str
+    stake: int
+    max_factor: int
 
 
 class Validators(BaseModel):
+    elect_at: int
+    elect_close: int
+    min_stake: int
+    total_stake: int
     validators: List[Validator]
 
 
@@ -65,7 +72,27 @@ class ValidatorSet(BaseModel):
     list: List
 
 
+class BlockCurrencyCollection(BaseModel):
+    grams: int
+    other: List[Dict[str, Any]]
+
+
+class BlockValueFlow(BaseModel):
+    from_prev_blk: BlockCurrencyCollection
+    to_next_blk: BlockCurrencyCollection
+    imported: BlockCurrencyCollection
+    exported: BlockCurrencyCollection
+    fees_collected: BlockCurrencyCollection
+    burned: Optional[BlockCurrencyCollection]
+    fees_imported: BlockCurrencyCollection
+    recovered: BlockCurrencyCollection
+    created: BlockCurrencyCollection
+    minted: BlockCurrencyCollection
+
+
 class BlockchainBlock(BaseModel):
+    tx_quantity: int
+    value_flow: BlockValueFlow
     workchain_id: int
     shard: str
     seqno: int
@@ -96,8 +123,12 @@ class BlockchainBlock(BaseModel):
     created_by: str
 
 
+class BlockchainBlocks(BaseModel):
+    blocks: List[BlockchainBlock]
+
+
 class BlockchainBlockShards(BaseModel):
-    shards: List[Dict]
+    shards: List[Dict[str, Any]]
 
 
 class RawBlockchainConfig(BaseModel):
@@ -174,6 +205,7 @@ class BlockchainRawAccount(BaseModel):
     code: Optional[str]
     data: Optional[str]
     last_transaction_lt: int
+    last_transaction_hash: Optional[str]
     status: str
     storage: AccountStorageInfo
 
@@ -203,3 +235,14 @@ class MethodExecutionResult(BaseModel):
     exit_code: int
     stack: List[TvmStackRecord]
     decoded: Optional[Any]
+
+
+class ServiceStatus(BaseModel):
+    rest_online: bool
+    indexing_latency: int
+
+
+class DecodedMessage(BaseModel):
+    destination: AccountAddress
+    destination_wallet_version: str
+    ext_in_msg_decoded: Optional[Dict[str, Any]]

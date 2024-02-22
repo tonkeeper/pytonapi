@@ -10,18 +10,33 @@ MASTERCHATIN_SEQNO = "123456"
 
 
 class TestBlockchainMethod(TestTonapi):
+    def test_status(self):
+        response = self.tonapi.blockchain.status()
+        self.assertIsInstance(response, schema.blockchain.ServiceStatus)
 
     def test_get_block_data(self):
         response = self.tonapi.blockchain.get_block_data(BLOCK_ID)
         self.assertIsInstance(response, schema.blockchain.BlockchainBlock)
 
-    def test_get_block_shards(self):
-        response = self.tonapi.blockchain.get_block_shards(MASTERCHATIN_SEQNO)
+    def test_get_block(self):
+        response = self.tonapi.blockchain.get_block(MASTERCHATIN_SEQNO)
         self.assertIsInstance(response, schema.blockchain.BlockchainBlockShards)
 
-    # def test_get_raw_block_config(self):
-    #     response = self.tonapi.blockchain.get_raw_config(BLOCK_ID)
-    #     self.assertIsInstance(response, schema.blockchain.RawBlockchainConfig)
+    def test_get_blocks(self):
+        response = self.tonapi.blockchain.get_blocks(MASTERCHATIN_SEQNO)
+        self.assertIsInstance(response, schema.blockchain.BlockchainBlocks)
+
+    def test_get_transactions_shards(self):
+        response = self.tonapi.blockchain.get_transactions_shards(MASTERCHATIN_SEQNO)
+        self.assertIsInstance(response, schema.blockchain.Transactions)
+
+    def test_get_blockchain_config(self):
+        response = self.tonapi.blockchain.get_blockchain_config(MASTERCHATIN_SEQNO)
+        self.assertIsInstance(response, schema.blockchain.BlockchainConfig)
+
+    def test_get_raw_blockchain_config(self):
+        response = self.tonapi.blockchain.get_raw_blockchain_config(MASTERCHATIN_SEQNO)
+        self.assertIsInstance(response, schema.blockchain.RawBlockchainConfig)
 
     def test_get_transaction_from_block(self):
         response = self.tonapi.blockchain.get_transaction_from_block(BLOCK_ID)

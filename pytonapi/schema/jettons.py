@@ -5,6 +5,7 @@ from pydantic.v1 import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
+from pytonapi.schema.rates import TokenRates
 
 
 class JettonVerificationType(str, Enum):
@@ -44,6 +45,7 @@ class JettonPreview(BaseModel):
 
 class JettonBalance(BaseModel):
     balance: str
+    price: Optional[TokenRates]
     wallet_address: AccountAddress
     jetton: JettonPreview
 
