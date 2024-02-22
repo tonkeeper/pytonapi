@@ -17,14 +17,14 @@
 
 - Blockchain
 
+- [x] /v2/status
 - [x] /v2/blockchain/blocks/{block_id}
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/shards
-- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/blocks
-- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/transactions
-- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/config
-- [ ] /v2/blockchain/masterchain/{masterchain_seqno}/config/raw
+- [x] /v2/blockchain/masterchain/{masterchain_seqno}/blocks
+- [x] /v2/blockchain/masterchain/{masterchain_seqno}/transactions
+- [x] /v2/blockchain/masterchain/{masterchain_seqno}/config
+- [x] /v2/blockchain/masterchain/{masterchain_seqno}/config/raw
 - [x] /v2/blockchain/blocks/{block_id}/transactions
-- [x] ~~/v2/blockchain/blocks/{block_id}/config/raw~~
 - [x] /v2/blockchain/transactions/{transaction_id}
 - [x] /v2/blockchain/messages/{msg_id}/transaction
 - [x] /v2/blockchain/validators
@@ -40,7 +40,7 @@
 
 - Emulation
 
-- [ ] /v2/message/decode
+- [x] /v2/message/decode
 - [x] /v2/events/emulate
 - [x] /v2/traces/emulate
 - [x] /v2/wallet/emulate
