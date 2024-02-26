@@ -3,6 +3,7 @@ from pytonapi.schema import blockchain
 from pytonapi.schema import dns
 from pytonapi.schema import domains
 from pytonapi.schema import events
+from pytonapi.schema import inscriptions
 from pytonapi.schema import jettons
 from pytonapi.schema import nft
 from pytonapi.schema import rates
@@ -17,6 +18,7 @@ __all__ = [
     "dns",
     "domains",
     "events",
+    "inscriptions",
     "jettons",
     "nft",
     "rates",

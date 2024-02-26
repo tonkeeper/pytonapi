@@ -71,6 +71,10 @@ class AsyncTonapi(AsyncTonapiClient):
         return methods.EventsMethod(**self.__dict__)
 
     @property
+    def inscriptions(self) -> methods.InscriptionsMethod:
+        return methods.InscriptionsMethod(**self.__dict__)
+
+    @property
     def nft(self) -> methods.NftMethod:
         return methods.NftMethod(**self.__dict__)
 

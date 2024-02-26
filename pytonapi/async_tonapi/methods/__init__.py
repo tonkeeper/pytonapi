@@ -3,6 +3,7 @@ from .blockchain import BlockchainMethod
 from .dns import DnsMethod
 from .emulate import EmulateMethod
 from .events import EventsMethod
+from .inscriptions import InscriptionsMethod
 from .jettons import JettonsMethod
 from .liteserver import LiteserverMethod
 from .nft import NftMethod
@@ -21,6 +22,7 @@ __all__ = [
     "DnsMethod",
     "EmulateMethod",
     "EventsMethod",
+    "InscriptionsMethod",
     "JettonsMethod",
     "LiteserverMethod",
     "NftMethod",
