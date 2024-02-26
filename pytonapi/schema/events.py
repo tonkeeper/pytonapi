@@ -157,6 +157,30 @@ class ActionSimplePreview(BaseModel):
     accounts: List[AccountAddress]
 
 
+class DomainRenewAction(BaseModel):
+    domain: str
+    contract_address: Address
+    renewer: AccountAddress
+
+
+class InscriptionTransferAction(BaseModel):
+    sender: AccountAddress
+    recipient: AccountAddress
+    amount: str
+    comment: Optional[str]
+    type: str
+    ticker: str
+    decimals: int
+
+
+class InscriptionMintAction(BaseModel):
+    recipient: AccountAddress
+    amount: str
+    type: str
+    ticker: str
+    decimals: int
+
+
 class Action(BaseModel):
     type: str
     status: str
@@ -177,6 +201,9 @@ class Action(BaseModel):
     ElectionsRecoverStake: Optional[ElectionsRecoverStakeAction]
     JettonSwap: Optional[JettonSwapAction]
     SmartContractExec: Optional[SmartContractAction]
+    DomainRenew: Optional[DomainRenewAction]
+    InscriptionTransfer: Optional[InscriptionTransferAction]
+    InscriptionMint: Optional[InscriptionMintAction]
     simple_preview: ActionSimplePreview
 
 
