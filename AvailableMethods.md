@@ -99,10 +99,10 @@
 
 - Inscriptions
 
-- [ ] /v2/experimental/accounts/{account_id}/inscriptions
-- [ ] /v2/experimental/accounts/{account_id}/inscriptions/history
-- [ ] /v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
-- [ ] /v2/experimental/inscriptions/op-template
+- [x] /v2/experimental/accounts/{account_id}/inscriptions
+- [x] /v2/experimental/accounts/{account_id}/inscriptions/history
+- [x] /v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
+- [x] /v2/experimental/inscriptions/op-template
 
 
 - Jettons
