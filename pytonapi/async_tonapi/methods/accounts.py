@@ -223,7 +223,6 @@ class AccountsMethod(AsyncTonapiClient):
 
         return NftItems(nft_items=nft_items)
 
-
     async def get_events(
             self,
             account_id: str,

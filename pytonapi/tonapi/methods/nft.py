@@ -96,10 +96,16 @@ class NftMethod(TonapiClient):
 
         return NftItems(**response)
 
-    def get_nft_history(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None,
-                        accept_language: str = "en", subject_only: bool = False,
-                        start_date: Optional[int] = None, end_date: Optional[int] = None
-                        ) -> AccountEvents:
+    def get_nft_history(
+            self,
+            account_id: str,
+            limit: int = 100,
+            before_lt: Optional[int] = None,
+            accept_language: str = "en",
+            subject_only: bool = False,
+            start_date: Optional[int] = None,
+            end_date: Optional[int] = None,
+    ) -> AccountEvents:
         """
         Get the transfer nfts history for account
 

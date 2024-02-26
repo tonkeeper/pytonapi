@@ -183,7 +183,7 @@ class BlockchainMethod(TonapiClient):
             self,
             account_id: str,
             after_lt: Optional[int] = None,
-            before_lt: int = 0,
+            before_lt: Optional[int] = None,
             limit: int = 100,
     ) -> Transactions:
         """
@@ -196,8 +196,9 @@ class BlockchainMethod(TonapiClient):
         :return: :class:`Transactions`
         """
         method = f"v2/blockchain/accounts/{account_id}/transactions"
-        params = {'before_lt': before_lt, 'limit': limit}
-        if after_lt: params['after_lt'] = after_lt  # noqa E701
+        params = {"limit": limit}
+        if before_lt: params["before_lt"] = before_lt  # noqa E701
+        if after_lt: params["after_lt"] = after_lt  # noqa E701
         response = self._get(method=method, params=params)
 
         return Transactions(**response)
