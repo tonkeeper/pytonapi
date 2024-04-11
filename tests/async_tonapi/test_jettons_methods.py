@@ -15,11 +15,14 @@ class TestJettonMethod(TestAsyncTonapi):
         response = await self.tonapi.jettons.get_holders(ACCOUNT_ID)
         self.assertIsInstance(response, schema.jettons.JettonHolders)
 
+    async def test_get_all_holders(self):
+        response = await self.tonapi.jettons.get_all_holders(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.jettons.JettonHolders)
+
     async def test_get_all_jettons(self):
         response = await self.tonapi.jettons.get_all_jettons()
-        self.assertIsInstance(response, schema.jettons.Jettons)
+        self.assertIsInstance(response, schema.jettons.JettonHolders)
 
     async def test_get_jetton_transfer_event(self):
         response = await self.tonapi.jettons.get_jetton_transfer_event(EVENT_ID)
-        print(response)
         self.assertIsInstance(response, schema.events.Event)

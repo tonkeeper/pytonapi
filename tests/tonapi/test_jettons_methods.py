@@ -15,6 +15,10 @@ class TestJettonMethod(TestTonapi):
         response = self.tonapi.jettons.get_holders(ACCOUNT_ID)
         self.assertIsInstance(response, schema.jettons.JettonHolders)
 
+    def test_get_all_holders(self):
+        response = self.tonapi.jettons.get_all_holders(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.jettons.JettonHolders)
+
     def test_get_all_jettons(self):
         response = self.tonapi.jettons.get_all_jettons()
         self.assertIsInstance(response, schema.jettons.Jettons)
