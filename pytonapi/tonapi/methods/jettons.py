@@ -1,7 +1,9 @@
+from typing import List
+
 from pytonapi.schema.events import Event
 from pytonapi.tonapi.client import TonapiClient
 
-from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons
+from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder
 
 
 class JettonsMethod(TonapiClient):
@@ -18,17 +20,42 @@ class JettonsMethod(TonapiClient):
 
         return JettonInfo(**response)
 
-    def get_holders(self, account_id: str) -> JettonHolders:
+    def get_holders(self, account_id: str, limit: int = 1000, offset: int = 0) -> JettonHolders:
         """
-        Get jetton's holders
+        Get jetton's holders.
 
-        :param account_id: account ID
-        :return: :class:`JettonHolders`
+        :param account_id: Account ID
+        :param limit: Default value - 1000
+        :param offset: Default value - 0
+        :return: JettonHolders
         """
         method = f"v2/jettons/{account_id}/holders"
-        response = self._get(method=method)
+        params = {"limit": limit, "offset": offset}
+        response = self._get(method=method, params=params)
 
         return JettonHolders(**response)
+
+    def get_all_holders(self, account_id: str) -> JettonHolders:
+        """
+        Get all jetton's holders.
+
+        :param account_id: Account ID
+        :return: :class:`JettonHolders`
+        """
+        jetton_holders: List[JettonHolder] = []
+        offset, limit = 0, 1000
+
+        while True:
+            result = self.get_holders(
+                account_id=account_id, limit=limit, offset=offset,
+            )
+            jetton_holders += result.addresses
+            offset += limit
+
+            if len(result.addresses) != limit:
+                break
+
+        return JettonHolders(addresses=jetton_holders)
 
     def get_all_jettons(self, limit: int = 100, offset: int = 0) -> Jettons:
         """
