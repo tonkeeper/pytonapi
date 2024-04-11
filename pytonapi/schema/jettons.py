@@ -56,6 +56,7 @@ class JettonsBalances(BaseModel):
 
 class JettonHolder(BaseModel):
     address: Address
+    owner: AccountAddress
     balance: str
 
 
