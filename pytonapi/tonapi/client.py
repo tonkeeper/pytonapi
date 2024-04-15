@@ -59,14 +59,7 @@ class TonapiClient:
         try:
             content = response.json()
         except httpx.ResponseNotRead:
-            content_bytes = response.read()
-            content_decoded = content_bytes.decode()
-            try:
-                content = json.loads(content_decoded)
-            except json.JSONDecodeError:
-                content = {"error": content_decoded}
-        except json.JSONDecodeError:
-            content = {"error", response.text}
+            content = {"error": response.text}
         except Exception as e:
             raise TONAPIError(f"Failed to read response content: {e}")
 
