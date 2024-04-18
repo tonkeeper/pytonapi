@@ -58,7 +58,7 @@ class TonapiClient:
         """
         try:
             content = response.json()
-        except httpx.ResponseNotRead:
+        except (httpx.ResponseNotRead, json.JSONDecodeError):
             content = {"error": response.text}
         except Exception as e:
             raise TONAPIError(f"Failed to read response content: {e}")
