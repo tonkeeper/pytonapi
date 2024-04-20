@@ -19,7 +19,7 @@ class EmulateMethod(AsyncTonapiClient):
             }
         :return: :class: `DecodedMessage`
         """
-        method = "v2/messages/decode"
+        method = "v2/message/decode"
         response = await self._post(
             method=method,
             body=body,

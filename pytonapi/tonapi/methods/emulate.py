@@ -19,7 +19,7 @@ class EmulateMethod(TonapiClient):
             }
         :return: :class: `DecodedMessage`
         """
-        method = "v2/messages/decode"
+        method = "v2/message/decode"
         response = self._post(
             method=method,
             body=body,
