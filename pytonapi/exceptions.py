@@ -29,7 +29,11 @@ class TONAPIUnauthorizedError(TONAPIClientError):
         )
 
 
-class TONAPISSELimitReachedError(TONAPIClientError):
+class TONAPISSEError(TONAPIServerError):
+    """Raised when the server encounters an error (HTTP 4xx)."""
+
+
+class TONAPISSELimitReachedError(TONAPISSEError):
     """Raises when the limit of streaming connections is reached (HTTP 401)."""
 
 
