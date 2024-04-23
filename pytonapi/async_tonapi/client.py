@@ -13,7 +13,8 @@ from pytonapi.exceptions import (
     TONAPINotFoundError,
     TONAPIUnauthorizedError,
     TONAPITooManyRequestsError,
-    TONAPINotImplementedError
+    TONAPINotImplementedError,
+    TONAPISSEError,
 )
 
 
@@ -61,9 +62,15 @@ class AsyncTonapiClient:
         :return: The response content.
         """
         try:
-            content = response.json()
-        except (httpx.ResponseNotRead, json.JSONDecodeError):
+            data = await response.aread()
+            try:
+                content = json.loads(data.decode())
+            except json.JSONDecodeError:
+                content = data.decode()
+        except httpx.ResponseNotRead:
             content = {"error": response.text}
+        except httpx.ReadError as read_error:
+            content = {"error": f"Read error occurred: {read_error}"}
         except Exception as e:
             raise TONAPIError(f"Failed to read response content: {e}")
 
@@ -114,8 +121,8 @@ class AsyncTonapiClient:
             try:
                 async with client.stream("GET", url=url, **data) as response:
                     response: httpx.Response
-                    if response.status_code != 200:
-                        await self.__process_response(response)
+                    response.raise_for_status()
+
                     async for line in response.aiter_lines():
                         try:
                             key, value = line.split(": ", 1)
@@ -127,6 +134,8 @@ class AsyncTonapiClient:
                             yield value
             except httpx.LocalProtocolError:
                 raise TONAPIUnauthorizedError
+            except httpx.HTTPStatusError as e:
+                raise TONAPISSEError(e)
 
     async def _subscribe_websocket(
             self,
