@@ -55,7 +55,7 @@ class SSEMethod(AsyncTonapiClient):
         :accounts: A list of account addresses to subscribe to
         """
         method = "v2/sse/accounts/traces"
-        params = {'accounts': accounts}
+        params = {'accounts': ",".join(accounts)}
         async for data in self._subscribe(method=method, params=params):
             event = TraceEventData(**json.loads(data))
             result = await handler(event, *args)
@@ -75,7 +75,7 @@ class SSEMethod(AsyncTonapiClient):
         :accounts: A list of account addresses to subscribe to
         """
         method = "v2/sse/mempool"
-        params = {'accounts': accounts}
+        params = {'accounts': ",".join(accounts)}
         async for data in self._subscribe(method=method, params=params):
             event = MempoolEventData(**json.loads(data))
             result = await handler(event, *args)
