@@ -5,7 +5,7 @@ from pydantic.v1 import BaseModel, Field
 
 class BlockRaw(BaseModel):
     workchain: int
-    shard: int
+    shard: str
     seqno: int
     root_hash: str
     file_hash: str
