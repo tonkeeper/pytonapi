@@ -21,7 +21,7 @@ class TestJettonMethod(TestAsyncTonapi):
 
     async def test_get_all_jettons(self):
         response = await self.tonapi.jettons.get_all_jettons()
-        self.assertIsInstance(response, schema.jettons.JettonHolders)
+        self.assertIsInstance(response, schema.jettons.Jettons)
 
     async def test_get_jetton_transfer_event(self):
         response = await self.tonapi.jettons.get_jetton_transfer_event(EVENT_ID)
