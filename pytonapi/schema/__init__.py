@@ -5,6 +5,7 @@ from pytonapi.schema import domains
 from pytonapi.schema import events
 from pytonapi.schema import inscriptions
 from pytonapi.schema import jettons
+from pytonapi.schema import liteserver
 from pytonapi.schema import nft
 from pytonapi.schema import rates
 from pytonapi.schema import staking
@@ -20,6 +21,7 @@ __all__ = [
     "events",
     "inscriptions",
     "jettons",
+    "liteserver",
     "nft",
     "rates",
     "staking",
