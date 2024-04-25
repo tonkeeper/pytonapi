@@ -10,7 +10,7 @@ class SSEMethod(TonapiClient):
     def subscribe_to_transactions(
             self,
             accounts: List[str],
-            handler: Callable[[TransactionEventData, ...], Any],
+            handler: Callable[[TransactionEventData, List[Any]], Any],
             args: Tuple[Any, ...] = (),
     ) -> None:
         """
@@ -24,12 +24,14 @@ class SSEMethod(TonapiClient):
         params = {'accounts': accounts}
         for data in self._subscribe(method=method, params=params):
             event = TransactionEventData(**json.loads(data))
-            handler(event, *args)
+            result = handler(event, *args)
+            if result is not None:
+                return result
 
     def subscribe_to_traces(
             self,
             accounts: List[str],
-            handler: Callable[[TraceEventData, ...], Any],
+            handler: Callable[[TraceEventData, List[Any]], Any],
             args: Tuple[Any, ...] = (),
     ) -> None:
         """
@@ -45,12 +47,14 @@ class SSEMethod(TonapiClient):
         params = {'accounts': accounts}
         for data in self._subscribe(method=method, params=params):
             event = TraceEventData(**json.loads(data))
-            handler(event, *args)
+            result = handler(event, *args)
+            if result is not None:
+                return result
 
     def subscribe_to_mempool(
             self,
             accounts: List[str],
-            handler: Callable[[MempoolEventData, ...], Any],
+            handler: Callable[[MempoolEventData, List[Any]], Any],
             args: Tuple[Any, ...] = (),
     ) -> None:
         """
@@ -63,4 +67,6 @@ class SSEMethod(TonapiClient):
         params = {'accounts': accounts}
         for data in self._subscribe(method=method, params=params):
             event = MempoolEventData(**json.loads(data))
-            handler(event, *args)
+            result = handler(event, *args)
+            if result is not None:
+                return result

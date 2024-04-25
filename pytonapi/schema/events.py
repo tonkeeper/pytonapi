@@ -233,7 +233,7 @@ class ValueFlow(BaseModel):
     account: AccountAddress
     ton: int
     fees: int
-    jettons: Optional[list[ValueFlowJettonsInner]]
+    jettons: Optional[List[ValueFlowJettonsInner]]
 
 
 class Event(BaseModel):

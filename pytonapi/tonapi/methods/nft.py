@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pytonapi.schema.events import AccountEvents
 from pytonapi.tonapi.client import TonapiClient
@@ -84,7 +84,7 @@ class NftMethod(TonapiClient):
 
         return NftItem(**response)
 
-    def get_bulk_items(self, account_ids: list[str]) -> NftItems:
+    def get_bulk_items(self, account_ids: List[str]) -> NftItems:
         """
         Get NFT items by their addresses
 
