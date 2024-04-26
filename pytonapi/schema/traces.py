@@ -73,9 +73,7 @@ class ComputePhase(BaseModel):
 
 
 class StateInit(BaseModel):
-    code: Optional[str]
-    data: Optional[str]
-    library: Dict[str, str]
+    boc: str
 
 
 class Message(BaseModel):
