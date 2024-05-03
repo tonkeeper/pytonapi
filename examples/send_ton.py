@@ -7,6 +7,9 @@ pip install tonsdk
 """
 
 import asyncio
+
+from tonsdk.boc import begin_cell
+
 from pytonapi import AsyncTonapi
 from tonsdk.utils import bytes_to_b64str, to_nano
 from tonsdk.contract.wallet import Wallets, WalletVersionEnum
@@ -41,9 +44,14 @@ async def main():
 
     # Prepare a transfer message to the destination address with the specified amount and sequence number
     transfer_amount = to_nano(float("0.1"), 'ton')
+
+    # Create the comment payload
+    payload = begin_cell().store_uint(0, 32).store_string("Hello World!").end_cell()
+
     query = wallet.create_transfer_message(
         to_addr=DESTINATION_ADDRESS,
         amount=transfer_amount,
+        payload=payload,
         seqno=seqno,
     )
 
