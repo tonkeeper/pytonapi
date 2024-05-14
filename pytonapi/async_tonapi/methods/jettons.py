@@ -54,7 +54,7 @@ class JettonsMethod(AsyncTonapiClient):
             if len(result.addresses) != limit:
                 break
 
-        return JettonHolders(addresses=jetton_holders)
+        return JettonHolders(addresses=jetton_holders, total=result.total)
 
     async def get_all_jettons(self, limit: int = 100, offset: int = 0) -> Jettons:
         """
