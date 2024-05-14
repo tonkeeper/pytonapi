@@ -62,6 +62,7 @@ class JettonHolder(BaseModel):
 
 class JettonHolders(BaseModel):
     addresses: List[JettonHolder]
+    total: int
 
 
 class Jettons(BaseModel):
