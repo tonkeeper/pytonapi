@@ -97,8 +97,8 @@ class AsyncTonapiClient:
                 501: TONAPINotImplementedError,
             }
             error_class = error_map.get(response.status_code, TONAPIError)
-            error = content.get("error", content)
-            raise error_class(error)
+            error_message = content.get("error") if isinstance(content, dict) else content
+            raise error_class(error_message)
 
         return content
 
