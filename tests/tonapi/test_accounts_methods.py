@@ -29,6 +29,10 @@ class TestAccountMethod(TestTonapi):
         response = self.tonapi.accounts.get_jettons_balances(ACCOUNT_ID)
         self.assertIsInstance(response, schema.jettons.JettonsBalances)
 
+    def test_get_jetton(self):
+        response = self.tonapi.accounts.get_jetton_balance(ACCOUNT_ID, JETTON_ID)
+        self.assertIsInstance(response, schema.jettons.JettonBalance)
+
     def test_get_jettons_history(self):
         response = self.tonapi.accounts.get_jettons_history(ACCOUNT_ID)
         self.assertIsInstance(response, schema.events.AccountEvents)
