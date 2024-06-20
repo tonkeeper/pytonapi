@@ -13,7 +13,7 @@ from pytonapi.schema.accounts import (
     BalanceChange,
 )
 from pytonapi.schema.domains import DomainNames
-from pytonapi.schema.jettons import JettonsBalances
+from pytonapi.schema.jettons import JettonBalance, JettonsBalances
 from pytonapi.schema.nft import NftItems, NftItem
 from pytonapi.schema.traces import TraceIds
 
@@ -80,6 +80,19 @@ class AccountsMethod(TonapiClient):
         response = self._get(method=method)
 
         return JettonsBalances(**response)
+
+    def get_jetton_balance(self, account_id: str, jetton_id: str) -> JettonBalance:
+        """
+        Get Jetton balance by owner address
+
+        :param account_id: account ID
+        :param jetton_id: jetton ID
+        :return: :class:`JettonBalance`
+        """
+        method = f"v2/accounts/{account_id}/jettons/{jetton_id}"
+        response = self._get(method=method)
+
+        return JettonBalance(**response)
 
     def get_jettons_history(
             self,

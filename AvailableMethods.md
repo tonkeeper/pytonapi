@@ -54,6 +54,7 @@
 - [x] /v2/accounts/{account_id}
 - [x] /v2/accounts/{account_id}/dns/backresolve
 - [x] /v2/accounts/{account_id}/jettons
+- [x] /v2/accounts/{account_id}/jettons/{jetton_id}
 - [x] /v2/accounts/{account_id}/jettons/history
 - [x] /v2/accounts/{account_id}/jettons/{jetton_id}/history
 - [x] /v2/accounts/{account_id}/nfts
