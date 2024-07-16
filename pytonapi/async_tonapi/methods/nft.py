@@ -124,7 +124,7 @@ class NftMethod(AsyncTonapiClient):
         """
         method = f"v2/nfts/{account_id}/history"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         if subject_only:
             params["subject_only"] = "true"

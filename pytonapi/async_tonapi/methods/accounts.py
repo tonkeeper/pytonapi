@@ -105,7 +105,7 @@ class AccountsMethod(AsyncTonapiClient):
         """
         method = f"v2/accounts/{account_id}/jettons/history"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         if subject_only:
             params["subject_only"] = "true"
@@ -145,7 +145,7 @@ class AccountsMethod(AsyncTonapiClient):
         """
         method = f"v2/accounts/{account_id}/jettons/{jetton_id}/history"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         if subject_only:
             params["subject_only"] = "true"
@@ -251,7 +251,7 @@ class AccountsMethod(AsyncTonapiClient):
         """
         method = f"v2/accounts/{account_id}/events"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         if subject_only:
             params["subject_only"] = "true"
@@ -325,7 +325,7 @@ class AccountsMethod(AsyncTonapiClient):
         """
         method = f"v2/accounts/{account_id}/nfts/history"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         if subject_only:
             params["subject_only"] = "true"

@@ -120,7 +120,7 @@ class NftMethod(TonapiClient):
         """
         method = f"v2/nfts/{account_id}/history"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa:E701
+        if before_lt is not None: params["before_lt"] = before_lt  # noqa:E701
         if subject_only: params["subject_only"] = "true"  # noqa:E701
         if start_date: params["start_date"] = start_date  # noqa:E701
         if end_date: params["end_date"] = end_date  # noqa:E701
