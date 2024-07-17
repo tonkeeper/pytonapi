@@ -44,7 +44,7 @@ class InscriptionsMethod(TonapiClient):
         """
         method = f"v2/experimental/accounts/{account_id}/inscriptions/history"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, params=params, headers=headers)
@@ -70,7 +70,7 @@ class InscriptionsMethod(TonapiClient):
         """
         method = f"v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history"
         params = {"limit": limit}
-        if before_lt:
+        if before_lt is not None:
             params["before_lt"] = before_lt
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, params=params, headers=headers)

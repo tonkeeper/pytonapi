@@ -197,8 +197,8 @@ class BlockchainMethod(TonapiClient):
         """
         method = f"v2/blockchain/accounts/{account_id}/transactions"
         params = {"limit": limit}
-        if before_lt: params["before_lt"] = before_lt  # noqa E701
-        if after_lt: params["after_lt"] = after_lt  # noqa E701
+        if before_lt is not None: params["before_lt"] = before_lt  # noqa E701
+        if after_lt is not None: params["after_lt"] = after_lt  # noqa E701
         response = self._get(method=method, params=params)
 
         return Transactions(**response)
