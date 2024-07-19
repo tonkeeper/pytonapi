@@ -9,10 +9,10 @@ class SSEMethod(AsyncTonapiClient):
 
     async def subscribe_to_transactions(
             self,
-            handler: Callable[[TransactionEventData, List[Any]], Awaitable[Any]],
+            handler: Callable[[TransactionEventData, Any], Awaitable[Any]],
             accounts: List[str],
             operations: Optional[List[str]] = None,
-            args: Tuple[Any, ...] = (),
+            args: Tuple = (),
     ) -> Any:
         """
         Subscribes to transactions SSE events for the specified accounts.
@@ -45,8 +45,8 @@ class SSEMethod(AsyncTonapiClient):
     async def subscribe_to_traces(
             self,
             accounts: List[str],
-            handler: Callable[[TraceEventData, List[Any]], Awaitable[Any]],
-            args: Tuple[Any, ...] = (),
+            handler: Callable[[TraceEventData, Any], Awaitable[Any]],
+            args: Tuple = (),
     ) -> Any:
         """
         Subscribes to traces SSE events for the specified accounts.
@@ -65,8 +65,8 @@ class SSEMethod(AsyncTonapiClient):
     async def subscribe_to_mempool(
             self,
             accounts: List[str],
-            handler: Callable[[MempoolEventData, List[Any]], Awaitable[Any]],
-            args: Tuple[Any, ...] = (),
+            handler: Callable[[MempoolEventData, Any], Awaitable[Any]],
+            args: Tuple = (),
     ) -> Any:
         """
         Subscribes to mempool SSE events for the specified accounts.
