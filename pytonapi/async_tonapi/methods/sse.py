@@ -96,7 +96,6 @@ class SSEMethod(AsyncTonapiClient):
         """
         method = "v2/sse/blocks"
         params = {} if workchain is None else {'workchain': workchain}
-        print(params)
         async for data in self._subscribe(method=method, params=params):
             event = BlockEventData(**json.loads(data))
             result = await handler(event, *args)
