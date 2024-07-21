@@ -261,6 +261,14 @@ class TransactionEventData(BaseModel):
     tx_hash: str
 
 
+class BlockEventData(BaseModel):
+    workchain: int
+    shard: str
+    seqno: int
+    root_hash: str
+    file_hash: str
+
+
 class Risk(BaseModel):
     description: Optional[str] = None
     transfer_all_remaining_balance: bool

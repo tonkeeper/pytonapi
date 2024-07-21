@@ -1,8 +1,8 @@
 import json
-from typing import List, Callable, Any, Awaitable, Tuple, Optional
+from typing import List, Callable, Any, Awaitable, Tuple, Optional, Union
 
 from pytonapi.async_tonapi.client import AsyncTonapiClient
-from pytonapi.schema.events import TransactionEventData, TraceEventData, MempoolEventData
+from pytonapi.schema.events import TransactionEventData, TraceEventData, MempoolEventData, BlockEventData
 
 
 class SSEMethod(AsyncTonapiClient):
@@ -78,6 +78,27 @@ class SSEMethod(AsyncTonapiClient):
         params = {'accounts': ",".join(accounts)}
         async for data in self._subscribe(method=method, params=params):
             event = MempoolEventData(**json.loads(data))
+            result = await handler(event, *args)
+            if result is not None:
+                return result
+
+    async def subscribe_to_blocks(
+            self,
+            workchain: Optional[Union[int, None]],
+            handler: Callable[[BlockEventData, Any], Awaitable[Any]],
+            args: Tuple = (),
+    ) -> Any:
+        """
+        Subscribes to blocks SSE events for the specified workchains.
+
+        :handler: A callable function to handle the SSEEvent
+        :workchain: The ID of the workchain to subscribe to. If None, subscribes to all workchains.
+        """
+        method = "v2/sse/blocks"
+        params = {} if workchain is None else {'workchain': workchain}
+        print(params)
+        async for data in self._subscribe(method=method, params=params):
+            event = BlockEventData(**json.loads(data))
             result = await handler(event, *args)
             if result is not None:
                 return result
