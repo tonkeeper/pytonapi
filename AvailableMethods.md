@@ -2,9 +2,10 @@
 
 - SSE
 
-- [x] v2/sse/accounts/transactions?accounts={accounts}
+- [x] v2/sse/accounts/transactions?accounts={accounts}&operations={operations}
 - [x] v2/sse/accounts/traces?accounts={accounts}
 - [x] v2/sse/mempool?accounts={accounts}
+- [x] v2/sse/blocks?workchain={workchain}
 
 
 - Websocket (async only)
