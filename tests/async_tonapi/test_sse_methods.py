@@ -2,7 +2,7 @@ from pprint import pprint
 
 from tests.async_tonapi import TestAsyncTonapi
 
-ACCOUNT_ID = "Ef8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM0vF"
+ACCOUNT_ID = "EQChB2eMoFG4ThuEsZ6ehlBPKJXOjNxlR5B7qKZNGIv256Da"
 ACCOUNTS_IDS = ["ALL"]
 
 
@@ -20,3 +20,6 @@ class TestSSEMethod(TestAsyncTonapi):
 
     async def test_subscribe_to_mempool(self):
         await self.tonapi.sse.subscribe_to_mempool([ACCOUNT_ID], handler)
+
+    async def test_subscribe_to_blocks(self):
+        await self.tonapi.sse.subscribe_to_blocks(None, handler=handler)
