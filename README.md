@@ -15,24 +15,9 @@ Python SDK for [tonapi.io](https://tonapi.io).\
 Information about the API can be found in the  [documentation](https://docs.tonconsole.com/tonapi/api-v2).\
 To use the API **you need an API key**, you can get it here [tonconsole.com](https://tonconsole.com/).
 
-## Features
-
-- **Asynchronous and Synchronous Calls:**\
-  Enjoy the flexibility of both asynchronous and synchronous variants for API
-  calls.
-
-- **Response Validation with Pydantic Models:**\
-  All response data is validated using Pydantic models, ensuring that you
-  receive structured and validated information.
-
-- **Convenient Data Manipulation:**\
-  The wrapper facilitates seamless manipulation of data, such as converting balances
-  to nanotons or amounts.
-
-- **Extensive Examples:**\
-  Explore a variety of examples in the [examples](https://github.com/tonkeeper/pytonapi/tree/main/examples) folder to
-  help you get started and
-  understand different use cases.
+<blockquote>
+For creating wallets, transferring TON, Jetton, NFTs, and other operations, recommend using <a href="https://github.com/nessshon/tonutils">tonutils</a> in combination with <code>TonapiClient</code>. For more information, refer to the library documentation.
+</blockquote>
 
 ## Usage
 
@@ -44,85 +29,72 @@ pip install pytonapi
 
 ### Examples
 
-<details>
-<summary><b>Asynchronous</b></summary>
+* **Asynchronous**
 
-```python
-from pytonapi import AsyncTonapi
+  ```python
+  from pytonapi import AsyncTonapi
+  
+  
+  # Declare an asynchronous function for using await
+  async def main():
+      # Create a new Tonapi object with the provided API key
+      tonapi = AsyncTonapi(api_key="Your API key")
+  
+      # Specify the account ID
+      account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
+  
+      # Retrieve account information asynchronously
+      account = await tonapi.accounts.get_info(account_id=account_id)
+  
+      # Print account details
+      print(f"Account Address (raw): {account.address.to_raw()}")
+      print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
+      print(f"Account Balance (nanoton): {account.balance.to_nano()}")
+      print(f"Account Balance (amount): {account.balance.to_amount()}")
+  
+  
+  if __name__ == '__main__':
+      import asyncio
+  
+      # Run the asynchronous function
+      asyncio.run(main())
+  
+  ```
 
+* **Synchronous**
 
-# Declare an asynchronous function for using await
-async def main():
-    # Create a new Tonapi object with the provided API key
-    tonapi = AsyncTonapi(api_key="Your API key")
+  ```python
+  from pytonapi import Tonapi
+  
+  
+  def main():
+      # Create a new Tonapi object with the provided API key
+      tonapi = Tonapi(api_key="Your API key")
+  
+      # Specify the account ID
+      account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
+  
+      # Retrieve account information
+      account = tonapi.accounts.get_info(account_id=account_id)
+  
+      # Print account details
+      print(f"Account Address (raw): {account.address.to_raw()}")
+      print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
+      print(f"Account Balance (nanoton): {account.balance.to_nano()}")
+      print(f"Account Balance (amount): {account.balance.to_amount()}")
+  
+  
+  if __name__ == '__main__':
+      main()
+  ```
 
-    # Specify the account ID
-    account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
+* **Additional examples** can be found [examples](https://github.com/tonkeeper/pytonapi/tree/main/examples) folder.
 
-    # Retrieve account information asynchronously
-    account = await tonapi.accounts.get_info(account_id=account_id)
+## Donations
 
-    # Print account details
-    print(f"Account Address (raw): {account.address.to_raw()}")
-    print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
-    print(f"Account Balance (nanoton): {account.balance.to_nano()}")
-    print(f"Account Balance (amount): {account.balance.to_amount()}")
+**TON** - `EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess`
 
-
-if __name__ == '__main__':
-    import asyncio
-
-    # Run the asynchronous function
-    asyncio.run(main())
-
-```
-
-</details>
-
-<details>
-<summary><b>Synchronous</b></summary>
-
-```python
-from pytonapi import Tonapi
-
-
-def main():
-    # Create a new Tonapi object with the provided API key
-    tonapi = Tonapi(api_key="Your API key")
-
-    # Specify the account ID
-    account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
-
-    # Retrieve account information
-    account = tonapi.accounts.get_info(account_id=account_id)
-
-    # Print account details
-    print(f"Account Address (raw): {account.address.to_raw()}")
-    print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
-    print(f"Account Balance (nanoton): {account.balance.to_nano()}")
-    print(f"Account Balance (amount): {account.balance.to_amount()}")
-
-
-if __name__ == '__main__':
-    main()
-
-```
-
-</details>
-
-
-<details>
-<summary><b>More</b></summary>
-
-* Additional examples can be found [examples](https://github.com/tonkeeper/pytonapi/tree/main/examples) folder.
-
-</details>
-
-## Dependencies
-
-* [httpx](https://pypi.org/project/httpx/) - A fully featured HTTP client for Python 3, which provides sync and async
-* [pydantic](https://pypi.org/project/pydantic/) - Data validation and settings management using Python type hints
-* [websockets](https://pypi.org/project/websockets/) - A library for building WebSocket servers and clients in Python
+**USDT** (TRC-20) - `TJjADKFT2i7jqNJAxkgeRm5o9uarcoLUeR`
 
 ## Contribution
 
@@ -133,12 +105,6 @@ submit a pull request.
 
 Supported by  [TONAPI](https://tonapi.io) and [TON Society](https://github.com/ton-society/grants-and-bounties) (Grants
 and Bounties program).
-
-## Donations
-
-**TON** - `EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess`
-
-**USDT** (TRC-20) - `TJjADKFT2i7jqNJAxkgeRm5o9uarcoLUeR`
 
 ## License
 
