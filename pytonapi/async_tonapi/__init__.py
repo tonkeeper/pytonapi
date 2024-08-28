@@ -71,6 +71,10 @@ class AsyncTonapi(AsyncTonapiClient):
         return methods.EventsMethod(**self.__dict__)
 
     @property
+    def gasless(self) -> methods.GaslessMethod:
+        return methods.GaslessMethod(**self.__dict__)
+
+    @property
     def inscriptions(self) -> methods.InscriptionsMethod:
         return methods.InscriptionsMethod(**self.__dict__)
 
