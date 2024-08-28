@@ -1,8 +1,8 @@
 from typing import Dict, Optional, Literal
 
-from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.events import AccountEvents
 from pytonapi.schema.inscriptions import InscriptionBalances
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class InscriptionsMethod(TonapiClientBase):
@@ -88,7 +88,7 @@ class InscriptionsMethod(TonapiClientBase):
             ticker: str = "nano",
     ) -> Dict[str, str]:
         """
-        Return comment for making operation with inscription. please don't use it if you don't know what you are doing.
+        Return comment for making operation with inscription. please don"t use it if you don"t know what you are doing.
 
         :param who: account address
         :param amount: amount of tokens

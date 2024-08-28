@@ -15,8 +15,8 @@ class TracesMethod(AsyncTonapiClientBase):
         :return: :class:`Trace`
         """
         if len(trace_id) == 44:
-            decoded = base64.urlsafe_b64decode(trace_id + '=' * (-len(trace_id) % 4))
-            trace_id = binascii.hexlify(decoded).decode('utf-8')
+            decoded = base64.urlsafe_b64decode(trace_id + "=" * (-len(trace_id) % 4))
+            trace_id = binascii.hexlify(decoded).decode("utf-8")
         method = f"v2/traces/{trace_id}"
         response_data = await self._get(method=method)
 

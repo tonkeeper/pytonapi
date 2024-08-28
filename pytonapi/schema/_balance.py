@@ -8,7 +8,7 @@ class Balance(RootModel[int]):
     Represents the balance of an account.
     """
 
-    def __str__(self) -> int:
+    def __str__(self) -> str:
         return self.root.__str__()
 
     def to_nano(self, decimals: int = 9) -> int:

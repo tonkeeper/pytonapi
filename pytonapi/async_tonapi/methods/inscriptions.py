@@ -88,7 +88,7 @@ class InscriptionsMethod(AsyncTonapiClientBase):
             ticker: str = "nano",
     ) -> Dict[str, str]:
         """
-        Return comment for making operation with inscription. please don't use it if you don't know what you are doing.
+        Return comment for making operation with inscription. please don"t use it if you don"t know what you are doing.
 
         :param who: account address
         :param amount: amount of tokens

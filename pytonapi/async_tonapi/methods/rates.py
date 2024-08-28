@@ -17,8 +17,8 @@ class RatesMethod(AsyncTonapiClientBase):
         :return: :class:`Rates`
         """
         params = {
-            'tokens': ','.join(map(str, tokens)),
-            'currencies': ','.join(map(str, currencies)),
+            "tokens": ",".join(map(str, tokens)),
+            "currencies": ",".join(map(str, currencies)),
         }
         method = f"v2/rates"
         response = await self._get(method=method, params=params)
@@ -41,7 +41,7 @@ class RatesMethod(AsyncTonapiClientBase):
         :param end_date: end date (optional)
         :return: :class:`ChartRates`
         """
-        params = {'token': token, "currency": currency}
+        params = {"token": token, "currency": currency}
         if start_date:
             params["start_date"] = start_date
         if end_date:

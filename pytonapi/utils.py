@@ -3,10 +3,10 @@ import struct
 from typing import Union
 
 __all__ = [
-    'raw_to_userfriendly',
-    'userfriendly_to_raw',
-    'to_amount',
-    'to_nano'
+    "raw_to_userfriendly",
+    "userfriendly_to_raw",
+    "to_amount",
+    "to_nano"
 ]
 
 
@@ -35,14 +35,14 @@ def raw_to_userfriendly(address: str, is_bounceable: bool = False) -> str:
     :return: The user-friendly address string, encoded in base64 and URL-safe.
     """
     tag = 0x11 if is_bounceable else 0x51
-    workchain_id, key = address.split(':')
-    workchain_id = int(workchain_id)
-    key = bytearray.fromhex(key)
+    workchain_id_str, key_str = address.split(":")
+    workchain_id = int(workchain_id_str)
+    key = bytearray.fromhex(key_str)
 
     short_ints = [j * 256 + i for i, j in zip(*[iter(key)] * 2)]
-    payload = struct.pack(f'Bb{"H" * 16}', tag, workchain_id, *short_ints)
+    payload = struct.pack(f"Bb{'H' * 16}", tag, workchain_id, *short_ints)
     crc = _calculate_crc_xmodem(payload)
-    encoded_key = payload + struct.pack('>H', crc)
+    encoded_key = payload + struct.pack(">H", crc)
 
     return base64.urlsafe_b64encode(encoded_key).decode("utf-8")
 
@@ -58,10 +58,10 @@ def userfriendly_to_raw(address: str) -> str:
              hexadecimal format, separated by a colon.
     """
     k = base64.urlsafe_b64decode(address)[1:34]
-    workchain_id = struct.unpack('b', k[:1])[0]
+    workchain_id = struct.unpack("b", k[:1])[0]
     key = k[1:].hex().lower()
 
-    return f'{workchain_id}:{key}'
+    return f"{workchain_id}:{key}"
 
 
 def to_amount(value: int, decimals: int = 9, precision: int = 2) -> Union[float, int]:

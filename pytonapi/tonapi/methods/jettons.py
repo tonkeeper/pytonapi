@@ -1,9 +1,8 @@
 from typing import List
 
 from pytonapi.schema.events import Event
-from pytonapi.tonapi.client import TonapiClientBase
-
 from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class JettonsMethod(TonapiClientBase):
@@ -22,7 +21,7 @@ class JettonsMethod(TonapiClientBase):
 
     def get_holders(self, account_id: str, limit: int = 1000, offset: int = 0) -> JettonHolders:
         """
-        Get jetton's holders.
+        Get jetton"s holders.
 
         :param account_id: Account ID
         :param limit: Default value - 1000

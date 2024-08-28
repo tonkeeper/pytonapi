@@ -55,7 +55,7 @@ class TONAPIInternalServerError(TONAPIServerError):
     """Raised when the server encounters an internal error (HTTP 500)."""
 
     def __init__(self, text: Optional[str] = None):
-        if "mempool is not enabled" in text:
+        if text is not None and "mempool is not enabled" in text:
             raise TONAPIMempoolNotEnabledError(
                 "Mempool functionality is not enabled on your plan. "
                 "Upgrade your plan on https://tonconsole.com."

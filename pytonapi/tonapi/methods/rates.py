@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from pytonapi.schema.rates import Rates, ChartRates, MarketsTonRates
-from pytonapi.tonapi import TonapiClientBase
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class RatesMethod(TonapiClientBase):
@@ -17,8 +17,8 @@ class RatesMethod(TonapiClientBase):
         :return: :class:`Rates`
         """
         params = {
-            'tokens': ','.join(map(str, tokens)),
-            'currencies': ','.join(map(str, currencies)),
+            "tokens": ",".join(map(str, tokens)),
+            "currencies": ",".join(map(str, currencies)),
         }
         method = f"v2/rates"
         response = self._get(method=method, params=params)
@@ -37,7 +37,7 @@ class RatesMethod(TonapiClientBase):
         :param end_date: end date
         :return: :class:`ChartRates`
         """
-        params = {'token': token, "currency": currency}
+        params = {"token": token, "currency": currency}
         if start_date: params["start_date"] = start_date  # noqa:E701
         if end_date: params["end_date"] = end_date  # noqa:E701
         method = f"v2/rates/chart"

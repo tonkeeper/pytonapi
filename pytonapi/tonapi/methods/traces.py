@@ -1,9 +1,8 @@
 import base64
 import binascii
 
-from pytonapi.tonapi.client import TonapiClientBase
-
 from pytonapi.schema.traces import Trace
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class TracesMethod(TonapiClientBase):
@@ -16,8 +15,8 @@ class TracesMethod(TonapiClientBase):
         :return: :class:`Trace`
         """
         if len(trace_id) == 44:
-            decoded = base64.urlsafe_b64decode(trace_id + '=' * (-len(trace_id) % 4))
-            trace_id = binascii.hexlify(decoded).decode('utf-8')
+            decoded = base64.urlsafe_b64decode(trace_id + "=" * (-len(trace_id) % 4))
+            trace_id = binascii.hexlify(decoded).decode("utf-8")
         method = f"v2/traces/{trace_id}"
         response = self._get(method=method)
 

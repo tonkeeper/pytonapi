@@ -23,8 +23,8 @@ class EventsMethod(AsyncTonapiClientBase):
         """
 
         if len(event_id) == 44:
-            decoded = base64.urlsafe_b64decode(event_id + '=' * (-len(event_id) % 4))
-            event_id = binascii.hexlify(decoded).decode('utf-8')
+            decoded = base64.urlsafe_b64decode(event_id + "=" * (-len(event_id) % 4))
+            event_id = binascii.hexlify(decoded).decode("utf-8")
 
         method = f"v2/events/{event_id}"
         headers = {"Accept-Language": accept_language}

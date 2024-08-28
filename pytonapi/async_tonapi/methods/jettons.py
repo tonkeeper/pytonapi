@@ -21,7 +21,7 @@ class JettonsMethod(AsyncTonapiClientBase):
 
     async def get_holders(self, account_id: str, limit: int = 1000, offset: int = 0) -> JettonHolders:
         """
-        Get jetton's holders.
+        Get jetton"s holders.
 
         :param account_id: Account ID
         :param limit: Default value - 1000

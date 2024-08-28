@@ -1,6 +1,5 @@
 from typing import Optional, Dict, Any
 
-from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.blockchain import (
     Transactions,
     Transaction,
@@ -15,6 +14,7 @@ from pytonapi.schema.blockchain import (
     RawBlockchainConfig,
     ServiceStatus,
 )
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 
 
 class BlockchainMethod(AsyncTonapiClientBase):

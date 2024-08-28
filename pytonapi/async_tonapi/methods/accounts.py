@@ -100,7 +100,6 @@ class AccountsMethod(AsyncTonapiClientBase):
             limit: int = 100,
             before_lt: Optional[int] = None,
             accept_language: str = "en",
-            subject_only: bool = False,
             start_date: Optional[int] = None,
             end_date: Optional[int] = None,
     ) -> AccountEvents:
@@ -111,7 +110,6 @@ class AccountsMethod(AsyncTonapiClientBase):
         :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value: en
-        :param subject_only: Default value: False
         :param start_date: Default value: None
         :param end_date: Default value: None
         :return: :class:`AccountEvents`
@@ -120,8 +118,6 @@ class AccountsMethod(AsyncTonapiClientBase):
         params = {"limit": limit}
         if before_lt is not None:
             params["before_lt"] = before_lt
-        if subject_only:
-            params["subject_only"] = "true"
         if start_date:
             params["start_date"] = start_date
         if end_date:
@@ -138,7 +134,6 @@ class AccountsMethod(AsyncTonapiClientBase):
             limit: int = 100,
             before_lt: Optional[int] = None,
             accept_language: str = "en",
-            subject_only: bool = False,
             start_date: Optional[int] = None,
             end_date: Optional[int] = None,
     ) -> AccountEvents:
@@ -151,7 +146,6 @@ class AccountsMethod(AsyncTonapiClientBase):
         :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value: en
-        :param subject_only: Default value: False
         :param start_date: Default value: None
         :param end_date: Default value: None
         :return: :class:`AccountEvents`
@@ -160,8 +154,6 @@ class AccountsMethod(AsyncTonapiClientBase):
         params = {"limit": limit}
         if before_lt is not None:
             params["before_lt"] = before_lt
-        if subject_only:
-            params["subject_only"] = "true"
         if start_date:
             params["start_date"] = start_date
         if end_date:
@@ -242,6 +234,7 @@ class AccountsMethod(AsyncTonapiClientBase):
             limit: int = 100,
             before_lt: Optional[int] = None,
             accept_language: str = "en",
+            initiator: bool = False,
             subject_only: bool = False,
             start_date: Optional[int] = None,
             end_date: Optional[int] = None,
@@ -256,18 +249,22 @@ class AccountsMethod(AsyncTonapiClientBase):
         :param account_id: account ID
         :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
+        :param initiator: Show only events that are initiated by this account. Default value : false
         :param accept_language: Default value: en
-        :param subject_only: Default value: False
+        :param subject_only: filter actions where requested account is not real subject
+          (for example sender or receiver jettons). Default value: False
         :param start_date: Default value: None
         :param end_date: Default value: None
         :return: :class:`AccountEvents`
         """
         method = f"v2/accounts/{account_id}/events"
-        params = {"limit": limit}
-        if before_lt is not None:
+        params = {
+            "limit": limit,
+            "initiator": initiator,
+            "subject_only": subject_only
+        }
+        if before_lt:
             params["before_lt"] = before_lt
-        if subject_only:
-            params["subject_only"] = "true"
         if start_date:
             params["start_date"] = start_date
         if end_date:
@@ -320,7 +317,6 @@ class AccountsMethod(AsyncTonapiClientBase):
             limit: int = 100,
             before_lt: Optional[int] = None,
             accept_language: str = "en",
-            subject_only: bool = False,
             start_date: Optional[int] = None,
             end_date: Optional[int] = None,
     ) -> AccountEvents:
@@ -331,7 +327,6 @@ class AccountsMethod(AsyncTonapiClientBase):
         :param limit: Default value: 100
         :param before_lt: omit this parameter to get last events
         :param accept_language: Default value: en
-        :param subject_only: Default value: False
         :param start_date: Default value: None
         :param end_date: Default value: None
         :return: :class:`AccountEvents`
@@ -340,12 +335,11 @@ class AccountsMethod(AsyncTonapiClientBase):
         params = {"limit": limit}
         if before_lt is not None:
             params["before_lt"] = before_lt
-        if subject_only:
-            params["subject_only"] = "true"
         if start_date:
             params["start_date"] = start_date
         if end_date:
             params["end_date"] = end_date
+
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, params=params, headers=headers)
 

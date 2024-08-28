@@ -16,7 +16,7 @@ class NftMethod(AsyncTonapiClientBase):
         :return: :class:`NftCollections`
         """
         method = "v2/nfts/collections"
-        params = {'limit': limit, 'offset': offset}
+        params = {"limit": limit, "offset": offset}
         response = await self._get(method=method, params=params)
 
         return NftCollections(**response)
@@ -48,7 +48,7 @@ class NftMethod(AsyncTonapiClientBase):
         :return: :class:`NftItems`
         """
         method = f"v2/nfts/collections/{account_id}/items"
-        params = {'limit': limit, 'offset': offset}
+        params = {"limit": limit, "offset": offset}
         response = await self._get(method=method, params=params)
 
         return NftItems(**response)
@@ -106,7 +106,6 @@ class NftMethod(AsyncTonapiClientBase):
             limit: int = 100,
             before_lt: Optional[int] = None,
             accept_language: str = "en",
-            subject_only: bool = False,
             start_date: Optional[int] = None,
             end_date: Optional[int] = None,
     ) -> AccountEvents:
@@ -117,7 +116,6 @@ class NftMethod(AsyncTonapiClientBase):
         :param limit: Default value: 100
         :param before_lt: Default value: None (omit this parameter to get last events)
         :param accept_language: Default value: en
-        :param subject_only: Default value: False
         :param start_date: Default value: None
         :param end_date: Default value: None
         :return: :class:`AccountEvents`
@@ -126,8 +124,6 @@ class NftMethod(AsyncTonapiClientBase):
         params = {"limit": limit}
         if before_lt is not None:
             params["before_lt"] = before_lt
-        if subject_only:
-            params["subject_only"] = "true"
         if start_date:
             params["start_date"] = start_date
         if end_date:

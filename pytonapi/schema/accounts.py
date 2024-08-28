@@ -77,7 +77,7 @@ class Subscriptions(BaseModel):
 class DnsExpiringItemsInner(BaseModel):
     expiring_at: int
     name: str
-    dns_item: Optional['NftItem'] = None
+    dns_item: Optional["NftItem"] = None
 
 
 class DnsExpiring(BaseModel):

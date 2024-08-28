@@ -1,8 +1,8 @@
 import base64
 import binascii
 
-from pytonapi.tonapi import TonapiClientBase
 from pytonapi.schema.events import Event
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class EventsMethod(TonapiClientBase):
@@ -22,8 +22,8 @@ class EventsMethod(TonapiClientBase):
         :return: :class:`Event`
         """
         if len(event_id) == 44:
-            decoded = base64.urlsafe_b64decode(event_id + '=' * (-len(event_id) % 4))
-            event_id = binascii.hexlify(decoded).decode('utf-8')
+            decoded = base64.urlsafe_b64decode(event_id + "=" * (-len(event_id) % 4))
+            event_id = binascii.hexlify(decoded).decode("utf-8")
         method = f"v2/events/{event_id}"
         headers = {"Accept-Language": accept_language}
         response = self._get(method=method, headers=headers)

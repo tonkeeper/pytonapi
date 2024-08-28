@@ -1,5 +1,5 @@
 import json
-from typing import List, Callable, Any, Awaitable, Tuple, Optional, Union
+from typing import List, Callable, Any, Awaitable, Tuple, Optional
 
 from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import TransactionEventData, TraceEventData, MempoolEventData, BlockEventData
@@ -27,14 +27,14 @@ class SSEMethod(AsyncTonapiClientBase):
          representing a message operation opcode which is an unsigned 32-bit integer.
          A hex string must start with "0x" prefix and have exactly 8 hex digits.
          An example of "operations" is &operations=JettonTransfer,0x0524c7ae,StonfiSwap.
-         The advantage of using hex strings is that it's possible to get transactions for operations
+         The advantage of using hex strings is that it"s possible to get transactions for operations
          that are not yet present on `the list <https://github.com/tonkeeper/tongo/blob/master/abi/messages.md>`_.
         :param args: Additional arguments to pass to the handler
         """
         method = "v2/sse/accounts/transactions"
-        params = {'accounts': ",".join(accounts)}
+        params = {"accounts": ",".join(accounts)}
         if operations:
-            params['operations'] = ",".join(operations)
+            params["operations"] = ",".join(operations)
 
         async for data in self._subscribe(method=method, params=params):
             event = TransactionEventData(**json.loads(data))
@@ -44,8 +44,8 @@ class SSEMethod(AsyncTonapiClientBase):
 
     async def subscribe_to_traces(
             self,
-            accounts: List[str],
             handler: Callable[[TraceEventData, Any], Awaitable[Any]],
+            accounts: List[str],
             args: Tuple = (),
     ) -> Any:
         """
@@ -55,7 +55,7 @@ class SSEMethod(AsyncTonapiClientBase):
         :accounts: A list of account addresses to subscribe to
         """
         method = "v2/sse/accounts/traces"
-        params = {'accounts': ",".join(accounts)}
+        params = {"accounts": ",".join(accounts)}
         async for data in self._subscribe(method=method, params=params):
             event = TraceEventData(**json.loads(data))
             result = await handler(event, *args)
@@ -64,8 +64,8 @@ class SSEMethod(AsyncTonapiClientBase):
 
     async def subscribe_to_mempool(
             self,
-            accounts: List[str],
             handler: Callable[[MempoolEventData, Any], Awaitable[Any]],
+            accounts: List[str],
             args: Tuple = (),
     ) -> Any:
         """
@@ -75,7 +75,7 @@ class SSEMethod(AsyncTonapiClientBase):
         :accounts: A list of account addresses to subscribe to
         """
         method = "v2/sse/mempool"
-        params = {'accounts': ",".join(accounts)}
+        params = {"accounts": ",".join(accounts)}
         async for data in self._subscribe(method=method, params=params):
             event = MempoolEventData(**json.loads(data))
             result = await handler(event, *args)
@@ -84,8 +84,8 @@ class SSEMethod(AsyncTonapiClientBase):
 
     async def subscribe_to_blocks(
             self,
-            workchain: Optional[Union[int, None]],
             handler: Callable[[BlockEventData, Any], Awaitable[Any]],
+            workchain: Optional[int] = None,
             args: Tuple = (),
     ) -> Any:
         """
@@ -95,7 +95,7 @@ class SSEMethod(AsyncTonapiClientBase):
         :workchain: The ID of the workchain to subscribe to. If None, subscribes to all workchains.
         """
         method = "v2/sse/blocks"
-        params = {} if workchain is None else {'workchain': workchain}
+        params = {} if workchain is None else {"workchain": workchain}
         async for data in self._subscribe(method=method, params=params):
             event = BlockEventData(**json.loads(data))
             result = await handler(event, *args)
