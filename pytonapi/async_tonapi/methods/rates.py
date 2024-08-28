@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from pytonapi.async_tonapi.client import AsyncTonapiClientBase
-from pytonapi.schema.rates import ChartRates, Rates
+from pytonapi.schema.rates import ChartRates, Rates, MarketsTonRates
 
 
 class RatesMethod(AsyncTonapiClientBase):
@@ -50,3 +50,14 @@ class RatesMethod(AsyncTonapiClientBase):
         response = await self._get(method=method, params=params)
 
         return ChartRates(**response)
+
+    async def get_ton_price_from_markets(self) -> MarketsTonRates:
+        """
+        Get the TON price from markets.
+
+        :return: :class:`MarketsTonRates`
+        """
+        method = f"v2/rates/markets"
+        response = await self._get(method=method)
+
+        return MarketsTonRates(**response)

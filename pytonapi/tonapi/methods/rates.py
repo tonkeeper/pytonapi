@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pytonapi.schema.rates import Rates, ChartRates
+from pytonapi.schema.rates import Rates, ChartRates, MarketsTonRates
 from pytonapi.tonapi import TonapiClientBase
 
 
@@ -44,3 +44,15 @@ class RatesMethod(TonapiClientBase):
         response = self._get(method=method, params=params)
 
         return ChartRates(**response)
+
+
+    def get_ton_price_from_markets(self) -> MarketsTonRates:
+        """
+        Get the TON price from markets.
+
+        :return: :class:`MarketsTonRates`
+        """
+        method = f"v2/rates/markets"
+        response = self._get(method=method)
+
+        return MarketsTonRates(**response)
