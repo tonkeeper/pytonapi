@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
@@ -19,17 +19,17 @@ class JettonMetadata(BaseModel):
     name: str
     symbol: str
     decimals: str
-    image: Optional[str]
-    description: Optional[str]
-    social: Optional[List[str]]
-    websites: Optional[List[str]]
-    catalogs: Optional[List[str]]
+    image: Optional[str] = None
+    description: Optional[str] = None
+    social: Optional[List[str]] = None
+    websites: Optional[List[str]] = None
+    catalogs: Optional[List[str]] = None
 
 
 class JettonInfo(BaseModel):
     mintable: bool
     total_supply: str
-    admin: Optional[AccountAddress]
+    admin: Optional[AccountAddress] = None
     metadata: JettonMetadata
     verification: JettonVerificationType
     holders_count: int
@@ -46,7 +46,7 @@ class JettonPreview(BaseModel):
 
 class JettonBalance(BaseModel):
     balance: str
-    price: Optional[TokenRates]
+    price: Optional[TokenRates] = None
     wallet_address: AccountAddress
     jetton: JettonPreview
 

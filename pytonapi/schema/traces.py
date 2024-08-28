@@ -3,7 +3,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Optional, List, Union
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from .accounts import AccountAddress
 
@@ -58,18 +58,18 @@ class CreditPhase(BaseModel):
 
 class StoragePhase(BaseModel):
     fees_collected: int
-    fees_due: Optional[int]
+    fees_due: Optional[int] = None
     status_change: AccStatusChange
 
 
 class ComputePhase(BaseModel):
     skipped: bool
-    skip_reason: Optional[ComputeSkipReason]
-    success: Optional[bool]
-    gas_fees: Optional[int]
-    gas_used: Optional[int]
-    vm_steps: Optional[int]
-    exit_code: Optional[int]
+    skip_reason: Optional[ComputeSkipReason] = None
+    success: Optional[bool] = None
+    gas_fees: Optional[int] = None
+    gas_used: Optional[int] = None
+    vm_steps: Optional[int] = None
+    exit_code: Optional[int] = None
 
 
 class StateInit(BaseModel):
@@ -84,15 +84,15 @@ class Message(BaseModel):
     value: int
     fwd_fee: int
     ihr_fee: int
-    destination: Optional[AccountAddress]
-    source: Optional[AccountAddress]
+    destination: Optional[AccountAddress] = None
+    source: Optional[AccountAddress] = None
     import_fee: int
     created_at: int
-    op_code: Optional[str]
-    init: Optional[StateInit]
-    decoded_op_name: Optional[str]
-    decoded_body: Optional[Union[dict, str]]
-    raw_body: Optional[str]
+    op_code: Optional[str] = None
+    init: Optional[StateInit] = None
+    decoded_op_name: Optional[str] = None
+    decoded_body: Optional[Union[dict, str]] = None
+    raw_body: Optional[str] = None
 
 
 class Transaction(BaseModel):
@@ -107,25 +107,25 @@ class Transaction(BaseModel):
     transaction_type: TransactionType
     state_update_old: str
     state_update_new: str
-    in_msg: Optional[Message]
+    in_msg: Optional[Message] = None
     out_msgs: List[Message]
     block: str
-    prev_trans_hash: Optional[str]
-    prev_trans_lt: Optional[int]
-    compute_phase: Optional[ComputePhase]
-    storage_phase: Optional[StoragePhase]
-    credit_phase: Optional[CreditPhase]
-    action_phase: Optional[ActionPhase]
-    bounce_phase: Optional[BouncePhaseType]
+    prev_trans_hash: Optional[str] = None
+    prev_trans_lt: Optional[int] = None
+    compute_phase: Optional[ComputePhase] = None
+    storage_phase: Optional[StoragePhase] = None
+    credit_phase: Optional[CreditPhase] = None
+    action_phase: Optional[ActionPhase] = None
+    bounce_phase: Optional[BouncePhaseType] = None
     aborted: bool
     destroyed: bool
 
 
 class Trace(BaseModel):
     transaction: Transaction
-    interfaces: Optional[List[str]]
-    children: Optional[List[Trace]]
-    emulated: Optional[bool]
+    interfaces: Optional[List[str]] = None
+    children: Optional[List[Trace]] = None
+    emulated: Optional[bool] = None
 
 
 class TraceId(BaseModel):

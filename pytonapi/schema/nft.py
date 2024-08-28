@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
@@ -14,7 +14,7 @@ class Price(BaseModel):
 class Sale(BaseModel):
     address: Address
     market: AccountAddress
-    owner: Optional[AccountAddress]
+    owner: Optional[AccountAddress] = None
     price: Price
 
 
@@ -26,28 +26,28 @@ class ImagePreview(BaseModel):
 class Collection(BaseModel):
     address: Address
     name: str
-    description: Optional[str]
+    description: Optional[str] = None
 
 
 class NftCollection(BaseModel):
     address: Address
     next_item_index: int
-    owner: Optional[AccountAddress]
+    owner: Optional[AccountAddress] = None
     raw_collection_content: str
-    metadata: Optional[dict]
-    previews: Optional[List[ImagePreview]]
+    metadata: Optional[dict] = None
+    previews: Optional[List[ImagePreview]] = None
 
 
 class NftItem(BaseModel):
     address: Address
     index: int
-    owner: Optional[AccountAddress]
-    collection: Optional[Collection]
+    owner: Optional[AccountAddress] = None
+    collection: Optional[Collection] = None
     verified: bool
     metadata: dict
-    sale: Optional[Sale]
-    previews: Optional[List[ImagePreview]]
-    dns: Optional[str]
+    sale: Optional[Sale] = None
+    previews: Optional[List[ImagePreview]] = None
+    dns: Optional[str] = None
     approved_by: List[str]
 
 

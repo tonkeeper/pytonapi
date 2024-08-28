@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
@@ -23,9 +23,9 @@ class TonTransferAction(BaseModel):
     sender: AccountAddress
     recipient: AccountAddress
     amount: int
-    comment: Optional[str]
-    encrypted_comment: Optional[EncryptedComment]
-    refund: Optional[Refund]
+    comment: Optional[str] = None
+    encrypted_comment: Optional[EncryptedComment] = None
+    refund: Optional[Refund] = None
 
 
 class ContractDeployAction(BaseModel):
@@ -34,14 +34,14 @@ class ContractDeployAction(BaseModel):
 
 
 class JettonTransferAction(BaseModel):
-    sender: Optional[AccountAddress]
-    recipient: Optional[AccountAddress]
+    sender: Optional[AccountAddress] = None
+    recipient: Optional[AccountAddress] = None
     senders_wallet: str
     recipients_wallet: str
     amount: str
-    comment: Optional[str]
-    encrypted_comment: Optional[EncryptedComment]
-    refund: Optional[Refund]
+    comment: Optional[str] = None
+    encrypted_comment: Optional[EncryptedComment] = None
+    refund: Optional[Refund] = None
     jetton: JettonPreview
 
 
@@ -60,13 +60,13 @@ class JettonMintAction(BaseModel):
 
 
 class NftItemTransferAction(BaseModel):
-    sender: Optional[AccountAddress]
-    recipient: Optional[AccountAddress]
+    sender: Optional[AccountAddress] = None
+    recipient: Optional[AccountAddress] = None
     nft: str
-    comment: Optional[str]
-    encrypted_comment: Optional[EncryptedComment]
-    payload: Optional[str]
-    refund: Optional[Refund]
+    comment: Optional[str] = None
+    encrypted_comment: Optional[EncryptedComment] = None
+    payload: Optional[str] = None
+    refund: Optional[Refund] = None
 
 
 class SubscriptionAction(BaseModel):
@@ -86,7 +86,7 @@ class UnSubscriptionAction(BaseModel):
 class AuctionBidAction(BaseModel):
     auction_type: str
     amount: Price
-    nft: Optional[NftItem]
+    nft: Optional[NftItem] = None
     bidder: AccountAddress
     auction: AccountAddress
 
@@ -112,7 +112,7 @@ class WithdrawStakeAction(BaseModel):
 
 
 class WithdrawStakeRequestAction(BaseModel):
-    amount: Optional[int]
+    amount: Optional[int] = None
     staker: AccountAddress
     pool: AccountAddress
 
@@ -131,12 +131,12 @@ class JettonSwapAction(BaseModel):
     dex: str
     amount_in: str
     amount_out: str
-    ton_in: Optional[int]
-    ton_out: Optional[int]
+    ton_in: Optional[int] = None
+    ton_out: Optional[int] = None
     user_wallet: AccountAddress
     router: AccountAddress
-    jetton_master_in: Optional[JettonPreview]
-    jetton_master_out: Optional[JettonPreview]
+    jetton_master_in: Optional[JettonPreview] = None
+    jetton_master_out: Optional[JettonPreview] = None
 
 
 class SmartContractAction(BaseModel):
@@ -144,16 +144,16 @@ class SmartContractAction(BaseModel):
     contract: AccountAddress
     ton_attached: int
     operation: str
-    payload: Optional[str]
-    refund: Optional[Refund]
+    payload: Optional[str] = None
+    refund: Optional[Refund] = None
 
 
 class ActionSimplePreview(BaseModel):
     name: str
     description: str
-    action_image: Optional[str]
-    value: Optional[str]
-    value_image: Optional[str]
+    action_image: Optional[str] = None
+    value: Optional[str] = None
+    value_image: Optional[str] = None
     accounts: List[AccountAddress]
 
 
@@ -167,7 +167,7 @@ class InscriptionTransferAction(BaseModel):
     sender: AccountAddress
     recipient: AccountAddress
     amount: str
-    comment: Optional[str]
+    comment: Optional[str] = None
     type: str
     ticker: str
     decimals: int
@@ -184,31 +184,31 @@ class InscriptionMintAction(BaseModel):
 class Action(BaseModel):
     type: str
     status: str
-    TonTransfer: Optional[TonTransferAction]
-    ContractDeploy: Optional[ContractDeployAction]
-    JettonTransfer: Optional[JettonTransferAction]
-    JettonBurn: Optional[JettonBurnAction]
-    JettonMint: Optional[JettonMintAction]
-    NftItemTransfer: Optional[NftItemTransferAction]
-    Subscribe: Optional[SubscriptionAction]
-    UnSubscribe: Optional[UnSubscriptionAction]
-    AuctionBid: Optional[AuctionBidAction]
-    NftPurchase: Optional[NftPurchaseAction]
-    DepositStake: Optional[DepositStakeAction]
-    WithdrawStake: Optional[WithdrawStakeAction]
-    WithdrawStakeRequest: Optional[WithdrawStakeRequestAction]
-    ElectionsDepositStake: Optional[ElectionsDepositStakeAction]
-    ElectionsRecoverStake: Optional[ElectionsRecoverStakeAction]
-    JettonSwap: Optional[JettonSwapAction]
-    SmartContractExec: Optional[SmartContractAction]
-    DomainRenew: Optional[DomainRenewAction]
-    InscriptionTransfer: Optional[InscriptionTransferAction]
-    InscriptionMint: Optional[InscriptionMintAction]
+    TonTransfer: Optional[TonTransferAction] = None
+    ContractDeploy: Optional[ContractDeployAction] = None
+    JettonTransfer: Optional[JettonTransferAction] = None
+    JettonBurn: Optional[JettonBurnAction] = None
+    JettonMint: Optional[JettonMintAction] = None
+    NftItemTransfer: Optional[NftItemTransferAction] = None
+    Subscribe: Optional[SubscriptionAction] = None
+    UnSubscribe: Optional[UnSubscriptionAction] = None
+    AuctionBid: Optional[AuctionBidAction] = None
+    NftPurchase: Optional[NftPurchaseAction] = None
+    DepositStake: Optional[DepositStakeAction] = None
+    WithdrawStake: Optional[WithdrawStakeAction] = None
+    WithdrawStakeRequest: Optional[WithdrawStakeRequestAction] = None
+    ElectionsDepositStake: Optional[ElectionsDepositStakeAction] = None
+    ElectionsRecoverStake: Optional[ElectionsRecoverStakeAction] = None
+    JettonSwap: Optional[JettonSwapAction] = None
+    SmartContractExec: Optional[SmartContractAction] = None
+    DomainRenew: Optional[DomainRenewAction] = None
+    InscriptionTransfer: Optional[InscriptionTransferAction] = None
+    InscriptionMint: Optional[InscriptionMintAction] = None
     simple_preview: ActionSimplePreview
 
 
 class AccountEvent(BaseModel):
-    description: Optional[str]
+    description: Optional[str] = None
     event_id: str
     account: AccountAddress
     timestamp: int
@@ -233,7 +233,7 @@ class ValueFlow(BaseModel):
     account: AccountAddress
     ton: int
     fees: int
-    jettons: Optional[List[ValueFlowJettonsInner]]
+    jettons: Optional[List[ValueFlowJettonsInner]] = None
 
 
 class Event(BaseModel):

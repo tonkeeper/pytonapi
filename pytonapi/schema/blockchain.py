@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional, Dict, Any
 
-from pydantic.v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 
 from pytonapi.schema._address import Address
 from pytonapi.schema.accounts import AccountAddress
@@ -30,16 +30,16 @@ class Transaction(BaseModel):
     transaction_type: TransactionType
     state_update_old: str
     state_update_new: str
-    in_msg: Optional[Message]
+    in_msg: Optional[Message] = None
     out_msgs: List[Message]
     block: str
-    prev_trans_hash: Optional[str]
-    prev_trans_lt: Optional[int]
-    compute_phase: Optional[ComputePhase]
-    storage_phase: Optional[StoragePhase]
-    credit_phase: Optional[CreditPhase]
-    action_phase: Optional[ActionPhase]
-    bounce_phase: Optional[BouncePhaseType]
+    prev_trans_hash: Optional[str] = None
+    prev_trans_lt: Optional[int] = None
+    compute_phase: Optional[ComputePhase] = None
+    storage_phase: Optional[StoragePhase] = None
+    credit_phase: Optional[CreditPhase] = None
+    action_phase: Optional[ActionPhase] = None
+    bounce_phase: Optional[BouncePhaseType] = None
     aborted: bool
     destroyed: bool
 
@@ -83,7 +83,7 @@ class BlockValueFlow(BaseModel):
     imported: BlockCurrencyCollection
     exported: BlockCurrencyCollection
     fees_collected: BlockCurrencyCollection
-    burned: Optional[BlockCurrencyCollection]
+    burned: Optional[BlockCurrencyCollection] = None
     fees_imported: BlockCurrencyCollection
     recovered: BlockCurrencyCollection
     created: BlockCurrencyCollection
@@ -113,9 +113,9 @@ class BlockchainBlock(BaseModel):
     gen_catchain_seqno: int
     min_ref_mc_seqno: int
     prev_key_block_seqno: int
-    gen_software_version: Optional[int]
-    gen_software_capabilities: Optional[int]
-    master_ref: Optional[str]
+    gen_software_version: Optional[int] = None
+    gen_software_capabilities: Optional[int] = None
+    master_ref: Optional[str] = None
     prev_refs: List[str]
     in_msg_descr_length: int
     out_msg_descr_length: int
@@ -201,11 +201,11 @@ class AccountStorageInfo(BaseModel):
 class BlockchainRawAccount(BaseModel):
     address: Address
     balance: int
-    extra_balance: Optional[Dict[str, str]]
-    code: Optional[str]
-    data: Optional[str]
+    extra_balance: Optional[Dict[str, str]] = None
+    code: Optional[str] = None
+    data: Optional[str] = None
     last_transaction_lt: int
-    last_transaction_hash: Optional[str]
+    last_transaction_hash: Optional[str] = None
     status: str
     storage: AccountStorageInfo
 
@@ -219,22 +219,22 @@ class BlockchainAccountInspect(BaseModel):
     code: str
     code_hash: str
     methods: List[BlockchainAccountInspectMethodsInner]
-    compiler: Optional[str]
+    compiler: Optional[str] = None
 
 
 class TvmStackRecord(BaseModel):
     type: str
-    cell: Optional[str]
-    slice: Optional[str]
-    num: Optional[str]
-    tuple: Optional[List[TvmStackRecord]]
+    cell: Optional[str] = None
+    slice: Optional[str] = None
+    num: Optional[str] = None
+    tuple: Optional[List[TvmStackRecord]] = None
 
 
 class MethodExecutionResult(BaseModel):
     success: bool
     exit_code: int
     stack: List[TvmStackRecord]
-    decoded: Optional[Any]
+    decoded: Optional[Any] = None
 
 
 class ServiceStatus(BaseModel):
@@ -245,4 +245,4 @@ class ServiceStatus(BaseModel):
 class DecodedMessage(BaseModel):
     destination: AccountAddress
     destination_wallet_version: str
-    ext_in_msg_decoded: Optional[Dict[str, Any]]
+    ext_in_msg_decoded: Optional[Dict[str, Any]] = None

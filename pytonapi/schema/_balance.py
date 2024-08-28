@@ -1,19 +1,15 @@
-from pydantic.v1 import BaseModel
+from pydantic import RootModel
 
 from pytonapi.utils import to_amount, to_nano
 
 
-class Balance(BaseModel):
+class Balance(RootModel[int]):
     """
     Represents the balance of an account.
     """
-    __root__: int
 
-    def __int__(self) -> int:
-        return self.__root__
-
-    def __call__(self) -> int:
-        return self.__root__
+    def __str__(self) -> int:
+        return self.root.__str__()
 
     def to_nano(self, decimals: int = 9) -> int:
         """
@@ -22,7 +18,7 @@ class Balance(BaseModel):
         :param decimals: The number of decimal places in the input value. Defaults to 9.
         :return: The value of the input in nanoton.
         """
-        return to_nano(self.__root__, decimals=decimals)
+        return to_nano(self.root, decimals=decimals)
 
     def to_amount(self, decimals: int = 9, precision: int = 2) -> float:
         """
@@ -32,4 +28,4 @@ class Balance(BaseModel):
         :param precision: The number of decimal places to round the converted value to. Defaults to 2.
         :return: The converted value, in TON, rounded to the specified precision.
         """
-        return to_amount(self.__root__, decimals=decimals, precision=precision)
+        return to_amount(self.root, decimals=decimals, precision=precision)

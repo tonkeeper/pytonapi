@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema.accounts import AccountAddress
 from pytonapi.schema.nft import NftItem
@@ -12,8 +12,8 @@ class DomainNames(BaseModel):
 
 class DomainInfo(BaseModel):
     name: str
-    expiring_at: Optional[int]
-    item: Optional[NftItem]
+    expiring_at: Optional[int] = None
+    item: Optional[NftItem] = None
 
 
 class DomainBid(BaseModel):

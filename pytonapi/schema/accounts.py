@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 from pytonapi.schema._balance import Balance
@@ -24,13 +24,13 @@ class Account(BaseModel):
     balance: Balance
     last_activity: int
     status: str
-    interfaces: Optional[List[str]]
-    name: Optional[str]
-    is_scam: Optional[bool]
-    icon: Optional[str]
-    memo_required: Optional[bool]
+    interfaces: Optional[List[str]] = None
+    name: Optional[str] = None
+    is_scam: Optional[bool] = None
+    icon: Optional[str] = None
+    memo_required: Optional[bool] = None
     get_methods: List[str]
-    is_suspended: Optional[bool]
+    is_suspended: Optional[bool] = None
     is_wallet: bool
 
 
@@ -40,16 +40,16 @@ class Accounts(BaseModel):
 
 class AccountAddress(BaseModel):
     address: Address
-    name: Optional[str]
+    name: Optional[str] = None
     is_scam: bool
-    icon: Optional[str]
+    icon: Optional[str] = None
     is_wallet: bool
 
 
 class FoundAccount(BaseModel):
     address: Address
-    name: Optional[str]
-    preview: Optional[str]
+    name: Optional[str] = None
+    preview: Optional[str] = None
 
 
 class FoundAccounts(BaseModel):
@@ -75,10 +75,9 @@ class Subscriptions(BaseModel):
 
 
 class DnsExpiringItemsInner(BaseModel):
-    from pytonapi.schema.nft import NftItem
     expiring_at: int
     name: str
-    dns_item: Optional[NftItem]
+    dns_item: Optional['NftItem'] = None
 
 
 class DnsExpiring(BaseModel):
@@ -91,3 +90,5 @@ class PublicKey(BaseModel):
 
 class BalanceChange(BaseModel):
     balance_change: Balance
+
+from pytonapi.schema.nft import NftItem

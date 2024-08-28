@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic.v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 
 
 class GaslessJetton(BaseModel):
@@ -15,8 +15,8 @@ class GaslessConfig(BaseModel):
 class SignRawMessage(BaseModel):
     address: str
     amount: str
-    payload: Optional[str]
-    stateInit: Optional[str]
+    payload: Optional[str] = None
+    stateInit: Optional[str] = None
 
 
 class SignRawParams(BaseModel):

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 
@@ -14,10 +14,10 @@ class WalletDNS(BaseModel):
 
 
 class DNSRecord(BaseModel):
-    wallet: Optional[WalletDNS]
-    next_resolver: Optional[str]
+    wallet: Optional[WalletDNS] = None
+    next_resolver: Optional[str] = None
     sites: List[str]
-    storage: Optional[str]
+    storage: Optional[str] = None
 
 
 class Auction(BaseModel):

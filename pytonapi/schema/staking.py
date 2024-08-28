@@ -1,6 +1,6 @@
 from typing import Union, List, Dict, Optional
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 
@@ -36,7 +36,7 @@ class PoolInfo(BaseModel):
     verified: bool
     current_nominators: int
     max_nominators: int
-    liquid_jetton_master: Optional[str]
+    liquid_jetton_master: Optional[str] = None
     nominators_stake: int
     validator_stake: int
 

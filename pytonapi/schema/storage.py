@@ -1,6 +1,6 @@
 from typing import List
 
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from pytonapi.schema._address import Address
 
