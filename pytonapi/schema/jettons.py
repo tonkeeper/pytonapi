@@ -29,6 +29,7 @@ class JettonMetadata(BaseModel):
 class JettonInfo(BaseModel):
     mintable: bool
     total_supply: str
+    admin: Optional[AccountAddress]
     metadata: JettonMetadata
     verification: JettonVerificationType
     holders_count: int
