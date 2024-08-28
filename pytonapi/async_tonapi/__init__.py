@@ -14,23 +14,26 @@ class AsyncTonapi(AsyncTonapiClientBase):
     def __init__(
             self,
             api_key: str,
-            is_testnet: Optional[bool] = False,
-            max_retries: Optional[int] = None,
+            is_testnet: bool = False,
+            max_retries: int = 0,
             base_url: Optional[str] = None,
             websocket_url: Optional[str] = None,
             headers: Optional[Dict[str, Any]] = None,
             timeout: Optional[float] = None,
+            debug: bool = False,
+            **kwargs,
     ) -> None:
         """
         Initialize the AsyncTonapiClient.
 
         :param api_key: The API key.
+        :param is_testnet: Use True if using the testnet.
+        :param max_retries: Maximum number of retries per request if rate limit is reached.
         :param base_url: The base URL for the API.
         :param websocket_url: The URL for the WebSocket server.
-        :param is_testnet: Use True if using the testnet.
-        :param timeout: Request timeout in seconds.
         :param headers: Additional headers to include in requests.
-        :param max_retries: Maximum number of retries per request if rate limit is reached.
+        :param timeout: Request timeout in seconds.
+        :param debug: Enable debug mode.
         """
         super().__init__(
             api_key=api_key,
@@ -40,6 +43,8 @@ class AsyncTonapi(AsyncTonapiClientBase):
             websocket_url=websocket_url,
             headers=headers,
             timeout=timeout,
+            debug=debug,
+            **kwargs,
         )
 
     @property

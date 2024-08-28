@@ -1,10 +1,10 @@
 import asyncio
 import json
-import logging
 from typing import Any, Dict, Optional, AsyncGenerator
 
 import httpx
 import websockets
+from httpx import URL, QueryParams
 
 from pytonapi.exceptions import (
     TONAPIBadRequestError,
@@ -16,6 +16,7 @@ from pytonapi.exceptions import (
     TONAPINotImplementedError,
     TONAPISSEError,
 )
+from pytonapi.logger_config import setup_logging
 
 
 class AsyncTonapiClientBase:
@@ -26,23 +27,26 @@ class AsyncTonapiClientBase:
     def __init__(
             self,
             api_key: str,
-            is_testnet: Optional[bool] = False,
-            max_retries: Optional[int] = None,
+            is_testnet: bool = False,
+            max_retries: int = 0,
             base_url: Optional[str] = None,
             websocket_url: Optional[str] = None,
             headers: Optional[Dict[str, Any]] = None,
             timeout: Optional[float] = None,
+            debug: bool = False,
+            **kwargs,
     ) -> None:
         """
         Initialize the AsyncTonapiClient.
 
         :param api_key: The API key.
+        :param is_testnet: Use True if using the testnet.
+        :param max_retries: Maximum number of retries per request if rate limit is reached.
         :param base_url: The base URL for the API.
         :param websocket_url: The URL for the WebSocket server.
-        :param is_testnet: Use True if using the testnet.
-        :param timeout: Request timeout in seconds.
         :param headers: Additional headers to include in requests.
-        :param max_retries: Maximum number of retries per request if rate limit is reached.
+        :param timeout: Request timeout in seconds.
+        :param debug: Enable debug mode.
         """
         self.api_key = api_key
         self.is_testnet = is_testnet
@@ -52,6 +56,9 @@ class AsyncTonapiClientBase:
         self.base_url = base_url or "https://tonapi.io/" if not is_testnet else "https://testnet.tonapi.io/"
         self.websocket_url = websocket_url or "wss://tonapi.io/v2/websocket"
         self.headers = headers or {"Authorization": f"Bearer {api_key}"}
+
+        self.debug = debug
+        self.logger = setup_logging(self.debug)
 
     @staticmethod
     async def __read_content(response: httpx.Response) -> Any:
@@ -100,6 +107,7 @@ class AsyncTonapiClientBase:
 
             if isinstance(content, dict):
                 content = content.get("error") or content.get("Error")
+            self.logger.error(f"Error response received: {content}")
             raise error_class(content)
 
         return content
@@ -107,7 +115,7 @@ class AsyncTonapiClientBase:
     async def _subscribe(
             self,
             method: str,
-            params: Optional[Dict[str, Any]],
+            params: Dict[str, Any],
     ) -> AsyncGenerator[str, None]:
         """
         Subscribe to an SSE event stream.
@@ -117,26 +125,36 @@ class AsyncTonapiClientBase:
         """
         url = self.base_url + method
         timeout = httpx.Timeout(timeout=self.timeout)
-        data = {"headers": self.headers, "params": params, "timeout": timeout}
 
+        self.logger.debug(f"Subscribing to SSE with URL: {url} and params: {params}")
         async with httpx.AsyncClient() as client:
             try:
-                async with client.stream("GET", url=url, **data) as response:
-                    response: httpx.Response
+                async with client.stream(
+                        method="GET",
+                        url=url,
+                        headers=self.headers,
+                        params=params or {},
+                        timeout=timeout,
+                ) as response:
                     response.raise_for_status()
 
                     async for line in response.aiter_lines():
                         try:
                             key, value = line.split(": ", 1)
                         except ValueError:
+                            self.logger.debug(f"Skipped line due to ValueError: {line}")
                             continue
                         if value == "heartbeat":
+                            self.logger.debug("Received heartbeat")
                             continue
                         if key == "data":
+                            self.logger.debug(f"Received SSE data: {value}")
                             yield value
             except httpx.LocalProtocolError:
+                self.logger.error("Local protocol error during SSE subscription.")
                 raise TONAPIUnauthorizedError
             except httpx.HTTPStatusError as e:
+                self.logger.error(f"HTTP status error during SSE subscription: {e}")
                 raise TONAPISSEError(e)
 
     async def _subscribe_websocket(
@@ -157,6 +175,7 @@ class AsyncTonapiClientBase:
             "method": method,
             "params": params,
         }
+        self.logger.debug("Subscribing to WebSocket with payload: {payload}")
         async with websockets.connect(self.websocket_url) as websocket:
             try:
                 await websocket.send(json.dumps(payload))
@@ -165,9 +184,11 @@ class AsyncTonapiClientBase:
                     message_json = json.loads(message)
                     if "params" in message_json:
                         value = message_json["params"]
+                        self.logger.debug(f"Received WebSocket message: {value}")
                         yield value
-            except websockets.exceptions.ConnectionClosed:
-                raise
+            except websockets.exceptions.ConnectionClosed as e:
+                self.logger.error(f"WebSocket connection closed unexpectedly: {e}")
+                raise TONAPIError(e)
 
     async def _request(
             self,
@@ -190,14 +211,33 @@ class AsyncTonapiClientBase:
         url = self.base_url + path
         self.headers.update(headers or {})
         timeout = httpx.Timeout(timeout=self.timeout)
+
+        self.logger.debug(f"Request {method}: {URL(url).copy_merge_params(QueryParams(params))}")
+        self.logger.debug(f"Request headers: {self.headers}")
+        if params:
+            self.logger.debug(f"Request params: {params}")
+        if body:
+            self.logger.debug(f"Request body: {body}")
         try:
             async with httpx.AsyncClient(headers=self.headers, timeout=timeout) as session:
-                session: httpx.AsyncClient
-                data = {"params": params or {}, "json": body or {}}
-                response = await session.request(method=method, url=url, **data)
-                return await self.__process_response(response)
+                response = await session.request(
+                    method=method,
+                    url=url,
+                    params=params or {},
+                    json=body or {},
+                )
+                response_content = await self.__process_response(response)
+                self.logger.debug(f"Response received - Status code: {response.status_code}")
+                self.logger.debug(f"Response headers: {response.headers}")
+                self.logger.debug(f"Response content: {response_content}")
+                return response_content
+
         except httpx.LocalProtocolError:
+            self.logger.error("Local protocol error occurred during request.")
             raise TONAPIUnauthorizedError
+        except httpx.HTTPStatusError as e:
+            self.logger.error(f"HTTP status error during request: {e}")
+            raise TONAPIError(e)
 
     async def _request_retries(
             self,
@@ -227,12 +267,10 @@ class AsyncTonapiClientBase:
                     body=body,
                 )
             except TONAPITooManyRequestsError:
-                logging.warning(
-                    f"Rate limit exceeded. "
-                    f"Retrying {i + 1}/{self.max_retries} is in progress."
-                )
+                self.logger.warning(f"Rate limit exceeded. Retrying {i + 1}/{self.max_retries} in 1 second.")
                 await asyncio.sleep(1)
 
+        self.logger.error("Max retries exceeded while making request")
         raise TONAPITooManyRequestsError
 
     async def _get(
@@ -250,7 +288,7 @@ class AsyncTonapiClientBase:
         :return: The response content as a dictionary.
         """
         request = self._request
-        if self.max_retries:
+        if self.max_retries > 0:
             request = self._request_retries
         return await request("GET", method, headers, params=params)
 
@@ -270,6 +308,6 @@ class AsyncTonapiClientBase:
         :return: The response content as a dictionary.
         """
         request = self._request
-        if self.max_retries:
+        if self.max_retries > 0:
             request = self._request_retries
         return await request("POST", method, headers, params=params, body=body)

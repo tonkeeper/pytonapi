@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
 
-from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.tonapi import methods
+from pytonapi.tonapi.client import TonapiClientBase
 
 __all__ = [
     "Tonapi",
@@ -14,11 +14,13 @@ class Tonapi(TonapiClientBase):
     def __init__(
             self,
             api_key: str,
-            is_testnet: Optional[bool] = False,
-            max_retries: Optional[int] = None,
+            is_testnet: bool = False,
+            max_retries: int = 0,
             base_url: Optional[str] = None,
             headers: Optional[Dict[str, Any]] = None,
             timeout: Optional[float] = None,
+            debug: bool = False,
+            **kwargs,
     ) -> None:
         """
         Initialize the TonapiClient.
@@ -36,69 +38,77 @@ class Tonapi(TonapiClientBase):
             max_retries=max_retries,
             base_url=base_url,
             headers=headers,
-            timeout=timeout
+            timeout=timeout,
+            debug=debug,
+            **kwargs
         )
 
     @property
+    def __getattributes(self) -> Dict[str, Any]:
+        attributes = self.__dict__
+        attributes.pop("logger")
+        return attributes
+
+    @property
     def blockchain(self) -> methods.BlockchainMethod:
-        return methods.BlockchainMethod(**self.__dict__)
+        return methods.BlockchainMethod(**self.__getattributes)
 
     @property
     def accounts(self) -> methods.AccountsMethod:
-        return methods.AccountsMethod(**self.__dict__)
+        return methods.AccountsMethod(**self.__getattributes)
 
     @property
     def jettons(self) -> methods.JettonsMethod:
-        return methods.JettonsMethod(**self.__dict__)
+        return methods.JettonsMethod(**self.__getattributes)
 
     @property
     def liteserver(self) -> methods.LiteserverMethod:
-        return methods.LiteserverMethod(**self.__dict__)
+        return methods.LiteserverMethod(**self.__getattributes)
 
     @property
     def dns(self) -> methods.DnsMethod:
-        return methods.DnsMethod(**self.__dict__)
+        return methods.DnsMethod(**self.__getattributes)
 
     @property
     def emulate(self) -> methods.EmulateMethod:
-        return methods.EmulateMethod(**self.__dict__)
+        return methods.EmulateMethod(**self.__getattributes)
 
     @property
     def events(self) -> methods.EventsMethod:
-        return methods.EventsMethod(**self.__dict__)
+        return methods.EventsMethod(**self.__getattributes)
 
     @property
     def inscriptions(self) -> methods.InscriptionsMethod:
-        return methods.InscriptionsMethod(**self.__dict__)
+        return methods.InscriptionsMethod(**self.__getattributes)
 
     @property
     def nft(self) -> methods.NftMethod:
-        return methods.NftMethod(**self.__dict__)
+        return methods.NftMethod(**self.__getattributes)
 
     @property
     def rates(self) -> methods.RatesMethod:
-        return methods.RatesMethod(**self.__dict__)
+        return methods.RatesMethod(**self.__getattributes)
 
     @property
     def sse(self) -> methods.SSEMethod:
-        return methods.SSEMethod(**self.__dict__)
+        return methods.SSEMethod(**self.__getattributes)
 
     @property
     def staking(self) -> methods.StakingMethod:
-        return methods.StakingMethod(**self.__dict__)
+        return methods.StakingMethod(**self.__getattributes)
 
     @property
     def storage(self) -> methods.StorageMethod:
-        return methods.StorageMethod(**self.__dict__)
+        return methods.StorageMethod(**self.__getattributes)
 
     @property
     def tonconnect(self) -> methods.TonconnectMethod:
-        return methods.TonconnectMethod(**self.__dict__)
+        return methods.TonconnectMethod(**self.__getattributes)
 
     @property
     def traces(self) -> methods.TracesMethod:
-        return methods.TracesMethod(**self.__dict__)
+        return methods.TracesMethod(**self.__getattributes)
 
     @property
     def wallet(self) -> methods.WalletMethod:
-        return methods.WalletMethod(**self.__dict__)
+        return methods.WalletMethod(**self.__getattributes)
