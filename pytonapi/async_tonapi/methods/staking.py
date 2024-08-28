@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.staking import (
     AccountStaking,
     StakingPoolInfo,
@@ -9,7 +9,7 @@ from pytonapi.schema.staking import (
 )
 
 
-class StakingMethod(AsyncTonapiClient):
+class StakingMethod(AsyncTonapiClientBase):
 
     async def get_participating_pools(self, account_id: str) -> AccountStaking:
         """

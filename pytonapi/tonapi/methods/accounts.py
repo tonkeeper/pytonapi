@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from pytonapi.schema.events import AccountEvents, AccountEvent
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.accounts import (
     Account,
     Accounts,
@@ -18,7 +18,7 @@ from pytonapi.schema.nft import NftItems, NftItem
 from pytonapi.schema.traces import TraceIds
 
 
-class AccountsMethod(TonapiClient):
+class AccountsMethod(TonapiClientBase):
 
     def parse_address(self, account_id: str) -> AddressForm:
         """

@@ -1,12 +1,12 @@
 from typing import Optional, List
 
 from pytonapi.schema.events import AccountEvents
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 
 from pytonapi.schema.nft import NftCollections, NftCollection, NftItems, NftItem
 
 
-class NftMethod(TonapiClient):
+class NftMethod(TonapiClientBase):
 
     def get_collections(self, limit: int = 15, offset: int = 0) -> NftCollections:
         """

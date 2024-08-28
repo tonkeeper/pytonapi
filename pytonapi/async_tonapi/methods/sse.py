@@ -1,11 +1,11 @@
 import json
 from typing import List, Callable, Any, Awaitable, Tuple, Optional, Union
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import TransactionEventData, TraceEventData, MempoolEventData, BlockEventData
 
 
-class SSEMethod(AsyncTonapiClient):
+class SSEMethod(AsyncTonapiClientBase):
 
     async def subscribe_to_transactions(
             self,

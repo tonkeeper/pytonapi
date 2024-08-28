@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
 
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.blockchain import (
     Transactions,
     Transaction,
@@ -17,7 +17,7 @@ from pytonapi.schema.blockchain import (
 )
 
 
-class BlockchainMethod(TonapiClient):
+class BlockchainMethod(TonapiClientBase):
 
     def status(self) -> ServiceStatus:
         """

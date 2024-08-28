@@ -1,10 +1,10 @@
 from typing import Dict, Any, Union
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.accounts import Accounts
 
 
-class WalletMethod(AsyncTonapiClient):
+class WalletMethod(AsyncTonapiClientBase):
 
     async def get_backup_info(
             self,

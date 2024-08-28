@@ -1,11 +1,11 @@
 import base64
 import binascii
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import Event
 
 
-class EventsMethod(AsyncTonapiClient):
+class EventsMethod(AsyncTonapiClientBase):
 
     async def get_event(self, event_id: str, accept_language: str = "en") -> Event:
         """

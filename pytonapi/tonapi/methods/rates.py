@@ -1,10 +1,10 @@
 from typing import List, Optional
 
 from pytonapi.schema.rates import Rates, ChartRates
-from pytonapi.tonapi import TonapiClient
+from pytonapi.tonapi import TonapiClientBase
 
 
-class RatesMethod(TonapiClient):
+class RatesMethod(TonapiClientBase):
 
     def get_prices(self, tokens: List[str], currencies: List[str]) -> Rates:
         """

@@ -1,10 +1,10 @@
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 
 from pytonapi.schema.dns import DNSRecord, Auctions
 from pytonapi.schema.domains import DomainBids, DomainInfo
 
 
-class DnsMethod(TonapiClient):
+class DnsMethod(TonapiClientBase):
 
     def get_info(self, domain_name: str) -> DomainInfo:
         """

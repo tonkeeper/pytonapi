@@ -1,15 +1,15 @@
 from typing import Any, Dict, Optional
 
 from pytonapi.async_tonapi import methods
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 
 __all__ = [
     "AsyncTonapi",
-    "AsyncTonapiClient",
+    "AsyncTonapiClientBase",
 ]
 
 
-class AsyncTonapi(AsyncTonapiClient):
+class AsyncTonapi(AsyncTonapiClientBase):
 
     def __init__(
             self,

@@ -18,7 +18,7 @@ from pytonapi.exceptions import (
 )
 
 
-class AsyncTonapiClient:
+class AsyncTonapiClientBase:
     """
     Asynchronous TON API Client.
     """
@@ -97,8 +97,10 @@ class AsyncTonapiClient:
                 501: TONAPINotImplementedError,
             }
             error_class = error_map.get(response.status_code, TONAPIError)
-            error_message = content.get("error") if isinstance(content, dict) else content
-            raise error_class(error_message)
+
+            if isinstance(content, dict):
+                content = content.get("error") or content.get("Error")
+            raise error_class(content)
 
         return content
 

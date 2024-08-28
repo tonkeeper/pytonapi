@@ -1,9 +1,9 @@
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.dns import DNSRecord, Auctions
 from pytonapi.schema.domains import DomainBids, DomainInfo
 
 
-class DnsMethod(AsyncTonapiClient):
+class DnsMethod(AsyncTonapiClientBase):
 
     async def get_info(self, domain_name: str) -> DomainInfo:
         """

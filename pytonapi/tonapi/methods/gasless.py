@@ -1,10 +1,10 @@
 from typing import Dict, Any
 
 from pytonapi.schema.gasless import GaslessConfig, SignRawParams
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 
 
-class GaslessMethod(TonapiClient):
+class GaslessMethod(TonapiClientBase):
 
     def get_config(self) -> GaslessConfig:
         """

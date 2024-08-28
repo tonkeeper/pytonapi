@@ -1,8 +1,8 @@
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.tonconnect import TonconnectPayload, AccountInfoByStateInit
 
 
-class TonconnectMethod(TonapiClient):
+class TonconnectMethod(TonapiClientBase):
 
     def get_payload(self) -> TonconnectPayload:
         """

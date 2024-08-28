@@ -1,8 +1,8 @@
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.storage import StorageProviders
 
 
-class StorageMethod(AsyncTonapiClient):
+class StorageMethod(AsyncTonapiClientBase):
 
     async def get_providers(self) -> StorageProviders:
         """

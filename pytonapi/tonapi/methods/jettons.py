@@ -1,12 +1,12 @@
 from typing import List
 
 from pytonapi.schema.events import Event
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 
 from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder
 
 
-class JettonsMethod(TonapiClient):
+class JettonsMethod(TonapiClientBase):
 
     def get_info(self, account_id: str) -> JettonInfo:
         """

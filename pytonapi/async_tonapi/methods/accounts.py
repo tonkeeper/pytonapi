@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.accounts import (
     Account,
     Accounts,
@@ -18,7 +18,7 @@ from pytonapi.schema.nft import NftItems, NftItem
 from pytonapi.schema.traces import TraceIds
 
 
-class AccountsMethod(AsyncTonapiClient):
+class AccountsMethod(AsyncTonapiClientBase):
 
     async def parse_address(self, account_id: str) -> AddressForm:
         """

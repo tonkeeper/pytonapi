@@ -1,8 +1,8 @@
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.storage import StorageProviders
 
 
-class StorageMethod(TonapiClient):
+class StorageMethod(TonapiClientBase):
 
     def get_providers(self) -> StorageProviders:
         """

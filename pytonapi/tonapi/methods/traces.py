@@ -1,12 +1,12 @@
 import base64
 import binascii
 
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 
 from pytonapi.schema.traces import Trace
 
 
-class TracesMethod(TonapiClient):
+class TracesMethod(TonapiClientBase):
 
     def get_trace(self, trace_id: str) -> Trace:
         """

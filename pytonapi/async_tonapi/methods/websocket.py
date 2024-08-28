@@ -1,10 +1,10 @@
 from typing import List, Callable, Any, Awaitable, Tuple
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import TransactionEventData, TraceEventData, MempoolEventData
 
 
-class WebSocketMethod(AsyncTonapiClient):
+class WebSocketMethod(AsyncTonapiClientBase):
 
     async def subscribe_to_transactions(
             self,

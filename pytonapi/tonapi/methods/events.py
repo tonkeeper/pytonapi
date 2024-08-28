@@ -1,11 +1,11 @@
 import base64
 import binascii
 
-from pytonapi.tonapi import TonapiClient
+from pytonapi.tonapi import TonapiClientBase
 from pytonapi.schema.events import Event
 
 
-class EventsMethod(TonapiClient):
+class EventsMethod(TonapiClientBase):
 
     def get_event(self, event_id: str, accept_language: str = "en") -> Event:
         """

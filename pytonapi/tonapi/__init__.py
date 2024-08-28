@@ -1,15 +1,15 @@
 from typing import Any, Dict, Optional
 
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.tonapi import methods
 
 __all__ = [
     "Tonapi",
-    "TonapiClient"
+    "TonapiClientBase"
 ]
 
 
-class Tonapi(TonapiClient):
+class Tonapi(TonapiClientBase):
 
     def __init__(
             self,

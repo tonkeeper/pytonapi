@@ -1,11 +1,11 @@
 from typing import Optional
 
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.staking import (StakingPoolInfo, AccountStaking,
                                      StakingPoolHistory, StakingPools)
 
 
-class StakingMethod(TonapiClient):
+class StakingMethod(TonapiClientBase):
 
     def get_participating_pools(self, account_id: str) -> AccountStaking:
         """

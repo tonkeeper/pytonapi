@@ -1,12 +1,12 @@
 from typing import Dict, Any, Optional
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.blockchain import DecodedMessage
 from pytonapi.schema.events import Event, AccountEvent, MessageConsequences
 from pytonapi.schema.traces import Trace
 
 
-class EmulateMethod(AsyncTonapiClient):
+class EmulateMethod(AsyncTonapiClientBase):
 
     async def decode_message(self, body: Dict[str, Any]) -> DecodedMessage:
         """

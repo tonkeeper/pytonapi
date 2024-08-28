@@ -1,11 +1,11 @@
 import base64
 import binascii
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.traces import Trace
 
 
-class TracesMethod(AsyncTonapiClient):
+class TracesMethod(AsyncTonapiClientBase):
 
     async def get_trace(self, trace_id: str) -> Trace:
         """

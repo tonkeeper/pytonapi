@@ -2,10 +2,10 @@ import json
 from typing import List, Callable, Any, Tuple, Optional, Union
 
 from pytonapi.schema.events import TransactionEventData, TraceEventData, MempoolEventData, BlockEventData
-from pytonapi.tonapi import TonapiClient
+from pytonapi.tonapi import TonapiClientBase
 
 
-class SSEMethod(TonapiClient):
+class SSEMethod(TonapiClientBase):
 
     def subscribe_to_transactions(
             self,

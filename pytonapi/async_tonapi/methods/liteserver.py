@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional, Union
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.liteserver import (
     RawMasterChainInfo,
     RawMasterChainInfoExt,
@@ -18,7 +18,7 @@ from pytonapi.schema.liteserver import (
 )
 
 
-class LiteserverMethod(AsyncTonapiClient):
+class LiteserverMethod(AsyncTonapiClientBase):
 
     async def get_masterchain_info(self) -> RawMasterChainInfo:
         """

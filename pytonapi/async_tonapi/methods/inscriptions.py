@@ -1,11 +1,11 @@
 from typing import Dict, Optional, Literal
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import AccountEvents
 from pytonapi.schema.inscriptions import InscriptionBalances
 
 
-class InscriptionsMethod(AsyncTonapiClient):
+class InscriptionsMethod(AsyncTonapiClientBase):
 
     async def get_all_inscriptions(
             self,

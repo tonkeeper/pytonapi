@@ -1,11 +1,11 @@
 from typing import List
 
-from pytonapi.async_tonapi.client import AsyncTonapiClient
+from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import Event
 from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder
 
 
-class JettonsMethod(AsyncTonapiClient):
+class JettonsMethod(AsyncTonapiClientBase):
 
     async def get_info(self, account_id: str) -> JettonInfo:
         """

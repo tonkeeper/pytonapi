@@ -1,10 +1,10 @@
 from typing import Dict, Any, Union
 
-from pytonapi.tonapi.client import TonapiClient
+from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.accounts import Accounts
 
 
-class WalletMethod(TonapiClient):
+class WalletMethod(TonapiClientBase):
 
     def get_backup_info(
             self,
