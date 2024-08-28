@@ -5,8 +5,8 @@ from typing import Union
 __all__ = [
     'raw_to_userfriendly',
     'userfriendly_to_raw',
-    'nano_to_amount',
-    'amount_to_nano'
+    'to_amount',
+    'to_nano'
 ]
 
 
@@ -64,11 +64,12 @@ def userfriendly_to_raw(address: str) -> str:
     return f'{workchain_id}:{key}'
 
 
-def nano_to_amount(value: int, precision: int = 2) -> Union[float, int]:
+def to_amount(value: int, decimals: int = 9, precision: int = 2) -> Union[float, int]:
     """
     Converts a value from nanoton to TON and rounds it to the specified precision.
 
     :param value: The value to convert, in nanoton. This should be a positive integer.
+    :param decimals: The number of decimal places in the converted value. Defaults to 9.
     :param precision: The number of decimal places to round the converted value to. Defaults to 2.
     :return: The converted value in TON, rounded to the specified precision.
     """
@@ -78,20 +79,21 @@ def nano_to_amount(value: int, precision: int = 2) -> Union[float, int]:
     if not isinstance(precision, int) or precision < 0:
         raise ValueError("Precision must be a non-negative integer.")
 
-    ton_value = value / 1e9
+    ton_value = value / (10 ** decimals)
     rounded_ton_value = round(ton_value, precision)
 
     return rounded_ton_value if rounded_ton_value % 1 != 0 else int(rounded_ton_value)
 
 
-def amount_to_nano(value: Union[int, float]) -> int:
+def to_nano(value: Union[int, float], decimals: int = 9) -> int:
     """
     Converts TON value to nanoton.
 
     :param value: TON value to be converted. Can be a float or an integer.
+    :param decimals: The number of decimal places in the input value. Defaults to 9.
     :return: The value of the input in nanoton.
     """
     if not isinstance(value, (int, float)):
         raise ValueError("Value must be a positive integer or float.")
 
-    return int(value * 1e9)
+    return int(value * (10 ** decimals))
