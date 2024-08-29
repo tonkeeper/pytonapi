@@ -22,7 +22,7 @@ async def handler(event: TransactionEventData, tonapi: AsyncTonapi) -> None:
 
     # If the transaction is successful, print the trace
     if trace.transaction.success:
-        print(trace.dict())
+        print(trace.model_dump())
 
 
 async def main() -> None:
@@ -30,7 +30,7 @@ async def main() -> None:
 
     # Subscribe to transaction events for the specified accounts
     await tonapi.sse.subscribe_to_transactions(
-        accounts=ACCOUNTS, handler=handler, args=(tonapi,)
+        handler, accounts=ACCOUNTS, args=(tonapi,)
     )
 
 

@@ -1,65 +1,47 @@
 """
-You'll need a library for message construction,
-such as tonsdk. Below is an example code you can use.
-To use the tonsdk library, make sure to install it using pip:
+Simple example of sending TON using tonutils with the Tonapi client.
 
-pip install tonsdk
+Install tonutils with:
+pip install tonutils
 """
 
-import asyncio
+from tonutils.client import TonapiClient
+from tonutils.wallet import WalletV4R2
 
-from tonsdk.boc import begin_cell
+# API key for accessing the Tonapi (obtainable from https://tonconsole.com)
+API_KEY = ""
 
-from pytonapi import AsyncTonapi
-from tonsdk.utils import bytes_to_b64str, to_nano
-from tonsdk.contract.wallet import Wallets, WalletVersionEnum
+# Set to True for test network, False for main network
+IS_TESTNET = True
 
-# Tonapi Key
-API_KEY = "AE33EX7D5...K2AO3FYQ"  # noqa
+# Mnemonic phrase used to connect the wallet
+MNEMONIC: list[str] = []
 
-# Wallet Mnemonics
-MNEMONICS = "word1 word2 word3 ..."  # noqa
+# The address of the recipient
+DESTINATION_ADDRESS = "UQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNbbp"
 
-# Destination Address
-DESTINATION_ADDRESS = "EQC...Ness"  # noqa
+# Optional comment to include in the forward payload
+COMMENT = "Hello from tonutils!"
+
+# Amount to transfer in TON
+AMOUNT = 0.01
 
 
-async def main():
-    # Initialize AsyncTonapi with the provided API key and set it to use the testnet or mainnet
-    tonapi = AsyncTonapi(api_key=API_KEY, is_testnet=True)
+async def main() -> None:
+    client = TonapiClient(api_key=API_KEY, is_testnet=IS_TESTNET)
+    wallet, public_key, private_key, mnemonic = WalletV4R2.from_mnemonic(client, MNEMONIC)
 
-    # Create a wallet from the provided mnemonics
-    mnemonics_list = MNEMONICS.split(" ")
-    _mnemonics, _pub_k, _priv_k, wallet = Wallets.from_mnemonics(
-        mnemonics_list,
-        WalletVersionEnum.v4r2,  # Set the version of the wallet
-        0,
+    tx_hash = await wallet.transfer(
+        destination=DESTINATION_ADDRESS,
+        amount=AMOUNT,
+        body=COMMENT,
     )
 
-    # Get the sequence number of the wallet's current state
-    method_result = await tonapi.blockchain.execute_get_method(
-        wallet.address.to_string(False), "seqno"
-    )
-    seqno = int(method_result.decoded.get("state", 0))
-
-    # Prepare a transfer message to the destination address with the specified amount and sequence number
-    transfer_amount = to_nano(float("0.1"), 'ton')
-
-    # Create the comment payload
-    payload = begin_cell().store_uint(0, 32).store_string("Hello World!").end_cell()
-
-    query = wallet.create_transfer_message(
-        to_addr=DESTINATION_ADDRESS,
-        amount=transfer_amount,
-        payload=payload,
-        seqno=seqno,
-    )
-
-    # Convert the message to Base64 and send it through the Tonapi blockchain
-    message_boc = bytes_to_b64str(query["message"].to_boc(False))
-    data = {'boc': message_boc}
-    await tonapi.blockchain.send_message(data)
+    print(f"Successfully transferred {AMOUNT} TON!")
+    print(f"Transaction hash: {tx_hash}")
 
 
 if __name__ == "__main__":
+    import asyncio
+
     asyncio.run(main())
