@@ -15,3 +15,7 @@ class TestRatesMethod(TestTonapi):
     def test_get_chart(self):
         response = self.tonapi.rates.get_chart(TOKEN)
         self.assertIsInstance(response, schema.rates.ChartRates)
+
+    def test_get_ton_price_from_markets(self):
+        response = self.tonapi.rates.get_ton_price_from_markets()
+        self.assertIsInstance(response, schema.rates.MarketsTonRates)

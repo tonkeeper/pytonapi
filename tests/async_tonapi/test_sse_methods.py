@@ -13,13 +13,13 @@ async def handler(event) -> None:
 class TestSSEMethod(TestAsyncTonapi):
 
     async def test_subscribe_to_transactions(self):
-        await self.tonapi.sse.subscribe_to_transactions(ACCOUNTS_IDS, handler)
+        await self.tonapi.sse.subscribe_to_transactions(handler, ACCOUNTS_IDS)
 
     async def test_subscribe_to_traces(self):
-        await self.tonapi.sse.subscribe_to_traces(ACCOUNTS_IDS, handler)
+        await self.tonapi.sse.subscribe_to_traces(handler, ACCOUNTS_IDS)
 
     async def test_subscribe_to_mempool(self):
-        await self.tonapi.sse.subscribe_to_mempool([ACCOUNT_ID], handler)
+        await self.tonapi.sse.subscribe_to_mempool(handler, [ACCOUNT_ID])
 
     async def test_subscribe_to_blocks(self):
-        await self.tonapi.sse.subscribe_to_blocks(None, handler=handler)
+        await self.tonapi.sse.subscribe_to_blocks(handler)

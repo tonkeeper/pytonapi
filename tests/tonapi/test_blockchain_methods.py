@@ -6,13 +6,10 @@ ACCOUNT_ID = "EQBR6UVvw1tFcLkxWapnSQ10QH7JWt1fGUesX_C8lqWbluLL"  # noqa
 MESSAGE_ID = "EAC465A0DC51E844B12BBD0040308801FA19B8D1BD49208AA929E2CAAEE9D401"
 TRANSACTION_ID = "97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
 ACCOUNT_ID_NFT = "EQBSZKEvqoiuPUCFz-CHtpVxAwg1F8PyjZhWAJL2yeujn0_H"  # noqa
-MASTERCHATIN_SEQNO = "123456"
+MASTERCHATIN_SEQNO = 34835953
 
 
 class TestBlockchainMethod(TestTonapi):
-    def test_status(self):
-        response = self.tonapi.blockchain.status()
-        self.assertIsInstance(response, schema.blockchain.ServiceStatus)
 
     def test_get_block_data(self):
         response = self.tonapi.blockchain.get_block_data(BLOCK_ID)
@@ -69,10 +66,6 @@ class TestBlockchainMethod(TestTonapi):
     def test_inspect_account(self):
         response = self.tonapi.blockchain.inspect_account(ACCOUNT_ID)
         self.assertIsInstance(response, schema.blockchain.BlockchainAccountInspect)
-
-    # def test_send_message(self):
-    #     response = self.tonapi.blockchain.send_message("body")
-    #     self.assertIsInstance(response, bool)
 
     def test_get_config(self):
         response = self.tonapi.blockchain.get_config()

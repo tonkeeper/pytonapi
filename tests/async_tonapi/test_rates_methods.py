@@ -15,3 +15,7 @@ class TestRatesMethod(TestAsyncTonapi):
     async def test_get_chart(self):
         response = await self.tonapi.rates.get_chart(TOKEN)
         self.assertIsInstance(response, schema.rates.ChartRates)
+
+    async def test_get_ton_price_from_markets(self):
+        response = await self.tonapi.rates.get_ton_price_from_markets()
+        self.assertIsInstance(response, schema.rates.MarketsTonRates)
