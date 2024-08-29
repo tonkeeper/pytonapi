@@ -14,6 +14,7 @@ from .staking import StakingMethod
 from .storage import StorageMethod
 from .tonconnect import TonconnectMethod
 from .traces import TracesMethod
+from .utilites import UtilitiesMethod
 from .wallet import WalletMethod
 
 __all__ = [
@@ -33,5 +34,6 @@ __all__ = [
     "StorageMethod",
     "TonconnectMethod",
     "TracesMethod",
+    "UtilitiesMethod",
     "WalletMethod",
 ]

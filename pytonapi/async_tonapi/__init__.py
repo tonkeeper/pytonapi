@@ -112,6 +112,10 @@ class AsyncTonapi(AsyncTonapiClientBase):
         return methods.TracesMethod(**self.__dict__)
 
     @property
+    def utilities(self) -> methods.UtilitiesMethod:
+        return methods.UtilitiesMethod(**self.__dict__)
+
+    @property
     def wallet(self) -> methods.WalletMethod:
         return methods.WalletMethod(**self.__dict__)
 

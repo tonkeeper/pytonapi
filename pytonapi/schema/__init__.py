@@ -12,6 +12,7 @@ from pytonapi.schema import staking
 from pytonapi.schema import storage
 from pytonapi.schema import tonconnect
 from pytonapi.schema import traces
+from pytonapi.schema import utilites
 
 __all__ = [
     "accounts",
@@ -28,4 +29,5 @@ __all__ = [
     "storage",
     "tonconnect",
     "traces",
+    "utilites",
 ]

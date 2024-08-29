@@ -1,6 +1,5 @@
 from typing import Optional, Dict, Any
 
-from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.blockchain import (
     Transactions,
     Transaction,
@@ -13,22 +12,11 @@ from pytonapi.schema.blockchain import (
     BlockchainRawAccount,
     MethodExecutionResult,
     RawBlockchainConfig,
-    ServiceStatus,
 )
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class BlockchainMethod(TonapiClientBase):
-
-    def status(self) -> ServiceStatus:
-        """
-        Reduce indexing latency.
-
-        :return: :class:`ServiceStatus`
-        """
-        method = "v2/status"
-        response = self._get(method=method)
-
-        return ServiceStatus(**response)
 
     def get_block_data(self, block_id: str) -> BlockchainBlock:
         """

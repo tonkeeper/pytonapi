@@ -110,5 +110,9 @@ class Tonapi(TonapiClientBase):
         return methods.TracesMethod(**self.__getattributes)
 
     @property
+    def utilities(self) -> methods.UtilitiesMethod:
+        return methods.UtilitiesMethod(**self.__dict__)
+
+    @property
     def wallet(self) -> methods.WalletMethod:
         return methods.WalletMethod(**self.__getattributes)

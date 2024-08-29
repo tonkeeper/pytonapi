@@ -237,11 +237,6 @@ class MethodExecutionResult(BaseModel):
     decoded: Optional[Any] = None
 
 
-class ServiceStatus(BaseModel):
-    rest_online: bool
-    indexing_latency: int
-
-
 class DecodedMessage(BaseModel):
     destination: AccountAddress
     destination_wallet_version: str
