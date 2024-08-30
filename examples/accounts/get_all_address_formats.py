@@ -10,7 +10,7 @@ ACCOUNT_ID = "UQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqEBI"  # noqa
 
 def main():
     tonapi = Tonapi(api_key=API_KEY)
-    account = tonapi.accounts.parse_address(ACCOUNT_ID)
+    account = tonapi.utilities.parse_address(ACCOUNT_ID)
 
     print(f"Raw form: {account.raw_form}")
     # output: 0:83dfd552e63729b472fcbcc8c45ebcc6691702558b68ec7527e1ba403a0f31a8
