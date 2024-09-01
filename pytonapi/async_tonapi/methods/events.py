@@ -1,5 +1,6 @@
 import base64
 import binascii
+from typing import Any, Dict, Optional
 
 from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import Event
@@ -21,13 +22,35 @@ class EventsMethod(AsyncTonapiClientBase):
         :param accept_language: Default value : en
         :return: :class:`Event`
         """
-
         if len(event_id) == 44:
             decoded = base64.urlsafe_b64decode(event_id + "=" * (-len(event_id) % 4))
             event_id = binascii.hexlify(decoded).decode("utf-8")
-
         method = f"v2/events/{event_id}"
         headers = {"Accept-Language": accept_language}
         response = await self._get(method=method, headers=headers)
+
+        return Event(**response)
+
+    async def emulate(
+            self, body: Dict[str, Any],
+            accept_language: str = "en",
+            ignore_signature_check: Optional[bool] = None,
+    ) -> Event:
+        """
+        Emulate sending message to blockchain.
+
+        :param body: bag-of-cells serialized to base64
+            example value:
+            {
+                 "boc": "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg"
+            }
+        :param accept_language: Default value : en
+        :param ignore_signature_check: Default value : None
+        :return: :class: `Event`
+        """
+        method = "v2/events/emulate"
+        params = {"ignore_signature_check": ignore_signature_check} if ignore_signature_check else {}
+        headers = {"Accept-Language": accept_language}
+        response = await self._post(method=method, params=params, body=body, headers=headers)
 
         return Event(**response)
