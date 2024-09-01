@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel
 
@@ -37,7 +37,7 @@ class NftApprovedBy(str, Enum):
     none = "none"
 
     @classmethod
-    def _missing_(cls, value):
+    def _missing_(cls, value: Any) -> str:
         return cls.none
 
 
@@ -58,7 +58,7 @@ class TrustType(str, Enum):
     none = "none"
 
     @classmethod
-    def _missing_(cls, value):
+    def _missing_(cls, value: Any) -> str:
         return cls.none
 
 

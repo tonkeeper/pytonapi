@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel
 
@@ -13,6 +13,10 @@ class JettonVerificationType(str, Enum):
     graylist = "graylist"
     blacklist = "blacklist"
     none = "none"
+
+    @classmethod
+    def _missing_(cls, value: Any) -> str:
+        return cls.none
 
 
 class JettonMetadata(BaseModel):
