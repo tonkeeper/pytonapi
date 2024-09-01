@@ -79,3 +79,8 @@ class JettonQuantity(BaseModel):
     quantity: str
     wallet_address: AccountAddress
     jetton: JettonPreview
+
+
+class JettonTransferPayload(BaseModel):
+    custom_payload: Optional[str] = None
+    state_init: Optional[str] = None

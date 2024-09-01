@@ -1,7 +1,7 @@
 from typing import List
 
 from pytonapi.schema.events import Event
-from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder
+from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder, JettonTransferPayload
 from pytonapi.tonapi.client import TonapiClientBase
 
 
@@ -11,8 +11,8 @@ class JettonsMethod(TonapiClientBase):
         """
         Get jetton metadata by jetton master address.
 
-        :param account_id: account ID
-        :return: :class:`JettonInfo`
+        :param account_id: Account ID
+        :return: JettonInfo
         """
         method = f"v2/jettons/{account_id}"
         response = self._get(method=method)
@@ -64,7 +64,7 @@ class JettonsMethod(TonapiClientBase):
         :param offset: Default value - 0
         :return: :class:`Jettons`
         """
-        method = f"v2/jettons"
+        method = "v2/jettons"
         params = {"limit": limit, "offset": offset}
         response = self._get(method=method, params=params)
 
@@ -81,3 +81,16 @@ class JettonsMethod(TonapiClientBase):
         response = self._get(method=method)
 
         return Event(**response)
+
+    def get_jetton_transfer_payload(self, jetton_id: str, account_id: str) -> JettonTransferPayload:
+        """
+        Get jetton's custom payload and state init required for transfer.
+
+        :param jetton_id: jetton ID
+        :param account_id: account ID
+        :return: :class:`Event`
+        """
+        method = f"/v2/jettons/{jetton_id}/transfer/{account_id}/payload"
+        response = self._get(method=method)
+
+        return JettonTransferPayload(**response)

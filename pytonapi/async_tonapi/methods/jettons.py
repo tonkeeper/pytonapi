@@ -2,7 +2,7 @@ from typing import List
 
 from pytonapi.async_tonapi.client import AsyncTonapiClientBase
 from pytonapi.schema.events import Event
-from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder
+from pytonapi.schema.jettons import JettonInfo, JettonHolders, Jettons, JettonHolder, JettonTransferPayload
 
 
 class JettonsMethod(AsyncTonapiClientBase):
@@ -81,3 +81,16 @@ class JettonsMethod(AsyncTonapiClientBase):
         response = await self._get(method=method)
 
         return Event(**response)
+
+    async def get_jetton_transfer_payload(self, jetton_id: str, account_id: str) -> JettonTransferPayload:
+        """
+        Get jetton's custom payload and state init required for transfer.
+
+        :param jetton_id: jetton ID
+        :param account_id: account ID
+        :return: :class:`Event`
+        """
+        method = f"/v2/jettons/{jetton_id}/transfer/{account_id}/payload"
+        response = await self._get(method=method)
+
+        return JettonTransferPayload(**response)
