@@ -1,7 +1,8 @@
 from typing import Dict, Any, Union
 
-from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.accounts import Accounts
+from pytonapi.schema.events import MessageConsequences
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class WalletMethod(TonapiClientBase):
@@ -80,3 +81,26 @@ class WalletMethod(TonapiClientBase):
         response = self._get(method=method)
 
         return response.get("seqno", None)
+
+    def emulate(self, body: Dict[str, Any], accept_language: str = "en") -> MessageConsequences:
+        """
+        Emulate sending message to blockchain.
+
+        :param body: Data that is expected. example value:
+                    {
+                      "boc": "string",
+                      "params": [
+                        {
+                          "address": "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b",
+                          "balance": 10000000000
+                        }
+                      ]
+                    }
+        :param accept_language: Default value: en
+        :return: :class:`Dict[str, Any]`
+        """
+        method = "v2/wallet/emulate"
+        headers = {"Accept-Language": accept_language}
+        response = self._post(method=method, body=body, headers=headers)
+
+        return MessageConsequences(**response)
