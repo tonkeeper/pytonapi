@@ -34,9 +34,9 @@
 - [x] /v2/accounts/search
 - [x] /v2/accounts/{account_id}/dns/expiring
 - [x] /v2/accounts/{account_id}/publickey
-- [ ] /v2/accounts/{account_id}/multisigs
+- [x] /v2/accounts/{account_id}/multisigs
 - [x] /v2/accounts/{account_id}/diff
-- [ ] /v2/accounts/{account_id}/events/emulate
+- [x] /v2/accounts/{account_id}/events/emulate
 
 
 - NFT
@@ -55,7 +55,7 @@
 - [x] /v2/jettons
 - [x] /v2/jettons/{account_id}
 - [x] /v2/jettons/{account_id}/holders
-- [ ] /v2/jettons/{jetton_id}/transfer/{account_id}/payload
+- [x] /v2/jettons/{jetton_id}/transfer/{account_id}/payload
 - [x] /v2/events/{event_id}/jettons
 
 
@@ -69,12 +69,11 @@
 
 - Wallet
 
-- [ ] /v2/wallet/backup
 - [x] /v2/wallet/backup
 - [x] /v2/wallet/auth/proof
 - [x] /v2/pubkeys/{public_key}/wallets
 - [x] /v2/wallet/{account_id}/seqno
-- [ ] /v2/wallet/emulate
+- [x] /v2/wallet/emulate
 
 
 - Rates
@@ -95,13 +94,13 @@
 - Traces
 
 - [x] /v2/traces/{trace_id}
-- [ ] /v2/traces/emulate
+- [x] /v2/traces/emulate
 
 
 - Events
 
 - [x] /v2/events/{event_id}
-- [ ] /v2/events/emulate
+- [x] /v2/events/emulate
 
 
 - Storage
@@ -124,11 +123,11 @@
 
 - Multisig
 
-- [ ] /v2/multisig/{account_id}
+- [x] /v2/multisig/{account_id}
 
 - Blockchain
 
-- [ ] /v2/blockchain/reduced/blocks
+- [x] /v2/blockchain/reduced/blocks
 - [x] /v2/blockchain/blocks/{block_id}
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/shards
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/blocks
@@ -166,7 +165,7 @@
 - [x] /v2/liteserver/get_block_proof
 - [x] /v2/liteserver/get_config_all/{block_id}
 - [x] /v2/liteserver/get_shard_block_proof/{block_id}
-- [ ] /v2/liteserver/get_out_msg_queue_sizes
+- [x] /v2/liteserver/get_out_msg_queue_sizes
 
 
 - Emulation
