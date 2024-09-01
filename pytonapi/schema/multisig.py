@@ -33,3 +33,7 @@ class Multisig(BaseModel):
     signers: List[Address]
     proposers: List[Address]
     orders: MultisigOrder
+
+
+class Multisigs(BaseModel):
+    multisigs: List[Multisig]
