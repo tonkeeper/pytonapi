@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from pytonapi.schema.accounts import (
     Account,
@@ -12,6 +12,7 @@ from pytonapi.schema.accounts import (
 from pytonapi.schema.domains import DomainNames
 from pytonapi.schema.events import AccountEvents, AccountEvent
 from pytonapi.schema.jettons import JettonBalance, JettonsBalances
+from pytonapi.schema.multisig import Multisigs
 from pytonapi.schema.nft import NftItems, NftItem
 from pytonapi.schema.traces import TraceIds
 from pytonapi.tonapi.client import TonapiClientBase
@@ -395,6 +396,18 @@ class AccountsMethod(TonapiClientBase):
 
         return PublicKey(**response)
 
+    def get_account_multisigs(self, account_id: str) -> Multisigs:
+        """
+        Get account's multisigs.
+
+        :param account_id: account ID
+        :return: :class:`PublicKey`
+        """
+        method = f"v2/accounts/{account_id}/multisigs"
+        response = self._get(method=method)
+
+        return Multisigs(**response)
+
     def get_balance_change(
             self,
             account_id: str,
@@ -414,3 +427,28 @@ class AccountsMethod(TonapiClientBase):
         response = self._get(method=method, params=params)
 
         return BalanceChange(**response)
+
+    def emulate_event(
+            self,
+            account_id: str,
+            body: Dict[str, Any],
+            accept_language: str = "en",
+            ignore_signature_check: Optional[bool] = None,
+    ) -> AccountEvent:
+        """
+        Emulate sending message to blockchain.
+
+        :param account_id: account ID
+        :param body: Request body with `boc`: both a single boc and a batch of boc serialized in base64 are accepted.
+                    {
+                        "boc": "base64 string"
+                    }
+        :param accept_language: Default value: en
+        :param ignore_signature_check: Default value: None
+        """
+        method = f"/v2/accounts/{account_id}/events/emulate"
+        params = {"ignore_signature_check": ignore_signature_check} if ignore_signature_check is not None else {}
+        headers = {"Accept-Language": accept_language}
+        response = self._post(method=method, params=params, body=body, headers=headers)
+
+        return AccountEvent(**response)
