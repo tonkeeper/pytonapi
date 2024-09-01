@@ -110,3 +110,13 @@ class RawConfig(BaseModel):
 class RawShardProof(BaseModel):
     masterchain_id: BlockRaw
     links: List
+
+
+class OutMsgQueueShard(BaseModel):
+    id: BlockRaw
+    size: int
+
+
+class OutMsgQueueSize(BaseModel):
+    ext_msg_queue_size_limit: int
+    shards: List[OutMsgQueueShard]

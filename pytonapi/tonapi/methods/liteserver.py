@@ -1,6 +1,5 @@
 from typing import Dict, Any, Optional, Union
 
-from pytonapi.tonapi.client import TonapiClientBase
 from pytonapi.schema.liteserver import (
     RawMasterChainInfo,
     RawMasterChainInfoExt,
@@ -15,7 +14,9 @@ from pytonapi.schema.liteserver import (
     RawBlockProof,
     RawConfig,
     RawShardProof,
+    OutMsgQueueSize,
 )
+from pytonapi.tonapi.client import TonapiClientBase
 
 
 class LiteserverMethod(TonapiClientBase):
@@ -259,3 +260,14 @@ class LiteserverMethod(TonapiClientBase):
         response = self._get(method=method)
 
         return RawShardProof(**response)
+
+    def get_out_msg_queue_size(self) -> OutMsgQueueSize:
+        """
+        Get out message queue sizeGet out msg queue sizes.
+
+        :return: :class:`OutMsgQueueSize` size
+        """
+        method = "v2/liteserver/get_out_msg_queue_size"
+        response = self._get(method=method)
+
+        return OutMsgQueueSize(**response)

@@ -15,6 +15,7 @@ from pytonapi.schema.liteserver import (
     RawBlockProof,
     RawConfig,
     RawShardProof,
+    OutMsgQueueSize,
 )
 
 
@@ -259,3 +260,14 @@ class LiteserverMethod(AsyncTonapiClientBase):
         response = await self._get(method=method)
 
         return RawShardProof(**response)
+
+    async def get_out_msg_queue_size(self) -> OutMsgQueueSize:
+        """
+        Get out message queue sizeGet out msg queue sizes.
+
+        :return: :class:`OutMsgQueueSize` size
+        """
+        method = "v2/liteserver/get_out_msg_queue_size"
+        response = await self._get(method=method)
+
+        return OutMsgQueueSize(**response)
