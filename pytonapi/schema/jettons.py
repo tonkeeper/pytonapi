@@ -10,6 +10,7 @@ from pytonapi.schema.rates import TokenRates
 
 class JettonVerificationType(str, Enum):
     whitelist = "whitelist"
+    graylist = "graylist"
     blacklist = "blacklist"
     none = "none"
 
