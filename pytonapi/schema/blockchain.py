@@ -241,3 +241,18 @@ class DecodedMessage(BaseModel):
     destination: AccountAddress
     destination_wallet_version: str
     ext_in_msg_decoded: Optional[Dict[str, Any]] = None
+
+
+class ReducedBlock(BaseModel):
+    workchain_id: int
+    shard: str
+    seqno: int
+    master_ref: Optional[str] = None
+    tx_quantity: int
+    utime: int
+    shards_blocks: List[str]
+    parent: List[str]
+
+
+class ReducedBlocks(BaseModel):
+    blocks: List[ReducedBlock]

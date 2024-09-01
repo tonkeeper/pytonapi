@@ -13,10 +13,25 @@ from pytonapi.schema.blockchain import (
     BlockchainRawAccount,
     MethodExecutionResult,
     RawBlockchainConfig,
+    ReducedBlocks,
 )
 
 
 class BlockchainMethod(AsyncTonapiClientBase):
+
+    async def get_reduced_blocks(self, from_: int, to_: int) -> ReducedBlocks:
+        """
+        Get reduced blockchain blocks data.
+
+        :param from_: from
+        :param to_: to
+        :return: :class:`ReducedBlocks`
+        """
+        method = f"v2/blockchain/reduced/blocks"
+        params = {"from": from_, "to": to_}
+        response = await self._get(method=method, params=params)
+
+        return ReducedBlocks(**response)
 
     async def get_block_data(self, block_id: str) -> BlockchainBlock:
         """
