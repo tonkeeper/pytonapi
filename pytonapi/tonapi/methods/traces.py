@@ -1,5 +1,6 @@
 import base64
 import binascii
+from typing import Any, Dict, Optional
 
 from pytonapi.schema.traces import Trace
 from pytonapi.tonapi.client import TonapiClientBase
@@ -19,5 +20,23 @@ class TracesMethod(TonapiClientBase):
             trace_id = binascii.hexlify(decoded).decode("utf-8")
         method = f"v2/traces/{trace_id}"
         response = self._get(method=method)
+
+        return Trace(**response)
+
+    def emulate(self, body: Dict[str, Any], ignore_signature_check: Optional[bool] = None) -> Trace:
+        """
+        Emulate sending message to blockchain.
+
+        :param body: bag-of-cells serialized to base64
+            example value:
+            {
+                 "boc": "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg"
+            }
+        :param ignore_signature_check: Default value : None
+        :return: :class: `Trace`
+        """
+        method = "v2/traces/emulate"
+        params = {"ignore_signature_check": ignore_signature_check} if ignore_signature_check else {}
+        response = self._post(method=method, params=params, body=body)
 
         return Trace(**response)
