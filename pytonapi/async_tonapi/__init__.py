@@ -64,6 +64,10 @@ class AsyncTonapi(AsyncTonapiClientBase):
         return methods.LiteserverMethod(**self.__dict__)
 
     @property
+    def multisig(self) -> methods.MultisigMethod:
+        return methods.MultisigMethod(**self.__dict__)
+
+    @property
     def dns(self) -> methods.DnsMethod:
         return methods.DnsMethod(**self.__dict__)
 

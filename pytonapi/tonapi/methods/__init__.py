@@ -7,6 +7,7 @@ from .gasless import GaslessMethod
 from .inscriptions import InscriptionsMethod
 from .jettons import JettonsMethod
 from .liteserver import LiteserverMethod
+from .multisig import MultisigMethod
 from .nft import NftMethod
 from .rates import RatesMethod
 from .sse import SSEMethod
@@ -27,6 +28,7 @@ __all__ = [
     "InscriptionsMethod",
     "JettonsMethod",
     "LiteserverMethod",
+    "MultisigMethod",
     "NftMethod",
     "RatesMethod",
     "SSEMethod",

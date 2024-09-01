@@ -66,6 +66,10 @@ class Tonapi(TonapiClientBase):
         return methods.LiteserverMethod(**self.__getattributes)
 
     @property
+    def multisig(self) -> methods.MultisigMethod:
+        return methods.MultisigMethod(**self.__getattributes)
+
+    @property
     def dns(self) -> methods.DnsMethod:
         return methods.DnsMethod(**self.__getattributes)
 
