@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -29,6 +30,17 @@ class Collection(BaseModel):
     description: Optional[str] = None
 
 
+class NftApprovedBy(str, Enum):
+    getgems = "getgems"
+    tonkeeper = "tonkeeper"
+    ton_diamonds = "ton.diamonds"
+    none = "none"
+
+    @classmethod
+    def _missing_(cls, value):
+        return cls.none
+
+
 class NftCollection(BaseModel):
     address: Address
     next_item_index: int
@@ -36,6 +48,18 @@ class NftCollection(BaseModel):
     raw_collection_content: str
     metadata: Optional[dict] = None
     previews: Optional[List[ImagePreview]] = None
+    approved_by: NftApprovedBy
+
+
+class TrustType(str, Enum):
+    whitelist = "whitelist"
+    graylist = "graylist"
+    blacklist = "blacklist"
+    none = "none"
+
+    @classmethod
+    def _missing_(cls, value):
+        return cls.none
 
 
 class NftItem(BaseModel):
@@ -49,6 +73,8 @@ class NftItem(BaseModel):
     previews: Optional[List[ImagePreview]] = None
     dns: Optional[str] = None
     approved_by: List[str]
+    include_cnft: Optional[bool] = None
+    trust: TrustType
 
 
 class NftItems(BaseModel):
