@@ -446,7 +446,7 @@ class AccountsMethod(AsyncTonapiClientBase):
         :param accept_language: Default value: en
         :param ignore_signature_check: Default value: None
         """
-        method = f"/v2/accounts/{account_id}/events/emulate"
+        method = f"v2/accounts/{account_id}/events/emulate"
         params = {"ignore_signature_check": ignore_signature_check} if ignore_signature_check is not None else {}
         headers = {"Accept-Language": accept_language}
         response = await self._post(method=method, params=params, body=body, headers=headers)

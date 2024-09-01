@@ -90,7 +90,7 @@ class JettonsMethod(AsyncTonapiClientBase):
         :param account_id: account ID
         :return: :class:`Event`
         """
-        method = f"/v2/jettons/{jetton_id}/transfer/{account_id}/payload"
+        method = f"v2/jettons/{jetton_id}/transfer/{account_id}/payload"
         response = await self._get(method=method)
 
         return JettonTransferPayload(**response)
