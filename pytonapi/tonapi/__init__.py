@@ -44,74 +44,68 @@ class Tonapi(TonapiClientBase):
         )
 
     @property
-    def __getattributes(self) -> Dict[str, Any]:
-        attributes = self.__dict__
-        attributes.pop("logger")
-        return attributes
-
-    @property
     def blockchain(self) -> methods.BlockchainMethod:
-        return methods.BlockchainMethod(**self.__getattributes)
+        return methods.BlockchainMethod(**self.__dict__)
 
     @property
     def accounts(self) -> methods.AccountsMethod:
-        return methods.AccountsMethod(**self.__getattributes)
+        return methods.AccountsMethod(**self.__dict__)
 
     @property
     def jettons(self) -> methods.JettonsMethod:
-        return methods.JettonsMethod(**self.__getattributes)
+        return methods.JettonsMethod(**self.__dict__)
 
     @property
     def liteserver(self) -> methods.LiteserverMethod:
-        return methods.LiteserverMethod(**self.__getattributes)
+        return methods.LiteserverMethod(**self.__dict__)
 
     @property
     def multisig(self) -> methods.MultisigMethod:
-        return methods.MultisigMethod(**self.__getattributes)
+        return methods.MultisigMethod(**self.__dict__)
 
     @property
     def dns(self) -> methods.DnsMethod:
-        return methods.DnsMethod(**self.__getattributes)
+        return methods.DnsMethod(**self.__dict__)
 
     @property
     def emulate(self) -> methods.EmulateMethod:
-        return methods.EmulateMethod(**self.__getattributes)
+        return methods.EmulateMethod(**self.__dict__)
 
     @property
     def events(self) -> methods.EventsMethod:
-        return methods.EventsMethod(**self.__getattributes)
+        return methods.EventsMethod(**self.__dict__)
 
     @property
     def inscriptions(self) -> methods.InscriptionsMethod:
-        return methods.InscriptionsMethod(**self.__getattributes)
+        return methods.InscriptionsMethod(**self.__dict__)
 
     @property
     def nft(self) -> methods.NftMethod:
-        return methods.NftMethod(**self.__getattributes)
+        return methods.NftMethod(**self.__dict__)
 
     @property
     def rates(self) -> methods.RatesMethod:
-        return methods.RatesMethod(**self.__getattributes)
+        return methods.RatesMethod(**self.__dict__)
 
     @property
     def sse(self) -> methods.SSEMethod:
-        return methods.SSEMethod(**self.__getattributes)
+        return methods.SSEMethod(**self.__dict__)
 
     @property
     def staking(self) -> methods.StakingMethod:
-        return methods.StakingMethod(**self.__getattributes)
+        return methods.StakingMethod(**self.__dict__)
 
     @property
     def storage(self) -> methods.StorageMethod:
-        return methods.StorageMethod(**self.__getattributes)
+        return methods.StorageMethod(**self.__dict__)
 
     @property
     def tonconnect(self) -> methods.TonconnectMethod:
-        return methods.TonconnectMethod(**self.__getattributes)
+        return methods.TonconnectMethod(**self.__dict__)
 
     @property
     def traces(self) -> methods.TracesMethod:
-        return methods.TracesMethod(**self.__getattributes)
+        return methods.TracesMethod(**self.__dict__)
 
     @property
     def utilities(self) -> methods.UtilitiesMethod:
@@ -119,4 +113,4 @@ class Tonapi(TonapiClientBase):
 
     @property
     def wallet(self) -> methods.WalletMethod:
-        return methods.WalletMethod(**self.__getattributes)
+        return methods.WalletMethod(**self.__dict__)
