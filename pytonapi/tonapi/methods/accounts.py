@@ -211,7 +211,7 @@ class AccountsMethod(TonapiClientBase):
             nft_items += result.nft_items
             offset += limit
 
-            if len(result.nft_items) != limit:
+            if len(result.nft_items) == 0:
                 break
 
         return NftItems(nft_items=nft_items)

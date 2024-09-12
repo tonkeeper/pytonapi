@@ -51,7 +51,7 @@ class JettonsMethod(AsyncTonapiClientBase):
             jetton_holders += result.addresses
             offset += limit
 
-            if len(result.addresses) != limit:
+            if len(result.addresses) == 0:
                 break
 
         return JettonHolders(addresses=jetton_holders, total=result.total)
