@@ -226,6 +226,7 @@ class AccountEvents(BaseModel):
 
 class ValueFlowJettonsInner(BaseModel):
     account: AccountAddress
+    jetton: JettonPreview
     quantity: int
 
 
