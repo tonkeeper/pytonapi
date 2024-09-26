@@ -57,28 +57,49 @@ class AccountsMethod(TonapiClientBase):
 
         return DomainNames(**response)
 
-    def get_jettons_balances(self, account_id: str) -> JettonsBalances:
+    def get_jettons_balances(
+            self,
+            account_id: str,
+            currencies: Optional[List[str]] = None,
+            supported_extensions: Optional[List[str]] = None,
+    ) -> JettonsBalances:
         """
         Get all Jettons balances by owner address.
 
         :param account_id: account ID
+        :param currencies: accept ton and all possible fiat currencies, separated by commas
+        :param supported_extensions: comma separated list supported extensions
         :return: :class:`JettonsBalances`
         """
         method = f"v2/accounts/{account_id}/jettons"
-        response = self._get(method=method)
+        params = {"supported_extensions": ",".join(supported_extensions)} if supported_extensions else {}
+        if currencies:
+            params["currencies"] = ",".join(currencies)
+        response = self._get(method=method, params=params)
 
         return JettonsBalances(**response)
 
-    def get_jetton_balance(self, account_id: str, jetton_id: str) -> JettonBalance:
+    def get_jetton_balance(
+            self,
+            account_id: str,
+            jetton_id: str,
+            currencies: Optional[List[str]] = None,
+            supported_extensions: Optional[List[str]] = None,
+    ) -> JettonBalance:
         """
         Get Jetton balance by owner address
 
         :param account_id: account ID
         :param jetton_id: jetton ID
+        :param currencies: accept ton and all possible fiat currencies, separated by commas
+        :param supported_extensions: comma separated list supported extensions
         :return: :class:`JettonBalance`
         """
         method = f"v2/accounts/{account_id}/jettons/{jetton_id}"
-        response = self._get(method=method)
+        params = {"supported_extensions": ",".join(supported_extensions)} if supported_extensions else {}
+        if currencies:
+            params["currencies"] = ",".join(currencies)
+        response = self._get(method=method, params=params)
 
         return JettonBalance(**response)
 
