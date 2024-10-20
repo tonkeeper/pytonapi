@@ -12,7 +12,7 @@ class ChartRates(BaseModel):
 
 
 class TokenRates(BaseModel):
-    prices: Optional[Dict[str, str]] = None
+    prices: Optional[Dict[str, Union[float, int]]] = None
     diff_24h: Optional[Dict[str, str]] = None
     diff_7d: Optional[Dict[str, str]] = None
     diff_30d: Optional[Dict[str, str]] = None
