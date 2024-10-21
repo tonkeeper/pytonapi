@@ -266,3 +266,22 @@ class TonapiClientBase:
         if self.max_retries > 0:
             request = self._request_retries
         return request("POST", method, headers, params=params, body=body)
+
+    def _delete(
+            self,
+            method: str,
+            params: Optional[Dict[str, Any]] = None,
+            headers: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Make a DELETE request.
+
+        :param method: The API method.
+        :param params: Optional query parameters.
+        :param headers: Optional headers to include in the request.
+        :return: The response content as a dictionary.
+        """
+        request = self._request
+        if self.max_retries > 0:
+            request = self._request_retries
+        return request("DELETE", method, headers, params=params)

@@ -124,5 +124,9 @@ class AsyncTonapi(AsyncTonapiClientBase):
         return methods.WalletMethod(**self.__dict__)
 
     @property
+    def webhooks(self) -> methods.WebhooksMethod:
+        return methods.WebhooksMethod(**self.__dict__)
+
+    @property
     def websocket(self) -> methods.WebSocketMethod:
         return methods.WebSocketMethod(**self.__dict__)

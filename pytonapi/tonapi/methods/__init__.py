@@ -17,6 +17,7 @@ from .tonconnect import TonconnectMethod
 from .traces import TracesMethod
 from .utilites import UtilitiesMethod
 from .wallet import WalletMethod
+from .webhooks import WebhooksMethod
 
 __all__ = [
     "AccountsMethod",
@@ -38,4 +39,5 @@ __all__ = [
     "TracesMethod",
     "UtilitiesMethod",
     "WalletMethod",
+    "WebhooksMethod",
 ]

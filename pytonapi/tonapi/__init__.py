@@ -114,3 +114,7 @@ class Tonapi(TonapiClientBase):
     @property
     def wallet(self) -> methods.WalletMethod:
         return methods.WalletMethod(**self.__dict__)
+
+    @property
+    def webhooks(self) -> methods.WebhooksMethod:
+        return methods.WebhooksMethod(**self.__dict__)
