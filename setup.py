@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pytonapi",
-    version="0.4.1",
+    version="0.4.2",
     author="nessshon",
     description="Provide access to indexed TON blockchain.",
     long_description=long_description,
