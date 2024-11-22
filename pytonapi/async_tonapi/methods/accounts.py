@@ -306,16 +306,19 @@ class AccountsMethod(AsyncTonapiClientBase):
 
         return AccountEvent(**response)
 
-    async def get_traces(self, account_id: str, limit: int = 100) -> TraceIds:
+    async def get_traces(self, account_id: str, limit: int = 100, before_lt: Optional[int] = None) -> TraceIds:
         """
         Get traces for account.
 
         :param account_id: account ID
         :param limit: Default value: 100
+        :param before_lt: omit this parameter to get last events
         :return: :class:`TraceIds`
         """
         method = f"v2/accounts/{account_id}/traces"
         params = {"limit": limit}
+        if before_lt is not None:
+            params["before_lt"] = before_lt
         response = await self._get(method=method, params=params)
 
         return TraceIds(**response)
