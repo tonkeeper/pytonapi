@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional, List, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
@@ -92,6 +92,7 @@ class Message(BaseModel):
     init: Optional[StateInit] = None
     decoded_op_name: Optional[str] = None
     decoded_body: Optional[Union[dict, str]] = None
+    hash: Optional[str] = None
     raw_body: Optional[str] = None
 
 
