@@ -92,7 +92,7 @@ pip install pytonapi
 
 ## Donations
 
-**TON** - `UQCDrgGaI6gWK-qlyw69xWZosurGxrpRgIgSkVsgahUtxZR0`
+**TON** - `UQC9gaU_nGZIC0rlSNQn1278x0KjNlFwJQwNvFXkML0EWFBt`
 
 **USDT** (TRC-20) - `TGKmm9H3FApFw8xcgRcZDHSku68vozAjo9`
 
