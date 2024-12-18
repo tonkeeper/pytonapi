@@ -2,7 +2,7 @@
 
 [![TON](https://img.shields.io/badge/TON-grey?logo=TON&logoColor=40AEF0)](https://ton.org)
 [![PyPI](https://img.shields.io/pypi/v/pytonapi.svg?color=FFE873&labelColor=3776AB)](https://pypi.python.org/pypi/pytonapi)
-![Python Versions](https://img.shields.io/badge/Python-3.7%20--%203.12-black?color=FFE873&labelColor=3776AB)
+![Python Versions](https://img.shields.io/badge/Python-3.9%20--%203.13-black?color=FFE873&labelColor=3776AB)
 [![License](https://img.shields.io/github/license/tonkeeper/pytonapi)](https://github.com/tonkeeper/pytonapi/blob/main/LICENSE)
 
 ![Image](https://telegra.ph//file/f88bcf9051073973edbd6.jpg)
@@ -29,64 +29,36 @@ pip install pytonapi
 
 ### Examples
 
-* **Asynchronous**
 
-  ```python
-  from pytonapi import AsyncTonapi
-  
-  
-  # Declare an asynchronous function for using await
-  async def main():
-      # Create a new Tonapi object with the provided API key
-      tonapi = AsyncTonapi(api_key="Your API key")
-  
-      # Specify the account ID
-      account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
-  
-      # Retrieve account information asynchronously
-      account = await tonapi.accounts.get_info(account_id=account_id)
-  
-      # Print account details
-      print(f"Account Address (raw): {account.address.to_raw()}")
-      print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
-      print(f"Account Balance (nanoton): {account.balance.to_nano()}")
-      print(f"Account Balance (amount): {account.balance.to_amount()}")
-  
-  
-  if __name__ == '__main__':
-      import asyncio
-  
-      # Run the asynchronous function
-      asyncio.run(main())
-  
-  ```
+```python
+from pytonapi import AsyncTonapi
 
-* **Synchronous**
 
-  ```python
-  from pytonapi import Tonapi
-  
-  
-  def main():
-      # Create a new Tonapi object with the provided API key
-      tonapi = Tonapi(api_key="Your API key")
-  
-      # Specify the account ID
-      account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
-  
-      # Retrieve account information
-      account = tonapi.accounts.get_info(account_id=account_id)
-  
-      # Print account details
-      print(f"Account Address (raw): {account.address.to_raw()}")
-      print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
-      print(f"Account Balance (nanoton): {account.balance.to_nano()}")
-      print(f"Account Balance (amount): {account.balance.to_amount()}")
-  
-  
-  if __name__ == '__main__':
-      main()
-  ```
+# Declare an asynchronous function for using await
+async def main():
+    # Create a new Tonapi object with the provided API key
+    tonapi = AsyncTonapi(api_key="Your API key")
+
+    # Specify the account ID
+    account_id = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
+
+    # Retrieve account information asynchronously
+    account = await tonapi.accounts.get_info(account_id=account_id)
+
+    # Print account details
+    print(f"Account Address (raw): {account.address.to_raw()}")
+    print(f"Account Address (userfriendly): {account.address.to_userfriendly(is_bounceable=True)}")
+    print(f"Account Balance (nanoton): {account.balance.to_nano()}")
+    print(f"Account Balance (amount): {account.balance.to_amount()}")
+
+
+if __name__ == '__main__':
+    import asyncio
+
+    # Run the asynchronous function
+    asyncio.run(main())
+
+```
 
 * **Additional examples** can be found [examples](https://github.com/tonkeeper/pytonapi/tree/main/examples) folder.
 
