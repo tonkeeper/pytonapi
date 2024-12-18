@@ -1,5 +1,5 @@
 from pytonapi import schema
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 TOKEN = "EQBCFwW8uFUh-amdRmNY9NyeDEaeDYXd9ggJGsicpqVcHq7B"  # noqa
 TOKENS = ["TON"]

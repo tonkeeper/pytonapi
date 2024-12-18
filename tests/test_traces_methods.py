@@ -1,5 +1,5 @@
 from pytonapi import schema
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 TRACE_ID_HEX = "97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
 TRACE_ID_BASE64 = "VdUG1YMbYqrinFDR4QR7j5CfGQ2O75m34bvxUKvmn00="  # noqa

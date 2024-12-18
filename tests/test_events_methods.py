@@ -1,5 +1,5 @@
 from pytonapi import schema
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 EVENT_ID_HEX = "53388440417dc044d00e99d89b591acc28f100332a004f180e4f14b876620c13"
 EVENT_ID_BASE64 = "5J+GJo3uSr36MjOwjYY+2NzYM7pvnm0WzNQktG8czbM="  # noqa

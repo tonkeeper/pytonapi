@@ -1,5 +1,5 @@
 from pytonapi import schema
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 BLOCK_ID = "(-1,8000000000000000,4234234)"
 ACCOUNT_ID = "EQBR6UVvw1tFcLkxWapnSQ10QH7JWt1fGUesX_C8lqWbluLL"  # noqa

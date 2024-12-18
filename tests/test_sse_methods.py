@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 ACCOUNT_ID = "EQChB2eMoFG4ThuEsZ6ehlBPKJXOjNxlR5B7qKZNGIv256Da"
 ACCOUNTS_IDS = ["ALL"]

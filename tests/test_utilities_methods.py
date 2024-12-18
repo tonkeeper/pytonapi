@@ -1,5 +1,5 @@
 from pytonapi import schema
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 ACCOUNT_ID = "EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N"  # noqa
 

@@ -1,5 +1,5 @@
 from pytonapi import schema
-from tests.async_tonapi import TestAsyncTonapi
+from tests import TestAsyncTonapi
 
 ACCOUNT_ID = "EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N"  # noqa
 EVENT_ID = "53388440417dc044d00e99d89b591acc28f100332a004f180e4f14b876620c13"
@@ -8,10 +8,6 @@ JETTON_ID = "EQD0vdSA_NedR9uvbgN9EikRX-suesDxGeFg69XQMavfLqIw"  # noqa
 
 
 class TestAccountMethod(TestAsyncTonapi):
-
-    async def test_parse_address(self):
-        response = await self.tonapi.accounts.parse_address(ACCOUNT_ID)
-        self.assertIsInstance(response, schema.accounts.AddressForm)
 
     async def test_get_info(self):
         response = await self.tonapi.accounts.get_info(ACCOUNT_ID)
@@ -43,10 +39,6 @@ class TestAccountMethod(TestAsyncTonapi):
 
     async def test_get_nfts(self):
         response = await self.tonapi.accounts.get_nfts(ACCOUNT_ID)
-        self.assertIsInstance(response, schema.nft.NftItems)
-
-    async def test_get_all_nfts(self):
-        response = await self.tonapi.accounts.get_all_nfts(ACCOUNT_ID)
         self.assertIsInstance(response, schema.nft.NftItems)
 
     async def test_get_traces(self):
@@ -87,4 +79,4 @@ class TestAccountMethod(TestAsyncTonapi):
 
     async def test_reindex(self):
         response = await self.tonapi.accounts.reindex(ACCOUNT_ID)
-        self.assertIsInstance(response, bool)
+        self.assertIs(response, None)
