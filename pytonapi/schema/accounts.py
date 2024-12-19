@@ -78,4 +78,5 @@ class PublicKey(BaseModel):
 class BalanceChange(BaseModel):
     balance_change: Balance
 
+
 from pytonapi.schema.nft import NftItem

@@ -20,7 +20,6 @@ class AccountSubscription(BaseModel):
     accounts: List[dict]
 
 
-
 class AccountTxSubscription(BaseModel):
     account_id: str
     last_delivered_lt: int

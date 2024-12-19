@@ -1,7 +1,5 @@
-from pytonapi.async_tonapi import AsyncTonapi
-from pytonapi.tonapi import Tonapi
+from pytonapi.tonapi import AsyncTonapi
 
 __all__ = [
     "AsyncTonapi",
-    "Tonapi",
 ]
