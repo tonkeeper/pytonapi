@@ -1,5 +1,5 @@
 """Get account info."""
-from pytonapi import Tonapi
+from pytonapi import AsyncTonapi
 
 # Enter your API key
 API_KEY = ""  # noqa
@@ -8,10 +8,10 @@ API_KEY = ""  # noqa
 ACCOUNT_ID = "EQAUxYSo-UwoqAGixaD3d7CNLp9PthgmEZfnr6BvsijzJHdA"  # noqa
 
 
-def main():
+async def main() -> None:
     # Creating new Tonapi object
-    tonapi = Tonapi(api_key=API_KEY)
-    account = tonapi.accounts.get_info(account_id=ACCOUNT_ID)
+    tonapi = AsyncTonapi(api_key=API_KEY)
+    account = await tonapi.accounts.get_info(account_id=ACCOUNT_ID)
 
     print(f"Raw form: {account.address.to_raw()}")
     # output: 0:bede2955afe5b451cde92eb189125c12685c6f8575df922400dc4c1d5411cd35
@@ -30,4 +30,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import asyncio
+
+    asyncio.run(main())

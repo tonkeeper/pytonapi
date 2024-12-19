@@ -1,5 +1,5 @@
 """Get account transactions."""
-from pytonapi import Tonapi
+from pytonapi import AsyncTonapi
 from pytonapi.utils import to_amount
 
 # Enter your API key
@@ -9,9 +9,9 @@ API_KEY = ""  # noqa
 ACCOUNT_ID = "EQAUxYSo-UwoqAGixaD3d7CNLp9PthgmEZfnr6BvsijzJHdA"  # noqa
 
 
-def main():
-    tonapi = Tonapi(api_key=API_KEY)
-    result = tonapi.blockchain.get_account_transactions(account_id=ACCOUNT_ID, limit=1000)
+async def main() -> None:
+    tonapi = AsyncTonapi(api_key=API_KEY)
+    result = await tonapi.blockchain.get_account_transactions(account_id=ACCOUNT_ID, limit=1000)
 
     for transaction in result.transactions:
         print(f"Value nanoton: {transaction.in_msg.value}")
@@ -26,4 +26,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import asyncio
+
+    asyncio.run(main())

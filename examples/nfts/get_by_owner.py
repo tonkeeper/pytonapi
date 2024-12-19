@@ -1,5 +1,5 @@
 """Get NFT items by owner address."""
-from pytonapi import Tonapi
+from pytonapi import AsyncTonapi
 
 # Enter your API key
 API_KEY = ""  # noqa
@@ -8,9 +8,9 @@ API_KEY = ""  # noqa
 ACCOUNT_ID = "EQC-3ilVr-W0Uc3pLrGJElwSaFxvhXXfkiQA3EwdVBHNNess"  # noqa
 
 
-def main():
-    tonapi = Tonapi(api_key=API_KEY)
-    result = tonapi.accounts.get_nfts(account_id=ACCOUNT_ID, limit=10)
+async def main() -> None:
+    tonapi = AsyncTonapi(api_key=API_KEY)
+    result = await tonapi.accounts.get_nfts(account_id=ACCOUNT_ID, limit=10)
 
     for nft in result.nft_items:
         print(f"NFT address (raw): {nft.address.to_raw()}")
@@ -28,4 +28,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import asyncio
+
+    asyncio.run(main())
