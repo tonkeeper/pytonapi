@@ -48,30 +48,30 @@ class AsyncTonapiClientBase:
         self.api_key = api_key
         self.is_testnet = is_testnet
 
-        self._timeout = timeout
-        self._max_retries = (
+        self._timeout = kwargs['_timeout'] if ('_timeout' in kwargs) else timeout
+        self._max_retries = kwargs['_max_retries'] if ('_max_retries' in kwargs) else (
             max_retries
             if max_retries >= 0 else
             0
         )
-        self._headers = (
+        self._headers = kwargs['_headers'] if ('_headers' in kwargs) else (
             headers
             if headers else
-            {"Authorization": f"Bearer {api_key}"}
+            ({"Authorization": f"Bearer {api_key}"} if api_key else {})
         )
-        self._base_url = (
+        self._base_url = kwargs['_base_url'] if ('_base_url' in kwargs) else (
             base_url
             if base_url else
             "https://tonapi.io/" if not is_testnet else "https://testnet.tonapi.io/"
         )
-        self._websocket_url = (
+        self._websocket_url = kwargs['_websocket_url'] if ('_websocket_url' in kwargs) else (
             websocket_url
             if websocket_url else
             "wss://tonapi.io/v2/websocket"
         )
 
-        self._debug = debug
-        self._logger = setup_logging(self._debug)
+        self._debug = kwargs['_debug'] if ('_debug' in kwargs) else debug
+        self._logger = kwargs['_logger'] if ('_logger' in kwargs) else setup_logging(self._debug)
 
     @staticmethod
     async def __read_content(response: aiohttp.ClientResponse) -> Dict[str, Any]:
