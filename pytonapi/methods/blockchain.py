@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any
+from typing import Literal, Optional, Dict, Any
 
 from pytonapi.base import AsyncTonapiClientBase
 from pytonapi.schema.blockchain import (
@@ -188,6 +188,7 @@ class BlockchainMethod(AsyncTonapiClientBase):
             after_lt: Optional[int] = None,
             before_lt: Optional[int] = None,
             limit: int = 100,
+            sort_order: Optional[Literal['asc', 'desc']] = 'desc',
     ) -> Transactions:
         """
         Get account transactions.
@@ -196,6 +197,7 @@ class BlockchainMethod(AsyncTonapiClientBase):
         :param after_lt: omit this parameter to get last transactions
         :param before_lt: omit this parameter to get last transactions
         :param limit: Default value : 100
+        :param sort_order: Default value : desc
         :return: :class:`Transactions`
         """
         method = f"v2/blockchain/accounts/{account_id}/transactions"
