@@ -188,7 +188,7 @@ class BlockchainMethod(AsyncTonapiClientBase):
             after_lt: Optional[int] = None,
             before_lt: Optional[int] = None,
             limit: int = 100,
-            sort_order: Optional[Literal['asc', 'desc']] = 'desc',
+            sort_order: Optional[Literal["asc", "desc"]] = "desc",
     ) -> Transactions:
         """
         Get account transactions.
@@ -201,7 +201,7 @@ class BlockchainMethod(AsyncTonapiClientBase):
         :return: :class:`Transactions`
         """
         method = f"v2/blockchain/accounts/{account_id}/transactions"
-        params = {"limit": limit}
+        params = {"limit": limit, "sort_order": sort_order}
         if before_lt is not None:
             params["before_lt"] = before_lt
         if after_lt is not None:

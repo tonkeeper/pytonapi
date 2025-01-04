@@ -47,31 +47,15 @@ class AsyncTonapiClientBase:
         """
         self.api_key = api_key
         self.is_testnet = is_testnet
+        self.max_retries = max(max_retries, 0)
 
-        self._timeout = kwargs['_timeout'] if ('_timeout' in kwargs) else timeout
-        self._max_retries = kwargs['_max_retries'] if ('_max_retries' in kwargs) else (
-            max_retries
-            if max_retries >= 0 else
-            0
-        )
-        self._headers = kwargs['_headers'] if ('_headers' in kwargs) else (
-            headers
-            if headers else
-            ({"Authorization": f"Bearer {api_key}"} if api_key else {})
-        )
-        self._base_url = kwargs['_base_url'] if ('_base_url' in kwargs) else (
-            base_url
-            if base_url else
-            "https://tonapi.io/" if not is_testnet else "https://testnet.tonapi.io/"
-        )
-        self._websocket_url = kwargs['_websocket_url'] if ('_websocket_url' in kwargs) else (
-            websocket_url
-            if websocket_url else
-            "wss://tonapi.io/v2/websocket"
-        )
+        self.headers = headers or {"Authorization": f"Bearer {self.api_key}"}
+        self.base_url = base_url or "https://tonapi.io/" if not is_testnet else "https://testnet.tonapi.io/"
+        self.websocket_url = websocket_url or "wss://tonapi.io/v2/websocket"
 
-        self._debug = kwargs['_debug'] if ('_debug' in kwargs) else debug
-        self._logger = kwargs['_logger'] if ('_logger' in kwargs) else setup_logging(self._debug)
+        self.timeout = timeout
+        self.debug = debug
+        self.logger = setup_logging(self.debug)
 
     @staticmethod
     async def __read_content(response: aiohttp.ClientResponse) -> Dict[str, Any]:
@@ -115,7 +99,7 @@ class AsyncTonapiClientBase:
         error_text = await self.__read_content(response)
         error_class = error_map.get(response.status, TONAPIError)
 
-        self._logger.error(f"Error response received: {error_text}")
+        self.logger.error(f"Error response received: {error_text}")
         raise error_class(error_text)
 
     async def _subscribe(
@@ -129,12 +113,12 @@ class AsyncTonapiClientBase:
         :param method: The API method to subscribe to.
         :param params: Optional parameters for the API method.
         """
-        url = self._base_url + method
-        self._logger.debug(f"Subscribing to SSE with URL: {url} and params: {params}")
+        url = self.base_url + method
+        self.logger.debug(f"Subscribing to SSE with URL: {url} and params: {params}")
 
         try:
-            async with aiohttp.ClientSession(headers=self._headers) as session:
-                async with session.get(url, params=params or {}, timeout=self._timeout) as response:
+            async with aiohttp.ClientSession(headers=self.headers) as session:
+                async with session.get(url, params=params or {}, timeout=self.timeout) as response:
                     await self.__raise_for_status(response)
 
                     async for line in response.content:
@@ -146,19 +130,19 @@ class AsyncTonapiClientBase:
                         try:
                             key, value = line_string.split(": ", 1)
                         except ValueError:
-                            self._logger.debug(f"Skipped line due to ValueError: {line_string}")
+                            self.logger.debug(f"Skipped line due to ValueError: {line_string}")
                             continue
 
                         if value == "heartbeat":
-                            self._logger.debug("Received heartbeat")
+                            self.logger.debug("Received heartbeat")
                             continue
                         if key == "data":
-                            self._logger.debug(f"Received SSE data: {value}")
+                            self.logger.debug(f"Received SSE data: {value}")
                             data = json.loads(value)
                             yield data
 
         except aiohttp.ClientError as e:
-            self._logger.error(f"Error subscribing to SSE: {e}")
+            self.logger.error(f"Error subscribing to SSE: {e}")
             raise TONAPIError(e)
 
     async def _subscribe_websocket(
@@ -179,37 +163,37 @@ class AsyncTonapiClientBase:
             "method": method,
             "params": params,
         }
-        self._logger.debug(f"Subscribing to WebSocket with payload: {payload}")
+        self.logger.debug(f"Subscribing to WebSocket with payload: {payload}")
 
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.ws_connect(self._websocket_url) as ws:
+                async with session.ws_connect(self.websocket_url) as ws:
                     await ws.send_json(payload)
 
                     async for msg in ws:
                         if isinstance(msg, aiohttp.WSMessage):
                             if msg.type == aiohttp.WSMsgType.TEXT:
                                 message_json = json.loads(msg.data)
-                                self._logger.debug(f"Received WebSocket message: {message_json}")
+                                self.logger.debug(f"Received WebSocket message: {message_json}")
                                 if "params" in message_json:
                                     params = message_json["params"]
-                                    self._logger.debug(f"Received WebSocket params: {params}")
+                                    self.logger.debug(f"Received WebSocket params: {params}")
                                     yield params
                                 elif "result" in message_json:
                                     result = message_json["result"]
                                     if not result.startswith("success"):
                                         raise TONAPIError(result)
                             elif msg.type == aiohttp.WSMsgType.CLOSED:
-                                self._logger.warning("WebSocket connection closed")
+                                self.logger.warning("WebSocket connection closed")
                                 break
                             elif msg.type == aiohttp.WSMsgType.ERROR:
-                                self._logger.error(f"WebSocket error: {ws.exception()}")
+                                self.logger.error(f"WebSocket error: {ws.exception()}")
                                 raise TONAPIError(f"WebSocket error: {ws.exception()}")
                         else:
                             raise TONAPIError(f"Unexpected WebSocket message type")
 
         except aiohttp.ClientError as e:
-            self._logger.error(f"WebSocket connection failed: {e}")
+            self.logger.error(f"WebSocket connection failed: {e}")
             raise TONAPIError(e)
         finally:
             if not ws.closed:
@@ -233,18 +217,18 @@ class AsyncTonapiClientBase:
         :param body: Optional request body data.
         :return: The response content as a dictionary.
         """
-        url = self._base_url + path
-        headers = {**self._headers, **(headers or {})}
+        url = self.base_url + path
+        headers = {**self.headers, **(headers or {})}
         if params:
             params = {k: str(v).lower() if isinstance(v, bool) else v for k, v in params.items()}
 
-        self._logger.debug(f"Request {method}: {url}")
-        self._logger.debug(f"Headers: {headers}, Params: {params}, Body: {body}")
+        self.logger.debug(f"Request {method}: {url}")
+        self.logger.debug(f"Headers: {headers}, Params: {params}, Body: {body}")
 
-        timeout = aiohttp.ClientTimeout(total=self._timeout)
+        timeout = aiohttp.ClientTimeout(total=self.timeout)
 
         async with aiohttp.ClientSession(timeout=timeout) as session:
-            for attempt in range(self._max_retries + 1):
+            for attempt in range(self.max_retries + 1):
                 try:
                     async with session.request(
                             method=method,
@@ -256,8 +240,8 @@ class AsyncTonapiClientBase:
                         await self.__raise_for_status(response)
                         return await self.__read_content(response)
                 except aiohttp.ClientResponseError as e:
-                    self._logger.error(f"Request failed (attempt {attempt}): {e}")
-                    if attempt < self._max_retries:
+                    self.logger.error(f"Request failed (attempt {attempt}): {e}")
+                    if attempt < self.max_retries:
                         await asyncio.sleep(1)
                     else:
                         raise TONAPIError(e)
