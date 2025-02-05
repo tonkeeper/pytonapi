@@ -1,2 +1,2 @@
-aiohttp~=3.11.11
-pydantic~=2.10.4
+aiohttp>=3.9.0,<3.12
+pydantic>=2.4.1,<2.11
