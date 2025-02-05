@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pytonapi",
-    version="0.4.6",
+    version="0.4.7",
     author="nessshon",
     description="Provide access to indexed TON blockchain.",
     long_description=long_description,
@@ -13,8 +13,8 @@ setuptools.setup(
     url="https://github.com/tonkeeper/pytonapi/",
     packages=setuptools.find_packages(include=["pytonapi", "pytonapi.*"]),
     install_requires=[
-        "aiohttp~=3.11.11",
-        "pydantic~=2.10.4",
+        "aiohttp>=3.9.0,<3.12",
+        "pydantic>=2.4.1,<2.11",
     ],
     classifiers=[
         "Programming Language :: Python :: 3.9",
