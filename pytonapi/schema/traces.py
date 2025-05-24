@@ -45,10 +45,12 @@ class BouncePhaseType(str, Enum):
 
 class ActionPhase(BaseModel):
     success: bool
+    result_code: int
     total_actions: int
     skipped_actions: int
     fwd_fees: int
     total_fees: int
+    result_code_description: Optional[str] = None
 
 
 class CreditPhase(BaseModel):
@@ -70,6 +72,7 @@ class ComputePhase(BaseModel):
     gas_used: Optional[int] = None
     vm_steps: Optional[int] = None
     exit_code: Optional[int] = None
+    exit_code_description: Optional[int] = None
 
 
 class StateInit(BaseModel):
@@ -77,11 +80,13 @@ class StateInit(BaseModel):
 
 
 class Message(BaseModel):
+    msg_type: str
     created_lt: int
     ihr_disabled: bool
     bounce: bool
     bounced: bool
     value: int
+    value_extra: Optional[int] = None
     fwd_fee: int
     ihr_fee: int
     destination: Optional[AccountAddress] = None
@@ -105,6 +110,7 @@ class Transaction(BaseModel):
     orig_status: AccountStatus
     end_status: AccountStatus
     total_fees: int
+    end_balance: int
     transaction_type: TransactionType
     state_update_old: str
     state_update_new: str
@@ -120,6 +126,7 @@ class Transaction(BaseModel):
     bounce_phase: Optional[BouncePhaseType] = None
     aborted: bool
     destroyed: bool
+    raw: str
 
 
 class Trace(BaseModel):
