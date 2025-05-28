@@ -126,7 +126,7 @@
 - Multisig
 
 - [x] /v2/multisig/{account_id}
-- [x] /v2/multisig/order/{account_id}
+- [ ] /v2/multisig/order/{account_id}
 
 - Blockchain
 
@@ -189,4 +189,4 @@
 
 - ExtraCurrency
 
-- [ ] /v2/extra-currency/{id}
+- [x] /v2/extra-currency/{id}
