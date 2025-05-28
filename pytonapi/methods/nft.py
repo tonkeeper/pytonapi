@@ -33,6 +33,19 @@ class NftMethod(AsyncTonapiClientBase):
 
         return NftCollection(**response)
 
+    async def get_bulk_collections(self, account_ids: List[str]) -> NftCollections:
+        """
+        Get NFT collections by their addresses.
+
+        :param account_ids: A list of account IDs
+        :return: :class:`NftCollections`
+        """
+        method = f"v2/nfts/collections/_bulk"
+        params = {"account_ids": account_ids}
+        response = await self._post(method=method, body=params)
+
+        return NftCollections(**response)
+
     async def get_items_by_collection_address(
             self,
             account_id: str,
