@@ -13,8 +13,8 @@ setuptools.setup(
     url="https://github.com/tonkeeper/pytonapi/",
     packages=setuptools.find_packages(include=["pytonapi", "pytonapi.*"]),
     install_requires=[
-        "aiohttp>=3.9.0,<3.12",
-        "pydantic>=2.4.1,<2.11",
+        "aiohttp>=3.9.0,<=3.12.2",
+        "pydantic>=2.4.1,<=2.11.5",
     ],
     classifiers=[
         "Programming Language :: Python :: 3.9",
