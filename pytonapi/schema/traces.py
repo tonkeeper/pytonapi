@@ -72,7 +72,7 @@ class ComputePhase(BaseModel):
     gas_used: Optional[int] = None
     vm_steps: Optional[int] = None
     exit_code: Optional[int] = None
-    exit_code_description: Optional[int] = None
+    exit_code_description: Optional[str] = None
 
 
 class StateInit(BaseModel):

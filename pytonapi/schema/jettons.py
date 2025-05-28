@@ -47,6 +47,8 @@ class JettonPreview(BaseModel):
     decimals: int
     image: str
     verification: JettonVerificationType
+    custom_payload_api_uri: Optional[str] = None
+    score: int
 
 
 class JettonBalance(BaseModel):
@@ -84,3 +86,22 @@ class JettonQuantity(BaseModel):
 class JettonTransferPayload(BaseModel):
     custom_payload: Optional[str] = None
     state_init: Optional[str] = None
+
+
+class JettonOperation(BaseModel):
+    operation: str
+    utime: int
+    lt: int
+    transaction_hash: str
+    source: Optional[AccountAddress] = None
+    destination: Optional[AccountAddress] = None
+    amount: str
+    jetton: JettonPreview
+    trace_id: str
+    query_id: str
+    payload: Optional[Any]
+
+
+class JettonOperations(BaseModel):
+    operations: List[JettonOperation]
+    next_form: Optional[int] = None

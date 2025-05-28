@@ -83,3 +83,18 @@ class NftItems(BaseModel):
 
 class NftCollections(BaseModel):
     nft_collections: List[NftCollection]
+
+
+class NftOperation(BaseModel):
+    operation: str
+    utime: int
+    lt: int
+    transaction_hash: str
+    source: Optional[AccountAddress] = None
+    destination: Optional[AccountAddress] = None
+    item: NftItem
+
+
+class NftOperations(BaseModel):
+    operations: List[NftOperation]
+    next_form: Optional[int] = None

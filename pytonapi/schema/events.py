@@ -208,7 +208,6 @@ class Action(BaseModel):
 
 
 class AccountEvent(BaseModel):
-    description: Optional[str] = None
     event_id: str
     account: AccountAddress
     timestamp: int
