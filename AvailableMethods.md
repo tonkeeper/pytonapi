@@ -8,7 +8,7 @@
 - [x] v2/sse/blocks?workchain={workchain}
 
 
-- Websocket (async only)
+- Websocket
 
 - [x] v2/websocket/subscribe_account
 - [x] v2/websocket/subscribe_trace
@@ -24,7 +24,6 @@
 - [x] /v2/accounts/{account_id}/jettons
 - [x] /v2/accounts/{account_id}/jettons/{jetton_id}
 - [x] /v2/accounts/{account_id}/jettons/history
-- [x] /v2/accounts/{account_id}/jettons/{jetton_id}/history
 - [x] /v2/accounts/{account_id}/nfts
 - [x] /v2/accounts/{account_id}/events
 - [x] /v2/accounts/{account_id}/events/{event_id}
@@ -36,6 +35,8 @@
 - [x] /v2/accounts/{account_id}/publickey
 - [x] /v2/accounts/{account_id}/multisigs
 - [x] /v2/accounts/{account_id}/diff
+- [x] /v2/accounts/extra-currency/{id}/history
+- [x] /v2/jettons/{jetton_id}/accounts/{account_id}/history
 - [x] /v2/accounts/{account_id}/events/emulate
 
 
@@ -44,16 +45,17 @@
 - [x] /v2/accounts/{account_id}/nfts/history
 - [x] /v2/nfts/collections
 - [x] /v2/nfts/collections/{account_id}
+- [x] /v2/nfts/collections/_bulk
 - [x] /v2/nfts/collections/{account_id}/items
 - [x] /v2/nfts/_bulk
 - [x] /v2/nfts/{account_id}
-- [x] /v2/nfts/{account_id}/history
 
 
 - Jettons
 
 - [x] /v2/jettons
 - [x] /v2/jettons/{account_id}
+- [x] /v2/jettons/_bulk
 - [x] /v2/jettons/{account_id}/holders
 - [x] /v2/jettons/{jetton_id}/transfer/{account_id}/payload
 - [x] /v2/events/{event_id}/jettons
@@ -69,10 +71,10 @@
 
 - Wallet
 
-- [x] /v2/wallet/backup
 - [x] /v2/wallet/auth/proof
-- [x] /v2/pubkeys/{public_key}/wallets
 - [x] /v2/wallet/{account_id}/seqno
+- [x] /v2/wallet/{account_id}
+- [x] /v2/pubkeys/{public_key}/wallets
 - [x] /v2/wallet/emulate
 
 
@@ -124,11 +126,13 @@
 - Multisig
 
 - [x] /v2/multisig/{account_id}
+- [x] /v2/multisig/order/{account_id}
 
 - Blockchain
 
 - [x] /v2/blockchain/reduced/blocks
 - [x] /v2/blockchain/blocks/{block_id}
+- [ ] /v2/blockchain/blocks/{block_id}/boc
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/shards
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/blocks
 - [x] /v2/blockchain/masterchain/{masterchain_seqno}/transactions
@@ -177,16 +181,12 @@
 - [x] /v2/accounts/{account_id}/events/emulate
 
 
-- Inscriptions
-
-- [x] /v2/experimental/accounts/{account_id}/inscriptions
-- [x] /v2/experimental/accounts/{account_id}/inscriptions/history
-- [x] /v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
-- [x] /v2/experimental/inscriptions/op-template
-
-
 - Utilities
 
 - [x] /v2/status
 - [x] /v2/address/{account_id}/parse
 
+
+- ExtraCurrency
+
+- [ ] /v2/extra-currency/{id}
