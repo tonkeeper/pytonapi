@@ -32,6 +32,19 @@ class JettonsMethod(AsyncTonapiClientBase):
 
         return JettonHolders(**response)
 
+    async def get_bulk_jettons(self, account_ids: list[str]) -> Jettons:
+        """
+        Get a list of jetton masters by their addresses.
+
+        :param account_ids: A list of account IDs
+        :return: :class:`Jettons`
+        """
+        method = "v2/jettons/_bulk"
+        params = {"account_ids": account_ids}
+        response = await self._post(method=method, body=params)
+
+        return Jettons(**response)
+
     async def get_all_jettons(self, limit: int = 100, offset: int = 0) -> Jettons:
         """
         Get a list of all indexed jetton masters in the blockchain.
