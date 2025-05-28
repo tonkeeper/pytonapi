@@ -3,25 +3,10 @@ from typing import Dict, Any, Union
 from pytonapi.base import AsyncTonapiClientBase
 from pytonapi.schema.accounts import Accounts
 from pytonapi.schema.events import MessageConsequences
+from pytonapi.schema.wallet import Wallet
 
 
 class WalletMethod(AsyncTonapiClientBase):
-
-    async def get_backup_info(
-            self,
-            x_tonconnect_auth: str,
-    ) -> Union[str, None]:
-        """
-        Get backup info.
-
-        :param x_tonconnect_auth: X-TonConnect-Auth
-        :return: :class:`str` dump
-        """
-        method = "v2/wallet/backup"
-        headers = {"X-TonConnect-Auth": x_tonconnect_auth}
-        response = await self._get(method=method, headers=headers)
-
-        return response.get("dump", None)
 
     async def account_verification(
             self,
@@ -104,3 +89,15 @@ class WalletMethod(AsyncTonapiClientBase):
         response = await self._post(method=method, body=body, headers=headers)
 
         return MessageConsequences(**response)
+
+    async def get_info(self, account_id: str) -> Wallet:
+        """
+        Get human-friendly information about a wallet without low-level details.
+
+        :param account_id: Account ID
+        :return: :class:`Wallet`
+        """
+        method = f"v2/wallet/{account_id}"
+        response = await self._get(method=method)
+
+        return Wallet(**response)
