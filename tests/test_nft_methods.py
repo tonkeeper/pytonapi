@@ -20,6 +20,10 @@ class TestNftMethod(TestAsyncTonapi):
         response = await self.tonapi.nft.get_collection_by_collection_address(ACCOUNT_ID_COLLECTION)
         self.assertIsInstance(response, schema.nft.NftCollection)
 
+    async def test_get_bulk_collections(self):
+        response = await self.tonapi.nft.get_bulk_collections([ACCOUNT_ID_COLLECTION])
+        self.assertIsInstance(response, schema.nft.NftCollections)
+
     async def test_get_items_by_collection_address(self):
         response = await self.tonapi.nft.get_items_by_collection_address(ACCOUNT_ID_COLLECTION)
         self.assertIsInstance(response, schema.nft.NftItems)

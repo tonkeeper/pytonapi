@@ -9,13 +9,13 @@ JETTON_ID = "EQD0vdSA_NedR9uvbgN9EikRX-suesDxGeFg69XQMavfLqIw"  # noqa
 
 class TestAccountMethod(TestAsyncTonapi):
 
-    async def test_get_info(self):
-        response = await self.tonapi.accounts.get_info(ACCOUNT_ID)
-        self.assertIsInstance(response, schema.accounts.Account)
-
     async def test_get_bulk_info(self):
         response = await self.tonapi.accounts.get_bulk_info([ACCOUNT_ID])
         self.assertIsInstance(response, schema.accounts.Accounts)
+
+    async def test_get_info(self):
+        response = await self.tonapi.accounts.get_info(ACCOUNT_ID)
+        self.assertIsInstance(response, schema.accounts.Account)
 
     async def test_get_domains(self):
         response = await self.tonapi.accounts.get_domains(ACCOUNT_ID)
@@ -31,11 +31,11 @@ class TestAccountMethod(TestAsyncTonapi):
 
     async def test_get_jettons_history(self):
         response = await self.tonapi.accounts.get_jettons_history(ACCOUNT_ID)
-        self.assertIsInstance(response, schema.events.AccountEvents)
+        self.assertIsInstance(response, schema.jettons.JettonOperations)
 
     async def test_get_jettons_history_by_jetton(self):
         response = await self.tonapi.accounts.get_jettons_history_by_jetton(ACCOUNT_ID, JETTON_ID)
-        self.assertIsInstance(response, schema.events.AccountEvents)
+        self.assertIsInstance(response, schema.jettons.JettonOperations)
 
     async def test_get_nfts(self):
         response = await self.tonapi.accounts.get_nfts(ACCOUNT_ID)
@@ -55,7 +55,7 @@ class TestAccountMethod(TestAsyncTonapi):
 
     async def test_get_nft_history(self):
         response = await self.tonapi.accounts.get_nft_history(ACCOUNT_ID)
-        self.assertIsInstance(response, schema.events.AccountEvents)
+        self.assertIsInstance(response, schema.nft.NftOperations)
 
     async def test_search_by_domain(self):
         response = await self.tonapi.accounts.search_by_domain(DOMAIN_NAME)
@@ -80,3 +80,7 @@ class TestAccountMethod(TestAsyncTonapi):
     async def test_reindex(self):
         response = await self.tonapi.accounts.reindex(ACCOUNT_ID)
         self.assertIs(response, None)
+
+    async def test_get_extra_currency_history(self):
+        response = await self.tonapi.accounts.get_extra_currency_history(ACCOUNT_ID, currency_id=1)
+        self.assertIsInstance(response, schema.events.AccountEvents)
