@@ -84,10 +84,6 @@ class AsyncTonapi(AsyncTonapiClientBase):
         return methods.GaslessMethod(**self.__dict__)
 
     @property
-    def inscriptions(self) -> methods.InscriptionsMethod:
-        return methods.InscriptionsMethod(**self.__dict__)
-
-    @property
     def nft(self) -> methods.NftMethod:
         return methods.NftMethod(**self.__dict__)
 
@@ -130,3 +126,7 @@ class AsyncTonapi(AsyncTonapiClientBase):
     @property
     def websocket(self) -> methods.WebSocketMethod:
         return methods.WebSocketMethod(**self.__dict__)
+
+    @property
+    def extra_currency(self) -> methods.ExtraCurrencyMethod:
+        return methods.ExtraCurrencyMethod(**self.__dict__)
