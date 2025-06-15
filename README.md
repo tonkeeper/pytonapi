@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
 **TON** - `UQCDrgGaI6gWK-qlyw69xWZosurGxrpRgIgSkVsgahUtxZR0`
 
-**USDT** (TRC-20) - `TGKmm9H3FApFw8xcgRcZDHSku68vozAjo9`
+**USDT** (TRC-20) - `TDHMG7JRkmJBDD1qd4bNhdfoy2uzVd8ixA`
 
 ## Contribution
 
