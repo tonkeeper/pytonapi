@@ -5,7 +5,9 @@ ACCOUNT_ID = "EQCD39VS5jcptHL8vMjEXrzGaRcCVYto7HUn4bpAOg8xqB2N"  # noqa
 EVENT_ID = "53388440417dc044d00e99d89b591acc28f100332a004f180e4f14b876620c13"
 DOMAIN_NAME = "nessshon.t.me"  # noqa
 JETTON_ID = "EQD0vdSA_NedR9uvbgN9EikRX-suesDxGeFg69XQMavfLqIw"  # noqa
-
+MULTISIG_ACCOUNT_ID = "EQAsl59qOy9C2XL5452lGbHU9bI3l4lhRaopeNZ82NRK8nlA"
+EMULATE_ACCOUNT_ID = "EQBAF7OBsy_1R8Zs33l6XMP3k1OyMv6Nv-b_-n-qf7de9qp2"  # noqa
+EMULATE_BOC = "te6ccgEBAgEAoAABz4gAgC9nA2Zf6o+M2b7y9LmH7yanZGX9G3/N//T/VP9uvewComZfYno/fswnemt9B6xfHWRtZ2vKvL8C7ZiExKR3s3vsDDRnpxb5Oaoi7ATNea26glvtLlEwEFRoyIL2ZgqIaAAAAAgcAQBmYgA2ZpktQsYby0n9cV5VWOFINBjScIU2HdondFsK3lDpEBzEtAAAAAAAAAAAAAAAAAAA"
 
 class TestAccountMethod(TestAsyncTonapi):
 
@@ -73,6 +75,10 @@ class TestAccountMethod(TestAsyncTonapi):
         response = await self.tonapi.accounts.get_public_key(ACCOUNT_ID)
         self.assertIsInstance(response, schema.accounts.PublicKey)
 
+    async def test_get_account_multisigs(self):
+        response = await self.tonapi.accounts.get_account_multisigs(MULTISIG_ACCOUNT_ID)
+        self.assertIsInstance(response, schema.multisig.Multisigs)
+
     async def test_get_balance_change(self):
         response = await self.tonapi.accounts.get_balance_change(ACCOUNT_ID, 1514746800, 1672513200)
         self.assertIsInstance(response, schema.accounts.BalanceChange)
@@ -84,3 +90,7 @@ class TestAccountMethod(TestAsyncTonapi):
     async def test_get_extra_currency_history(self):
         response = await self.tonapi.accounts.get_extra_currency_history(ACCOUNT_ID, currency_id=1)
         self.assertIsInstance(response, schema.events.AccountEvents)
+
+    async def test_account_emulate_event(self):
+        response = await self.tonapi.accounts.emulate_event(EMULATE_ACCOUNT_ID, {"boc": EMULATE_BOC})
+        self.assertIsInstance(response, schema.events.AccountEvent)

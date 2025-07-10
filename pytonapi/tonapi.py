@@ -88,6 +88,10 @@ class AsyncTonapi(AsyncTonapiClientBase):
         return methods.NftMethod(**self.__dict__)
 
     @property
+    def purchases(self) -> methods.PurchasesMethod:
+        return methods.PurchasesMethod(**self.__dict__)
+
+    @property
     def rates(self) -> methods.RatesMethod:
         return methods.RatesMethod(**self.__dict__)
 

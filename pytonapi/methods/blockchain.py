@@ -45,6 +45,18 @@ class BlockchainMethod(AsyncTonapiClientBase):
 
         return BlockchainBlock(**response)
 
+    async def get_block_boc(self, block_id: str) -> str:
+        """
+        Get block data.
+
+        :param block_id: block ID (string), example: "(-1,8000000000000000,4234234)"
+        :return: :class:`BlockchainBlock`
+        """
+        method = f"v2/blockchain/blocks/{block_id}/boc"
+        response = await self._get(method=method)
+
+        return response["error"] # api returns raw string so the result stores in error
+
     async def get_block(self, masterchain_seqno: int) -> BlockchainBlockShards:
         """
         Get blockchain block shards.
