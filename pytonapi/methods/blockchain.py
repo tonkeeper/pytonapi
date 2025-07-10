@@ -55,7 +55,7 @@ class BlockchainMethod(AsyncTonapiClientBase):
         method = f"v2/blockchain/blocks/{block_id}/boc"
         response = await self._get(method=method)
 
-        return response["error"] # api returns raw string so the result stores in error
+        return response["error"]  # api returns raw string so the result stores in error
 
     async def get_block(self, masterchain_seqno: int) -> BlockchainBlockShards:
         """

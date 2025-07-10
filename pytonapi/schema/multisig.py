@@ -14,10 +14,12 @@ class Risk(BaseModel):
     jettons: List[JettonQuantity]
     nfts: List[NftItem]
 
+
 class ChangingParameters(BaseModel):
     threshold: int
     signers: List[Address]
     proposers: str
+
 
 class MultisigOrder(BaseModel):
     address: Address

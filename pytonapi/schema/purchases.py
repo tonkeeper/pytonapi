@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from pytonapi.schema.accounts import AccountAddress
 
+
 class Metadata(BaseModel):
     encrypted_binary: str
     decryption_key: Optional[str] = None

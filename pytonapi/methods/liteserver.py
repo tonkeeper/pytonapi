@@ -199,7 +199,7 @@ class LiteserverMethod(AsyncTonapiClientBase):
         :return: :class:`RawListBlockTransactions`
         """
         method = f"v2/liteserver/list_block_transactions/{block_id}"
-        params = {
+        params: Dict[str, Union[int, str]] = {
             "mode": mode,
             "count": count
         }
