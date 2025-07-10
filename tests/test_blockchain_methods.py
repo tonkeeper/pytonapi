@@ -1,6 +1,8 @@
 from pytonapi import schema
 from tests import TestAsyncTonapi
 
+PREV_BLOCK_UTIME = 1740393401
+NEXT_BLOCK_UTIME = 1740393901
 BLOCK_ID = "(-1,8000000000000000,48255809)"
 ACCOUNT_ID = "EQBR6UVvw1tFcLkxWapnSQ10QH7JWt1fGUesX_C8lqWbluLL"  # noqa
 MESSAGE_ID = "EAC465A0DC51E844B12BBD0040308801FA19B8D1BD49208AA929E2CAAEE9D401"
@@ -11,9 +13,17 @@ MASTERCHATIN_SEQNO = 34835953
 
 class TestBlockchainMethod(TestAsyncTonapi):
 
+    async def test_get_reduced_blocks(self):
+        response = await self.tonapi.blockchain.get_reduced_blocks(PREV_BLOCK_UTIME, NEXT_BLOCK_UTIME)
+        self.assertIsInstance(response, schema.blockchain.ReducedBlocks)
+
     async def test_get_block_data(self):
         response = await self.tonapi.blockchain.get_block_data(BLOCK_ID)
         self.assertIsInstance(response, schema.blockchain.BlockchainBlock)
+
+    async def test_get_block_boc(self):
+        response = await self.tonapi.blockchain.get_block_boc(BLOCK_ID)
+        self.assertIsInstance(response, str)
 
     async def test_get_block(self):
         response = await self.tonapi.blockchain.get_block(MASTERCHATIN_SEQNO)

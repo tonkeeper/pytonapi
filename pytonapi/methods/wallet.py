@@ -1,7 +1,7 @@
 from typing import Dict, Any, Union
 
 from pytonapi.base import AsyncTonapiClientBase
-from pytonapi.schema.accounts import Accounts
+from pytonapi.schema.accounts import Accounts, Account
 from pytonapi.schema.events import MessageConsequences
 from pytonapi.schema.wallet import Wallet
 

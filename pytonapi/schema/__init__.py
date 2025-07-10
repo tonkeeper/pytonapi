@@ -4,9 +4,12 @@ from pytonapi.schema import dns
 from pytonapi.schema import domains
 from pytonapi.schema import events
 from pytonapi.schema import extra_currency
+from pytonapi.schema import gasless
 from pytonapi.schema import jettons
 from pytonapi.schema import liteserver
+from pytonapi.schema import multisig
 from pytonapi.schema import nft
+from pytonapi.schema import purchases
 from pytonapi.schema import rates
 from pytonapi.schema import staking
 from pytonapi.schema import storage

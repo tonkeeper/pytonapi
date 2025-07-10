@@ -14,6 +14,10 @@ class Risk(BaseModel):
     jettons: List[JettonQuantity]
     nfts: List[NftItem]
 
+class ChangingParameters(BaseModel):
+    threshold: int
+    signers: List[Address]
+    proposers: str
 
 class MultisigOrder(BaseModel):
     address: Address
@@ -22,8 +26,11 @@ class MultisigOrder(BaseModel):
     sent_for_execution: bool
     signers: List[Address]
     approvals_num: int
-    expiration_data: int
+    expiration_date: int
     risk: Risk
+    creation_date: int
+    signed_by: List[Address]
+    multisig_address: Address
 
 
 class Multisig(BaseModel):
@@ -32,7 +39,7 @@ class Multisig(BaseModel):
     threshold: int
     signers: List[Address]
     proposers: List[Address]
-    orders: MultisigOrder
+    orders: List[MultisigOrder]
 
 
 class Multisigs(BaseModel):

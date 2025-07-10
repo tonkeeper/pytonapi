@@ -9,6 +9,7 @@ from .jettons import JettonsMethod
 from .liteserver import LiteserverMethod
 from .multisig import MultisigMethod
 from .nft import NftMethod
+from .purchases import PurchasesMethod
 from .rates import RatesMethod
 from .sse import SSEMethod
 from .staking import StakingMethod

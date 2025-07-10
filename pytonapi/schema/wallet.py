@@ -6,7 +6,6 @@ from ._address import Address
 
 
 class WalletStats(BaseModel):
-    ton_balance: int
     nfts_count: int
     jettons_count: int
     multisig_count: int
@@ -20,8 +19,15 @@ class WalletPlugin(BaseModel):
 
 class Wallet(BaseModel):
     address: Address
+    is_wallet: bool
+    balance: int
     stats: WalletStats
+    status: str
+    last_activity: int
     plugins: List[WalletPlugin]
     name: Optional[str] = None
     icon: Optional[str] = None
     is_suspended: Optional[bool] = None
+    signature_disabled: bool
+    interfaces: List[str]
+    last_lt: int

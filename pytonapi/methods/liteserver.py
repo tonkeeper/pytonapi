@@ -79,15 +79,18 @@ class LiteserverMethod(AsyncTonapiClientBase):
 
         return RawBlockState(**response)
 
-    async def get_raw_header(self, block_id: str) -> RawBlockHeader:
+    async def get_raw_header(self, block_id: str, mode: int) -> RawBlockHeader:
         """
         Get raw blockchain block header.
 
         :param block_id: block ID:  (workchain,shard,seqno,root_hash,file_hash)
+        :param mode: mode
         :return: :class:`RawBlockHeader`
         """
+
         method = f"v2/liteserver/get_block_header/{block_id}"
-        response = await self._get(method=method)
+        params = {"mode": mode}
+        response = await self._get(method=method, params=params)
 
         return RawBlockHeader(**response)
 
@@ -195,34 +198,36 @@ class LiteserverMethod(AsyncTonapiClientBase):
         :param lt: lt
         :return: :class:`RawListBlockTransactions`
         """
-        method = f"v2/liteserver/get_block_transactions/{block_id}"
+        method = f"v2/liteserver/list_block_transactions/{block_id}"
         params = {
             "mode": mode,
-            "count": count,
-            "account_id": account_id,
-            "lt": lt
+            "count": count
         }
+        if account_id:
+            params["account_id"] = account_id
+        if lt:
+            params["lt"] = lt
         response = await self._get(method=method, params=params)
 
         return RawListBlockTransactions(**response)
 
     async def get_block_proof(
             self,
-            know_block: str,
+            known_block: str,
             mode: int = 0,
             target_block: Optional[str] = None,
     ) -> RawBlockProof:
         """
         Get raw block proof.
 
-        :param know_block: know block: (workchain,shard,seqno,root_hash,file_hash)
+        :param known_block: know block: (workchain,shard,seqno,root_hash,file_hash)
         :param mode: mode 0
         :param target_block: target block: (workchain,shard,seqno,root_hash,file_hash)
         :return: :class:`RawBlockProof`
         """
-        method = f"v2/liteserver/get_block_proof/{know_block}"
+        method = f"v2/liteserver/get_block_proof"
         params = {
-            "know_block": know_block,
+            "known_block": known_block,
             "mode": mode,
         }
         if target_block:
@@ -267,7 +272,7 @@ class LiteserverMethod(AsyncTonapiClientBase):
 
         :return: :class:`OutMsgQueueSize` size
         """
-        method = "v2/liteserver/get_out_msg_queue_size"
+        method = "v2/liteserver/get_out_msg_queue_sizes"
         response = await self._get(method=method)
 
         return OutMsgQueueSize(**response)
